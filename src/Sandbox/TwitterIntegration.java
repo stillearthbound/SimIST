@@ -12,4 +12,6 @@ package Sandbox;
 public class TwitterIntegration {
     private String username;
     private String password;
+    
+    
 }
