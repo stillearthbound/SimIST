@@ -10,5 +10,6 @@ package Sandbox;
  * @author laurenritter
  */
 public class TwitterIntegration {
-    
+    private String username;
+    private String password;
 }
