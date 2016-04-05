@@ -16,7 +16,7 @@ import javax.swing.*;
 public class TweetUI extends JFrame implements ActionListener{
     private JPanel tweetPanel;
     private JLabel enterTweet;
-    private JTextField tweet;
+    private JTextArea tweet;
     private JButton enterButton;
     
     TweetUI(){
@@ -25,12 +25,11 @@ public class TweetUI extends JFrame implements ActionListener{
     
     public void initCustomComponents(){
         tweetPanel = new JPanel();
-        enterTweet = new JLabel("Enter your tweet");
-        tweet = new JTextField("");
+        enterTweet = new JLabel("Get Timeline");
+        tweet = new JTextArea();
         enterButton = new JButton("Enter");
         
         enterButton.addActionListener(this);
-        tweet.addActionListener(this);
         
         tweetPanel.add(enterTweet);
         tweetPanel.add(tweet);
