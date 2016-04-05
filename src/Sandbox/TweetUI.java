@@ -35,6 +35,8 @@ public class TweetUI extends JFrame implements ActionListener{
         tweetPanel.add(enterTweet);
         tweetPanel.add(tweet);
         tweetPanel.add(enterButton, SwingConstants.SOUTH_WEST);
+        
+        tweetPanel.setVisible(true);
     }
 
     @Override
