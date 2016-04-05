@@ -5,20 +5,32 @@
  */
 package Sandbox;
 
+import java.util.List;
 import twitter4j.*;
-import javax.swing.JOptionPane;
+import twitter4j.conf.ConfigurationBuilder;
 
 /**
  *
  * @author jakedotts
  */
 public class TwitterUI extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form TwitterUI
      */
+    private String consumerKey = "jbe5ocgcxYSM49yvDM0KwywbC";
+    private String consumerSecret = "GtuapOcOfLOvkqiyyBnArC0Vhv4iuoApKFGMUbqpyljlUs0NQO";
+    private String accessToken = "717072723835490306-Iw6CNqn19C1vJzK7VPJdDxxdX7mga1h";
+    private String accessTokenSecret = "32ifjEtUa6qeZnplyjjUvriGHCxNNsQdZpdN2hBNFeWQy";
+    
+    
+    //public TwitterIntegration(){
+        
+        
     public TwitterUI() {
         initComponents();
+        
+        
     }
 
     /**
@@ -31,46 +43,57 @@ public class TwitterUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        TimelineTweetLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        timelineTweetText = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("My Last Tweet");
+        jLabel1.setText("Timeline tweets:");
 
-        jButton1.setText("Login");
+        jButton1.setText("Get Timeline");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
+        timelineTweetText.setColumns(20);
+        timelineTweetText.setRows(5);
+        jScrollPane1.setViewportView(timelineTweetText);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jLabel1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jButton1))
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(65, Short.MAX_VALUE))
+                        .addGap(16, 16, 16)
+                        .addComponent(jButton1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TimelineTweetLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(95, 95, 95)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(32, 32, 32)
-                .addComponent(jButton1)
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addGap(101, 101, 101)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(TimelineTweetLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
@@ -78,15 +101,26 @@ public class TwitterUI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        ConfigurationBuilder cb = new ConfigurationBuilder();
+        cb.setDebugEnabled(true)
+                .setOAuthConsumerKey(consumerKey)
+                .setOAuthConsumerSecret(consumerSecret)
+                .setOAuthAccessToken(accessToken)
+                .setOAuthAccessTokenSecret(accessTokenSecret);
+        TwitterFactory tf = new TwitterFactory(cb.build());
+        Twitter twitter = tf.getInstance();
         try{
-        Twitter twitter = new TwitterFactory().getInstance();
-        User user = twitter.verifyCredentials();
-        JOptionPane.showMessageDialog(null, "showing @"+user.getScreenName()+ " You're logged in");
-        java.util.List<Status> statusList = twitter.getUserTimeline();
-        String timelineString = String.valueOf(statusList.get(0).getText());
-        jTextField1.setText(timelineString);
+            System.out.println("timeline retreval worked");
+        
+        
+        List<Status> statuses = twitter.getHomeTimeline();
+        for(Status status : statuses){
+            timelineTweetText.setText("@"+status.getUser().getName()+" : "+status.getText());
+        }
+        
+        
         } catch (TwitterException e){
-            JOptionPane.showMessageDialog(null, "Login Failed");
+            System.out.print("timeline retreval failed");
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -127,8 +161,10 @@ public class TwitterUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel TimelineTweetLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea timelineTweetText;
     // End of variables declaration//GEN-END:variables
 }
