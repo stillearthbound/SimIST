@@ -5,8 +5,8 @@
  */
 package Sandbox;
 
-import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
+
+import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
 /**
