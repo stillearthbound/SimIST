@@ -47,6 +47,8 @@ public class TwitterLoginUI extends JFrame implements ActionListener{
         panel.add(usernameField);
         panel.add(password);
         panel.add(passwordField);
+        
+        panel.setVisible(true);
     }
 
     @Override
