@@ -9,11 +9,12 @@ package Sandbox;
  *
  * @author laurenritter
  */
-public class TwitterController {
+public class TwitterCntl {
     private ManualTwitterUI theManualTwitterUI;
+    private TwitterCntl twitterCntl;
     
-    public TwitterController(){
-        theManualTwitterUI = new ManualTwitterUI();
+    public TwitterCntl(){
+        theManualTwitterUI = new ManualTwitterUI(twitterCntl);
         theManualTwitterUI.setVisible(true);
     }
 }

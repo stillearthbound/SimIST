@@ -1,7 +1,7 @@
 package controllers;
 
 import Sandbox.ManualTwitterUI;
-import Sandbox.TwitterController;
+import Sandbox.TwitterCntl;
 import Sandbox.TwitterUI;
 
 /*
@@ -24,8 +24,7 @@ public class App {
 //        TwitterUI newUI = new TwitterUI();
 //        newUI.setVisible(true);
         
-        TwitterController twitterCntl = new TwitterController();
-//        twitterCntl.setVisible(true);
+        TwitterCntl twitterCntl = new TwitterCntl();
     }
     
 }

@@ -18,8 +18,10 @@ public class ManualTwitterUI extends JFrame implements ActionListener{
     private JLabel enterTweet;
     private JTextArea tweet;
     private JButton enterButton;
+    private TwitterCntl theTwitterCntl;
     
-    public ManualTwitterUI(){
+    public ManualTwitterUI(TwitterCntl parentTwitterCntl){
+        theTwitterCntl = parentTwitterCntl;
         initCustomComponents();
     }
     
