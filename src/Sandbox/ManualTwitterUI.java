@@ -13,13 +13,13 @@ import javax.swing.*;
  *
  * @author laurenritter
  */
-public class TweetUI extends JFrame implements ActionListener{
+public class ManualTwitterUI extends JFrame implements ActionListener{
     private JPanel tweetPanel;
     private JLabel enterTweet;
     private JTextArea tweet;
     private JButton enterButton;
     
-    TweetUI(){
+    ManualTwitterUI(){
         initCustomComponents();
     }
     
@@ -40,6 +40,10 @@ public class TweetUI extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        enterButtonActionPerformed(e);
+    }
+    
+    public void enterButtonActionPerformed(ActionEvent e){
         
     }
 }
