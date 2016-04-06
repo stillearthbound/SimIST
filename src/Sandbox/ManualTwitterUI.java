@@ -19,11 +19,13 @@ public class ManualTwitterUI extends JFrame implements ActionListener{
     private JTextArea tweet;
     private JButton enterButton;
     
-    ManualTwitterUI(){
+    public ManualTwitterUI(){
         initCustomComponents();
     }
     
     public void initCustomComponents(){
+        setVisible(true);
+        
         tweetPanel = new JPanel();
         enterTweet = new JLabel("Get Timeline");
         tweet = new JTextArea();

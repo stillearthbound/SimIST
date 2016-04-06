@@ -12,7 +12,7 @@ package Sandbox;
 public class TwitterController {
     private ManualTwitterUI theManualTwitterUI;
     
-    TwitterController(){
+    public TwitterController(){
         theManualTwitterUI = new ManualTwitterUI();
         theManualTwitterUI.setVisible(true);
     }

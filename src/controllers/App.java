@@ -1,5 +1,7 @@
 package controllers;
 
+import Sandbox.ManualTwitterUI;
+import Sandbox.TwitterController;
 import Sandbox.TwitterUI;
 
 /*
@@ -19,9 +21,11 @@ public class App {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        TwitterUI newUI = new TwitterUI();
-        newUI.setVisible(true);
+//        TwitterUI newUI = new TwitterUI();
+//        newUI.setVisible(true);
         
+        TwitterController twitterCntl = new TwitterController();
+//        twitterCntl.setVisible(true);
     }
     
 }
