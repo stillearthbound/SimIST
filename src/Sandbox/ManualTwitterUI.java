@@ -19,6 +19,7 @@ public class ManualTwitterUI extends JFrame implements ActionListener{
     private JTextArea tweet;
     private JButton enterButton;
     private TwitterCntl theTwitterCntl;
+    private JFrame frame;
     
     public ManualTwitterUI(TwitterCntl parentTwitterCntl){
         theTwitterCntl = parentTwitterCntl;
@@ -26,8 +27,7 @@ public class ManualTwitterUI extends JFrame implements ActionListener{
     }
     
     public void initCustomComponents(){
-        setVisible(true);
-        
+        frame = new JFrame();
         tweetPanel = new JPanel();
         enterTweet = new JLabel("Get Timeline");
         tweet = new JTextArea();
@@ -39,6 +39,11 @@ public class ManualTwitterUI extends JFrame implements ActionListener{
         tweetPanel.add(tweet);
         tweetPanel.add(enterButton, SwingConstants.SOUTH_WEST);
         
+        frame.add(tweetPanel);
+        frame.setLocationRelativeTo(null);
+//        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+        
+        tweetPanel.setSize(250, 300);
         tweetPanel.setVisible(true);
     }
 
