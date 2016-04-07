@@ -21,11 +21,6 @@ import twitter4j.conf.ConfigurationBuilder;
  * @author laurenritter
  */
 public class ManualTwitterUI extends JFrame implements ActionListener{
-    /**
-     * Creates new form TwitterUI
-     */
-   
-    
     private JPanel tweetPanel;
     private JLabel enterTweet;
     private JTextArea timelineTweetText;
@@ -40,7 +35,7 @@ public class ManualTwitterUI extends JFrame implements ActionListener{
         
         frame = new JFrame();
         frame.setLocationRelativeTo(null);
-        frame.setSize(500, 500);
+        frame.setSize(250, 300);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,14 +52,16 @@ public class ManualTwitterUI extends JFrame implements ActionListener{
         scrollpane = new JScrollPane();
         
         enterButton.addActionListener(this);
-//        scrollpane.add(timelineTweetText);
+        timelineTweetText.setColumns(20);
+        timelineTweetText.setRows(10);
+        scrollpane.setViewportView(timelineTweetText);
         
         tweetPanel.add(enterTweet);
-        tweetPanel.add(scrollpane.add(timelineTweetText));
+        tweetPanel.add(scrollpane);
         tweetPanel.add(enterButton);
         tweetPanel.setVisible(true);
         
-        tweetPanel.setSize(500, 500);
+        tweetPanel.setSize(250, 300);
         frame.add(tweetPanel);
     }
 

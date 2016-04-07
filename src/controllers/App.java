@@ -24,10 +24,10 @@ public class App {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        TwitterUI newUI = new TwitterUI();
-        newUI.setVisible(true);
+//        TwitterUI newUI = new TwitterUI();
+//        newUI.setVisible(true);
         
-        //TwitterCntl twitterCntl = new TwitterCntl();
+        TwitterCntl twitterCntl = new TwitterCntl();
         
         
        
