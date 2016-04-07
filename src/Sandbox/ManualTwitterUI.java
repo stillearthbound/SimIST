@@ -35,32 +35,39 @@ public class ManualTwitterUI extends JFrame implements ActionListener{
     private JButton enterButton;
     private TwitterCntl theTwitterCntl;
     private JFrame frame;
+    private JScrollPane scrollpane;
     
     public ManualTwitterUI(TwitterCntl parentTwitterCntl){
+        super();
         theTwitterCntl = parentTwitterCntl;
         
         frame = new JFrame();
         frame.setLocationRelativeTo(null);
-        frame.setSize(250, 300);
+        frame.setSize(500, 500);
         frame.setVisible(true);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         initCustomComponents();
     }
     
     public void initCustomComponents(){
+        frame.setLocationRelativeTo(this);
+        
         tweetPanel = new JPanel();
         enterTweet = new JLabel("Get Timeline");
         timelineTweetText = new JTextArea();
         enterButton = new JButton("Enter");
+        scrollpane = new JScrollPane();
         
         enterButton.addActionListener(this);
+//        scrollpane.add(timelineTweetText);
         
         tweetPanel.add(enterTweet);
-        tweetPanel.add(timelineTweetText);
+        tweetPanel.add(scrollpane.add(timelineTweetText));
         tweetPanel.add(enterButton);
         tweetPanel.setVisible(true);
         
-        tweetPanel.setSize(250, 300);
+        tweetPanel.setSize(500, 500);
         frame.add(tweetPanel);
     }
 
