@@ -6,6 +6,8 @@
 package Sandbox;
 
 import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
@@ -19,10 +21,6 @@ public class TwitterUI extends javax.swing.JFrame {
     /**
      * Creates new form TwitterUI
      */
-    private String consumerKey = "jbe5ocgcxYSM49yvDM0KwywbC";
-    private String consumerSecret = "GtuapOcOfLOvkqiyyBnArC0Vhv4iuoApKFGMUbqpyljlUs0NQO";
-    private String accessToken = "717072723835490306-Iw6CNqn19C1vJzK7VPJdDxxdX7mga1h";
-    private String accessTokenSecret = "32ifjEtUa6qeZnplyjjUvriGHCxNNsQdZpdN2hBNFeWQy";
     
     
     //public TwitterIntegration(){
@@ -81,7 +79,7 @@ public class TwitterUI extends javax.swing.JFrame {
                                 .addGap(136, 136, 136)
                                 .addComponent(jLabel1)))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1)))
                 .addContainerGap())
@@ -107,30 +105,38 @@ public class TwitterUI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        KeyReader keys = new KeyReader();
         ConfigurationBuilder cb = new ConfigurationBuilder();
+        
         cb.setDebugEnabled(true)
-                .setOAuthConsumerKey(consumerKey)
-                .setOAuthConsumerSecret(consumerSecret)
-                .setOAuthAccessToken(accessToken)
-                .setOAuthAccessTokenSecret(accessTokenSecret);
+                .setOAuthConsumerKey(keys.getConsumerKey())
+                .setOAuthConsumerSecret(keys.getConsumerSecret())
+                .setOAuthAccessToken(keys.getAccessToken())
+                .setOAuthAccessTokenSecret(keys.getAccessTokenSecret());
+        
         TwitterFactory tf = new TwitterFactory(cb.build());
         Twitter twitter = tf.getInstance();
         try{
-            System.out.println("timeline retreval worked");
-        
-        
-        List<Status> statuses = twitter.getHomeTimeline();
-        for(Status status : statuses){
-            timelineTweetText.append("@"+status.getUser().getName()+" : "+status.getText()+"\n"+"\n");
-            timelineTweetText.setLineWrap(true);
-            timelineTweetText.setWrapStyleWord(true);
-            System.out.println("@"+status.getUser().getName()+" : "+status.getText());
+            System.out.println("timeline retreval worked \n *** ");
+            
+            List<Status> statuses = twitter.getHomeTimeline();
+            
+            for(Status status : statuses){
+                
+                timelineTweetText.append("@"+status.getUser().getScreenName()+" : "+status.getText()+"\n"+"\n");
+                timelineTweetText.setLineWrap(true);
+                timelineTweetText.setWrapStyleWord(true);
+                timelineTweetText.setCaretPosition(0);
+                
+                System.out.println("@"+status.getUser().getScreenName()+" : "+status.getText());
         }
         
         
         } catch (TwitterException e){
             System.out.print("timeline retreval failed");
         }
+        
+        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
