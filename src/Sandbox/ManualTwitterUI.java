@@ -46,9 +46,9 @@ public class ManualTwitterUI extends JFrame implements ActionListener{
         frame.setLocationRelativeTo(this);
         
         tweetPanel = new JPanel();
-        enterTweet = new JLabel("Get Timeline");
+        enterTweet = new JLabel("Timeline Tweets");
         timelineTweetText = new JTextArea();
-        enterButton = new JButton("Enter");
+        enterButton = new JButton("Get Timeline");
         scrollpane = new JScrollPane();
         
         enterButton.addActionListener(this);
@@ -63,11 +63,13 @@ public class ManualTwitterUI extends JFrame implements ActionListener{
         
         tweetPanel.setSize(250, 300);
         frame.add(tweetPanel);
+        frame.pack();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         enterButtonActionPerformed(e);
+        
     }
     
     public void enterButtonActionPerformed(ActionEvent e){
@@ -90,6 +92,7 @@ public class ManualTwitterUI extends JFrame implements ActionListener{
             timelineTweetText.append("@"+status.getUser().getName()+" : "+status.getText()+"\n"+"\n");
             timelineTweetText.setLineWrap(true);
             timelineTweetText.setWrapStyleWord(true);
+            timelineTweetText.setCaretPosition(0);
             System.out.println("@"+status.getUser().getName()+" : "+status.getText());
         }
         
