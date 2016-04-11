@@ -22,6 +22,7 @@ public class Clock{
     TimerTask task;
     int speed;
     int hours;
+    String display;
     
     public Clock() throws ParseException{
         
@@ -47,7 +48,7 @@ public class Clock{
                    time.setTime(hours);
                }
              
-               System.out.println(time.showTime() + "    " + time.showDate());
+               display = timeDateDisplay(time);
                }
         };           
     }
@@ -56,5 +57,8 @@ public class Clock{
         progressionOfTime.scheduleAtFixedRate(task, 1000, 60000);
     }
 
+    public String timeDateDisplay(ISTTime time){
+        return time.showTime() + "    " + time.showDate();
     }
+}
 

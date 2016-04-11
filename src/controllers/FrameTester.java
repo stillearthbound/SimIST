@@ -8,8 +8,12 @@ package controllers;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import views.ClockPanel;
 import views.TestFrame;
 import views.Floor;
 
@@ -23,6 +27,8 @@ public class FrameTester {
 
     private JButton auBon;
     private JButton floor;
+    
+    private ClockPanel clock;
 
     public FrameTester() {
         frame = new TestFrame();
@@ -38,17 +44,24 @@ public class FrameTester {
         panel.requestFocusInWindow();
     }
     
-    private void setup() {
+    private void setup(){
         frame.setLayout(new GridLayout(1, 2));
 
         auBon = new JButton("Au Bon Pain");
         floor = new JButton("Floor");
+        try {
+            clock = new ClockPanel();
+        } catch (ParseException ex) {
+            Logger.getLogger(FrameTester.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         frame.add(auBon);
         frame.add(floor);
+        frame.add(clock);
 
         auBon.addActionListener(new PanelSwitcher());
         floor.addActionListener(new PanelSwitcher());
+
     }
 
     private void refreshPane() {

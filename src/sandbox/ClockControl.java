@@ -4,6 +4,8 @@
  */
 package sandbox;
 
+import java.text.ParseException;
+
 /**
  *
  * @author aahughes, maxwellkos
@@ -12,12 +14,26 @@ public class ClockControl {
     
     Clock clock;
     
+    public ClockControl() throws ParseException{
+        this.clock = new Clock();
+    }
+    
     public void speedup(){
-        clock.speed += 1;
+        if (clock.speed < 3)
+            clock.speed += 1;
     }
     
     public void slowdown(){
-        clock.speed -= 1;
+        if (clock.speed > 1)
+            clock.speed -= 1;
     }
     
+    public void pause(){
+        clock.speed = 0;
+    }
+    
+    public String display(){
+        return clock.display;
+    }
+            
 }
