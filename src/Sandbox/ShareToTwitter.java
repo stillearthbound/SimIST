@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.*;
+import twitter4j.Query;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -49,15 +50,18 @@ public class ShareToTwitter extends JFrame implements ActionListener{
     }
     
     public void shareButtonActionPerformed(ActionEvent e){
+        //connects to the KeyReader class that has all of the account's credentials
         KeyReader keyreader = new KeyReader();
         
+        //logs into the 311 twitter account
         ConfigurationBuilder cBuilder = new ConfigurationBuilder();
         cBuilder.setOAuthConsumerKey(keyreader.getConsumerKey());
         cBuilder.setOAuthConsumerSecret(keyreader.getConsumerSecret());
         cBuilder.setOAuthAccessToken(keyreader.getAccessToken());
         cBuilder.setOAuthAccessTokenSecret(keyreader.getAccessTokenSecret());
         
-        TwitterFactory tFactory = new TwitterFactory(cBuilder.build());
+        Twitter tFactory = new TwitterFactory(cBuilder.build()).getInstance();
+
         
     }
 }
