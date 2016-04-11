@@ -50,7 +50,7 @@ public class ShareToTwitter extends JFrame implements ActionListener{
     
     public void shareButtonActionPerformed(ActionEvent e){
         KeyReader keyreader = new KeyReader();
-        
+        TwitterFactory tFactory = new TwitterFactory();
         
     }
 }
