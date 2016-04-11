@@ -4,6 +4,7 @@ package controllers;
 import java.util.ArrayList;
 
 public class Elevator extends Mover {
+    protected int direction = 0; // -1 for down, 0 for no direction, 1 for up.
     protected Floor currentFloor;
     protected Floor top;
     protected Floor bottom;
@@ -11,6 +12,7 @@ public class Elevator extends Mover {
     
     public Elevator(Building building, Floor top, Floor bottom) {
         this.currentFloor = bottom; // rest position of elevator is always at the bottom
+        this.direction = 0;         // elevator is at rest
         super(building);
     }
     
