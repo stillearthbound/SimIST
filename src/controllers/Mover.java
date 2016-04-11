@@ -3,10 +3,11 @@ package controllers;
 import java.util.ArrayList;
 
 public abstract class Mover {
-
+    protected Building building;
     protected ArrayList<Floor> floors;
 
-    public Mover() {
+    public Mover(Building building) {
+        this.building = building;
         ArrayList<Floor> floors = new ArrayList<Floor>();
     }
 
@@ -18,11 +19,6 @@ public abstract class Mover {
         floors.remove(f);
     }
 
-    //Needs to be overridden by child classes.
-    public abstract void moveUp(int floorNum);
-    
-    public abstract void moveDown(int floorNum); 
-
     public ArrayList<Floor> getFloors() {
         return floors;
     }
@@ -30,5 +26,9 @@ public abstract class Mover {
     public void setFloors(ArrayList<Floor> floors) {
         this.floors = floors;
     }
-
+    
+    //Needs to be overridden by child classes.
+    public abstract void moveUp(Unit passenger);
+    
+    public abstract void moveDown(Unit passenger);
 }

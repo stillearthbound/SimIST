@@ -30,18 +30,18 @@ public class UnitTest {
     /**
      * Test of getName method, of class Unit.
      */
-    @Test
-    public void testGetName() {
-        System.out.println("getName");
-        Unit instance = new Unit("Example Unit", new Floor(1));
-        
-        String expName = "Example Unit";
-        String name = instance.getName();
-        assertEquals(expName, name);
-        
-        int expFloor = 1;
-        int floor = instance.getFloorLevel();
-        assertEquals(expFloor, floor);
-    }
+//    @Test
+//    public void testGetName() {
+//        System.out.println("getName");
+//        Unit instance = new Unit("Example Unit", new Floor(1));
+//        
+//        String expName = "Example Unit";
+//        String name = instance.getName();
+//        assertEquals(expName, name);
+//        
+//        int expFloor = 1;
+//        int floor = instance.getFloorLevel();
+//        assertEquals(expFloor, floor);
+//    }
     
 }

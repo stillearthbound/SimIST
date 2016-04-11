@@ -5,7 +5,7 @@ package controllers;
  * @author lvw5264
  */
 public class Person extends Unit {
-    public Person(String name) {
-        super(name);
+    public Person(String name, Floor floor) {
+        super(name, floor);
     }
 }

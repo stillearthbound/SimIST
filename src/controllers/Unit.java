@@ -6,26 +6,13 @@ package controllers;
  */
 public class Unit {
     protected String name;
-    protected Floor floor;
+    protected Floor level;
     
-    public Unit(String name, Floor floor) {
+    public Unit(String name) {
         this.name = name;
-        this.floor = floor;
     }
     
     public String getName() {
         return this.name;
-    }
-    
-    public Floor getFloor() {
-        return this.floor;
-    }
-    
-    public int getFloorLevel() {
-        return this.floor.getLevel();
-    }
-    
-    public void setFloor(Floor floor) {
-        this.floor = floor;
     }
 }
