@@ -72,6 +72,7 @@ public class ManualTwitterUI extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         enterButtonActionPerformed(e);
+        shareButtonActionPerformed(e);
     }
     
     public void enterButtonActionPerformed(ActionEvent e){
@@ -102,5 +103,9 @@ public class ManualTwitterUI extends JFrame implements ActionListener{
         }catch (TwitterException te){
             System.out.print("timeline retreval failed");
         }
+    }
+    
+    public void shareButtonActionPerformed(ActionEvent e){
+        
     }
 }
