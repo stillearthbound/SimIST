@@ -11,7 +11,7 @@ import java.util.*;
 /**
  *
  * @author jrimland
- */
+*/
 public class Weather {
 
     /**
