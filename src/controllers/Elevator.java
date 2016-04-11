@@ -4,11 +4,13 @@ package controllers;
 import java.util.ArrayList;
 
 public class Elevator extends Mover {
+    protected Floor currentFloor;
     protected Floor top;
     protected Floor bottom;
     protected ArrayList<Unit> passengers = new ArrayList<Unit>();
     
     public Elevator(Building building, Floor top, Floor bottom) {
+        this.currentFloor = bottom; // rest position of elevator is always at the bottom
         super(building);
     }
     
