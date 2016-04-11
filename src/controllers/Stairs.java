@@ -3,9 +3,21 @@ package controllers;
 
 
 public class Stairs extends Mover {
-     public  void moveUp(int floorNum){
+    protected Unit passenger;
+    
+    public Unit getPassenger() {
+        return this.passenger;
+    }
+    
+    public void setPassenger(Unit passenger) {
+        this.passenger = passenger;
+    }
+    
+    public void moveUp(int floorNum){
+        
     }
     
     public void moveDown(int floorNum){
+        
     }
 }
