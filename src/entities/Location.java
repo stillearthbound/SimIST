@@ -21,22 +21,7 @@ public class Location {
     private boolean isOccupied;
     
    //Temporary room and floor classes to show what we think they will loook like.
-    public class Room{
-        private int RoomNumber;
-        
-        public class Floor{
-            private int floorNumber;
-            private ArrayList <Room> RoomList;
-            
-            Floor(int floorNumber, ArrayList<Room> RoomList){
-                this.floorNumber = floorNumber;
-                this.RoomList = RoomList;
-            }
-            private Floor floor;
-        }
-        
-        
-    }
+
     
     Location(/*Floor floor, */Room room, int xValue, int yValue, boolean isOccupied){
         this.room = room;
