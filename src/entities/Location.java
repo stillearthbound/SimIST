@@ -20,7 +20,7 @@ public class Location {
     //Assuming we will use tile based positions system.
     private boolean isOccupied;
     
-   //Temporary room and floor classes to show what we think they will loook like.
+   
 
     
     Location(/*Floor floor, */Room room, int xValue, int yValue, boolean isOccupied){
