@@ -50,7 +50,14 @@ public class ShareToTwitter extends JFrame implements ActionListener{
     
     public void shareButtonActionPerformed(ActionEvent e){
         KeyReader keyreader = new KeyReader();
-        TwitterFactory tFactory = new TwitterFactory();
+        
+        ConfigurationBuilder cBuilder = new ConfigurationBuilder();
+        cBuilder.setOAuthConsumerKey(keyreader.getConsumerKey());
+        cBuilder.setOAuthConsumerSecret(keyreader.getConsumerSecret());
+        cBuilder.setOAuthAccessToken(keyreader.getAccessToken());
+        cBuilder.setOAuthAccessTokenSecret(keyreader.getAccessTokenSecret());
+        
+        TwitterFactory tFactory = new TwitterFactory(cBuilder.build());
         
     }
 }
