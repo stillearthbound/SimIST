@@ -1,0 +1,4858 @@
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head><script type="text/javascript">/* <![CDATA[ */_cf_loadingtexthtml="<img alt=' ' src='/CFIDE/scripts/ajax/resources/cf/images/loading.gif'/>";
+_cf_contextpath="";
+_cf_ajaxscriptsrc="/CFIDE/scripts/ajax";
+_cf_jsonprefix='//';
+_cf_websocket_port=8575;
+_cf_flash_policy_port=1243;
+_cf_clientid='F4A9EF7FB3B09A89C66BF211C7DCFA05';/* ]]> */</script><script type="text/javascript" src="/CFIDE/scripts/ajax/messages/cfmessage.js"></script>
+<script type="text/javascript" src="/CFIDE/scripts/ajax/package/cfajax.js"></script>
+<script type="text/javascript" src="/CFIDE/scripts/cfform.js"></script>
+<script type="text/javascript" src="/CFIDE/scripts/masks.js"></script>
+
+<meta name="description" content="Penn State University Schedule of Courses" />
+<meta name="keywords" content="Penn State University, Schedule of Courses" />
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" lang="eng-us" />
+<meta name="language" content="eng-us" />
+<title>Penn State University - Office of the University Registrar - Schedule of Courses: Course Search Results</title>
+<link href="css/soc.css" rel="stylesheet" type="text/css" />
+<link href="css/colorbox.css" rel="stylesheet" type="text/css" />
+<!--[if lte IE 7]>
+<link href="css/ie.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.colorbox-min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("a.modal").colorbox({width:"50%"});
+		$('#results table tr:nth-child(even)').addClass('even'); 
+	});
+</script>
+
+<script type="text/javascript">
+function gotourl( mySelect ) { 
+      myIndex = mySelect.selectedIndex; 
+      myValue = mySelect.options[myIndex].value; 
+      window.location.href = myValue; 
+   } 
+</script>
+
+
+<script type="text/javascript">
+/* <![CDATA[ */
+// function fnRefreshSeats(formName) is executed when a user presses a "refresh seats" button; 
+// it sends form field information for the appropriate course 
+// to the action page which runs the GI call to get current seats available, builds an array 
+// of the results and returns them as a list in a text field
+function fnRefreshSeats(formName)
+    {
+		ColdFusion.Ajax.submitForm(formName,'act_advanced_search_get_seats.cfm', callback, errorHandler);
+	}
+function fnRefreshSeatsALL(formName)
+    {
+		ColdFusion.Ajax.submitForm(formName,'act_allCampus_search_get_seats.cfm', callback, errorHandler);
+	}
+// function callback(text) retrieves the results of the first function in the variable "text" 
+// which is a list of array elements - it splits them apart, then uses them to replace the seats available in the appropriate cells
+// a strange character at the beginning of the list array forced me to do odd manipulations (don't make me explain it!!) pss138	
+function callback(text)
+{
+   var str=text.toString();
+   var SplitArray = str.split("!");
+  //document.getElementById('errorDiv').innerHTML = str;
+  // document.getElementById('outputDiv1').innerHTML = ":SplitArray:" + SplitArray + "::" + SplitArray.length;
+   if (SplitArray.length > 1)
+   {
+   for(i = 1; i <= SplitArray.length - 1; i = i + 2)
+       {
+	      var SchedIDArray = SplitArray[i].split(";");
+		  var IDVar = SchedIDArray[0].toString();
+          var SeatsVar = "";
+			SeatsVar = SchedIDArray[1];
+	        if (document.getElementById('outputdiv' + IDVar)) //replace seats remaining in appropriate cells
+	            {
+	                if (SeatsVar == "0")//if seats remaining is zero, print it bold in red, otherwise, bold in blue
+					{
+					   document.getElementById('outputdiv' + IDVar).innerHTML = "<span class='refreshzero'>" + SeatsVar + "</span>";
+					}
+					else
+					{
+					 if (SeatsVar > "0")
+					 {
+					   document.getElementById('outputdiv' + IDVar).innerHTML = "<span class='refreshseats'>" + SeatsVar + "</span>";
+					  }
+					}
+					//if (document.getElementById('reviseTime' + IDVar))//replace time of refresh in appropriate header(s)
+	                //   {
+					 //    var d = new Date();
+		             //    document.getElementById('reviseTime' + IDVar).innerHTML = "as of " + d.toLocaleTimeString();
+				     //  }
+				}
+				//else
+				//document.getElementById('errorDiv').innerHTML = "Error Message:  The Refresh Seats function is unavailable at this time."
+	   }
+   }
+   else
+   document.getElementById('errorDiv').innerHTML =text;
+}
+//this function would send appropriate error messages, if any, from the first function
+function errorHandler(code, msg)
+    {
+	    alert("Error!" + code + ": " + msg);
+	}
+//
+/* ]]> */
+</script>
+<!--[if lte IE 6]>
+<script type="text/javascript" src="js/>unitpngfix.js"></script>
+<![endif]-->
+
+<script type="text/javascript">/* <![CDATA[ */
+	ColdFusion.Ajax.importTag('CFAJAXPROXY');
+/* ]]> */</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST110594046 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST110S614479 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST130594052 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST140594055 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST210594061 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST220594076 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST230594085 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST235594091 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST240594097 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST242594103 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST261614914 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST294594115 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST296594130 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST297B625000 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST301594190 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST302594193 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST311594196 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST331594202 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST361594208 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type="text/javascript">
+<!--
+    _CF_checkfmSeatsIST390594211 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+</head>
+
+<body>
+
+
+<div id="page_container">
+<h1 id="psu_logo">
+    <a class="psu" href="http://www.psu.edu">Penn State University</a> <a class="registrar" href="http://registrar.psu.edu/">Office of the University Registrar</a>
+</h1>
+        <ul id="nav">
+        	<li><a tabindex="45" class="active" href="search.cfm"><strong>New Search</strong></a></li>
+            <li><a tabindex="46" href="http://www.registrar.psu.edu/Reg_Timetable/RegTimetable_Main.cfm" target="_blank">When Can I Schedule?</a></li>
+            <li><a  tabindex="47" href="http://www.registrar.psu.edu/hist_course_offering/hist_course_offering.cfm" target="_blank">Past Course Offerings</a></li>
+            <li><a  tabindex="48"  href="building_maps.cfm" target="_blank">Campus Map</a></li>
+            <li><a  tabindex="49" href="help.cfm" target="_blank">Help</a></li>
+        </ul>
+        <div class="clear"></div>
+		
+
+
+<div class="clear"><br /></div>
+<h2>Schedule of Courses</h2>
+
+        <div id="announcements">
+        	<h3>Notes</h3>
+            <ul>
+            	<li>The information below was last updated on Wednesday, April 6, 2016</li>
+                <li>The number of open seats for all courses is updated hourly.  Click the green refresh button <img src="images/refresh.png" alt="refresh icon" /> below to get the <strong>current</strong> open seats for a particular course<noscript>&nbsp;<span class='red'>(requires JavaScript)</span></noscript>.</li>
+            </ul>
+        </div>
+		
+        <div id="section_nav">
+			<p class="floatleft">
+			<em>166 
+			 	sections found
+			</em></p>
+			<ul id="page_nav">
+				
+				
+					<li>
+					
+						<a href="#" class="not_visited">prev</a>
+					
+					</li>
+				
+						<li>
+						
+							<a href="#" class="current_page">1</a>
+						
+						</li>
+					
+						<li>
+						
+								<a href="act_search.cfm?pageIndex=1">2</a>
+							
+						</li>
+					
+						<li>
+						
+								<a href="act_search.cfm?pageIndex=2">3</a>
+							
+						</li>
+					
+						<li>
+						
+								<a href="act_search.cfm?pageIndex=3">4</a>
+							
+						</li>
+					
+					<li>
+					
+						<a href="act_search.cfm?pageIndex=1" class="not_visited">next</a>
+					
+					</li>
+				
+			</ul>
+			<div class="clear"><p />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<div id="errorDiv">&nbsp;</div>
+		</div>
+		
+	<div id="search_criteria">
+		<p><strong>Search Criteria:</strong>
+			SPRING 2016 - University Park 
+					- All Locations
+				- IST 
+	</p>
+	</div>
+	
+	<div id="viewall"><a href="act_search.cfm?viewAll=Y" id="view_all">View All Results</a></div>
+	
+	<div class="clear"></div>
+</div>
+        
+<div id="quicklinks">
+		
+</div>
+	
+<div id="results">
+
+ 	
+    
+	<div class="clear"></div>
+	<h3 class="floatleft">Information Sciences and Technology (IST) - <em>SPRING 2016 - All University Park</em></h3><a href="http://www.registrar.psu.edu/academic_calendar/Spring16.cfm" target="_blank"><img class="academic_cal" src="images/calendar.png" alt="academic calendar" title="View Academic Calendar" /></a>
+	<div class="clear"></div>
+	<p class="dept_contact">104 IST - (814) 865-8947</p>
+	
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST110594046" id="fmSeatsIST110594046" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST110594046(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="110" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 110</p>  
+		<p class="course_longname">Information, People and Technology</p>
+		<p class="course_credits">Credits: 3.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">The use, analysis and design of information systems and technologies to       organize, coordinate, and inform human enterprises. <a name="110" href="http://bulletins.psu.edu/undergrad/courses/I/IST/110/200405S1" target= "_blank">[more]</a></p>
+		<p class="course_description"><strong>May Satisfy:</strong>
+		  General Education - Social and Behavioral Sciences (GS) 
+			</p>
+		
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh110" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST110594046)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>594046</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv594046" class="outputdiv">   2</span>&nbsp;/&nbsp;150</p></td>
+			<td>
+			
+				<p>
+				M W 4:15 PM 
+					 - 5:30 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	113 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=ARM193" target="_blank">Murphy, Alison Ryan</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=110&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594049</p></td>
+			<td><p>002</p></td>
+			<td><p><span id="outputdiv594049" class="outputdiv"><span class='red'>   0</span></span>&nbsp;/&nbsp;54</p></td>
+			<td>
+			
+				<p>
+				T R 4:15 PM 
+					 - 5:30 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	205 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=LBE108" target="_blank">Erickson, Lisa B</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=110&amp;section=002&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>660859</p></td>
+			<td><p>901</p></td>
+			<td><p><span id="outputdiv660859" class="outputdiv"><span class='red'>   0</span></span>&nbsp;/&nbsp;35</p></td>
+			<td>
+			
+				<p>
+				M 6:00 PM 
+					 - 9:00 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	351 
+						<a href="googleMapRequest.html?cbldgloc=WILLARD" target="_blank">Willard Bldg</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=JUH26" target="_blank">Hill, John Lawrence</a>
+					</p>
+			<p>
+				
+					<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=JAR5757" target="_blank">Reep, James Allen</a>
+				</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=110&amp;section=901&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 863-5256</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>647515</p></td>
+			<td><p>902</p></td>
+			<td><p><span id="outputdiv647515" class="outputdiv"><span class='red'>0</span></span>&nbsp;/&nbsp;35</p></td>
+			<td>
+			
+				<p>
+				M 6:00 PM 
+					 - 9:00 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	007 
+						<a href="googleMapRequest.html?cbldgloc=LIFE SCI" target="_blank">Life Sciences Bldg</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=RJW33" target="_blank">Winscot, Rick J</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=110&amp;section=902&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 863-5256</span></p></td>
+		 </tr> 
+</tbody>
+</table>
+
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST110S614479" id="fmSeatsIST110S614479" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST110S614479(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="110S" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 110S</p>  
+		<p class="course_longname">Information, People and Technology</p>
+		<p class="course_credits">Credits: 3.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">The use, analysis and design of information systems and technologies to       organize, coordinate, and inform human enterprises. <a name="110S" href="http://bulletins.psu.edu/undergrad/courses/I/IST/110s/201516SP" target= "_blank">[more]</a></p>
+		<p class="course_description"><strong>May Satisfy:</strong>
+		  General Education - Social and Behavioral Sciences (GS) , First-Year Seminar 
+			</p>
+		
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh110S" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST110S614479)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>614479</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv614479" class="outputdiv"><span class='red'>0</span></span>&nbsp;/&nbsp;28</p></td>
+			<td>
+			
+				<p>
+				M W F 10:10 AM 
+					 - 11:00 AM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	110 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=JCR127" target="_blank">Rimland, Jeffrey C</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=614479&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=110S&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>615073</p></td>
+			<td><p>002</p></td>
+			<td><p><span id="outputdiv615073" class="outputdiv">   1</span>&nbsp;/&nbsp;28</p></td>
+			<td>
+			
+				<p>
+				T R 2:30 PM 
+					 - 3:45 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	210 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=EUC18" target="_blank">Choe, Eun Kyoung</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=615073&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=110S&amp;section=002&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+</tbody>
+</table>
+
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST130594052" id="fmSeatsIST130594052" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST130594052(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="130" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 130</p>  
+		<p class="course_longname">Emerging Technologies in Popular Culture</p>
+		<p class="course_credits">Credits: 3.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">A survey course that explores emerging technologies used to produce and       consume popular cultural artifacts. <a name="130" href="http://bulletins.psu.edu/undergrad/courses/I/IST/130/200809S1" target= "_blank">[more]</a></p>
+		<p class="course_description"><strong>May Satisfy:</strong>
+		  General Education - Arts (GA) 
+			</p>
+		
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh130" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST130594052)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>594052</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv594052" class="outputdiv">   3</span>&nbsp;/&nbsp;100</p></td>
+			<td>
+			
+				<p>
+				M W 2:30 PM 
+					 - 3:45 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	113 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+					<a href="http://faculty.ist.psu.edu/lkvasny/" target="_blank">Yarger, Lynette Marie</a>
+				</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=130&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+</tbody>
+</table>
+
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST140594055" id="fmSeatsIST140594055" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST140594055(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="140" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 140</p>  
+		<p class="course_longname">Introduction to Application Development</p>
+		<p class="course_credits">Credits: 3.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">A first course in concepts and skills for application development. <a name="140" href="http://bulletins.psu.edu/undergrad/courses/I/IST/140/201314S1" target= "_blank">[more]</a></p>
+		
+			<p class="course_description"><strong>Prerequisite:</strong> college algebra 
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh140" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST140594055)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>594055</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv594055" class="outputdiv">   5</span>&nbsp;/&nbsp;48</p></td>
+			<td>
+			
+				<p>
+				T R 9:45 AM 
+					 - 11:00 AM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	208 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=SRH10" target="_blank">Haynes, Steven Raymond</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594055&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=140&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594058</p></td>
+			<td><p>002</p></td>
+			<td><p><span id="outputdiv594058" class="outputdiv"><span class='red'>   0</span></span>&nbsp;/&nbsp;48</p></td>
+			<td>
+			
+				<p>
+				M W F 1:25 PM 
+					 - 2:15 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	208 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=MUF15" target="_blank">Fisher, Margaret Jane</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594058&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=140&amp;section=002&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+</tbody>
+</table>
+
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST210594061" id="fmSeatsIST210594061" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST210594061(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="210" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 210</p>  
+		<p class="course_longname">Organization of Data</p>
+		<p class="course_credits">Credits: 3.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">Introduction to concept of databases including the storage, manipulation,     evaluation, and display of data and related issues. <a name="210" href="http://bulletins.psu.edu/undergrad/courses/I/IST/210/201516FA" target= "_blank">[more]</a></p>
+		
+			<p class="course_description"><strong>Prerequisite:</strong> <a href="http://bulletins.psu.edu/bluebook/university_course_descriptions.cfm?letter=I&amp;courselong=IST__|110|200405S1" target="_blank">IST  110</a> 
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh210" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST210594061)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>594061</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv594061" class="outputdiv">   3</span>&nbsp;/&nbsp;48</p></td>
+			<td>
+			
+				<p>
+				T R 9:45 AM 
+					 - 11:00 AM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	110 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=ZUL17" target="_blank">Li, Zhenhui</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594061&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=210&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594064</p></td>
+			<td><p>002</p></td>
+			<td><p><span id="outputdiv594064" class="outputdiv">   3</span>&nbsp;/&nbsp;48</p></td>
+			<td>
+			
+				<p>
+				T R 2:30 PM 
+					 - 3:45 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	208 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=ZUL17" target="_blank">Li, Zhenhui</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594064&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=210&amp;section=002&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594067</p></td>
+			<td><p>003</p></td>
+			<td><p><span id="outputdiv594067" class="outputdiv">   1</span>&nbsp;/&nbsp;48</p></td>
+			<td>
+			
+				<p>
+				T R 11:15 AM 
+					 - 12:30 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	110 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=NNA102" target="_blank">Aileo, Nathan Noel</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594067&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=210&amp;section=003&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594070</p></td>
+			<td><p>004</p></td>
+			<td><p><span id="outputdiv594070" class="outputdiv"><span class='red'>   0</span></span>&nbsp;/&nbsp;48</p></td>
+			<td>
+			
+				<p>
+				T R 1:00 PM 
+					 - 2:15 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	110 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=MUF15" target="_blank">Fisher, Margaret Jane</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594070&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=210&amp;section=004&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594073</p></td>
+			<td><p>005</p></td>
+			<td><p><span id="outputdiv594073" class="outputdiv">   6</span>&nbsp;/&nbsp;54</p></td>
+			<td>
+			
+				<p>
+				M W 4:15 PM 
+					 - 5:30 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	205 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=BVH10" target="_blank">Hanrahan, Benjamin Vincent</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594073&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=210&amp;section=005&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>659389</p></td>
+			<td><p>006V</p></td>
+			<td><p><span id="outputdiv659389" class="outputdiv">   1</span>&nbsp;/&nbsp;60</p></td>
+			<td>
+			
+				<p>
+				WEB 
+				</p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=GLH10" target="_blank">Heberling, Gary Lee</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=659389&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+					<p>WEB</p>
+                
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=210&amp;section=006V&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>647518</p></td>
+			<td><p>901</p></td>
+			<td><p><span id="outputdiv647518" class="outputdiv">   1</span>&nbsp;/&nbsp;30</p></td>
+			<td>
+			
+				<p>
+				W 6:00 PM 
+					 - 9:00 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	007 
+						<a href="googleMapRequest.html?cbldgloc=LIFE SCI" target="_blank">Life Sciences Bldg</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=RJW33" target="_blank">Winscot, Rick J</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=647518&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=210&amp;section=901&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 863-5256</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>649051</p></td>
+			<td><p>902</p></td>
+			<td><p><span id="outputdiv649051" class="outputdiv"><span class='red'>0</span></span>&nbsp;/&nbsp;30</p></td>
+			<td>
+			
+				<p>
+				R 6:00 PM 
+					 - 9:00 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	007 
+						<a href="googleMapRequest.html?cbldgloc=LIFE SCI" target="_blank">Life Sciences Bldg</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=RJW33" target="_blank">Winscot, Rick J</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=649051&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=210&amp;section=902&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 863-5256</span></p></td>
+		 </tr> 
+</tbody>
+</table>
+
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST220594076" id="fmSeatsIST220594076" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST220594076(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="220" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 220</p>  
+		<p class="course_longname">Networking and Telecommunications</p>
+		<p class="course_credits">Credits: 3.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">Introduction to digital network topologies; transmission media, signal        modulation, digital packet switching and routing, systems integration,         communications mana <a name="220" href="http://bulletins.psu.edu/undergrad/courses/I/IST/220/199899S1" target= "_blank">[more]</a></p>
+		
+			<p class="course_description"><strong>Prerequisite:</strong> <a href="http://bulletins.psu.edu/bluebook/university_course_descriptions.cfm?letter=I&amp;courselong=IST__|110|200405S1" target="_blank">IST  110</a> 
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh220" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST220594076)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>594076</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv594076" class="outputdiv"><span class='red'>   0</span></span>&nbsp;/&nbsp;54</p></td>
+			<td>
+			
+				<p>
+				M W F 12:20 PM 
+					 - 1:10 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	205 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=XUZ14" target="_blank">Zhang, Xiaolong</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594076&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=220&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594079</p></td>
+			<td><p>002</p></td>
+			<td><p><span id="outputdiv594079" class="outputdiv">   1</span>&nbsp;/&nbsp;48</p></td>
+			<td>
+			
+				<p>
+				M W F 9:05 AM 
+					 - 9:55 AM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	110 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=ZUZ22" target="_blank">Zhou, Zihan</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594079&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=220&amp;section=002&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>625063</p></td>
+			<td><p>003</p></td>
+			<td><p><span id="outputdiv625063" class="outputdiv">   1</span>&nbsp;/&nbsp;54</p></td>
+			<td>
+			
+				<p>
+				M W F 10:10 AM 
+					 - 11:00 AM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	205 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=ZUZ22" target="_blank">Zhou, Zihan</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=625063&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=220&amp;section=003&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>673216</p></td>
+			<td><p>004</p></td>
+			<td><p><span id="outputdiv673216" class="outputdiv">   9</span>&nbsp;/&nbsp;54</p></td>
+			<td>
+			
+				<p>
+				T R 8:00 AM 
+					 - 9:15 AM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	205 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=DMC186" target="_blank">Coughlin, Daniel</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=673216&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=220&amp;section=004&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>647851</p></td>
+			<td><p>901</p></td>
+			<td><p><span id="outputdiv647851" class="outputdiv"><span class='red'>0</span></span>&nbsp;/&nbsp;35</p></td>
+			<td>
+			
+				<p>
+				M 7:00 PM 
+					 - 10:00 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	203 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=JPS263" target="_blank">Sustersic, John Phillip</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=220&amp;section=901&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 863-5256</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>647854</p></td>
+			<td><p>902</p></td>
+			<td><p><span id="outputdiv647854" class="outputdiv"><span class='red'>0</span></span>&nbsp;/&nbsp;35</p></td>
+			<td>
+			
+				<p>
+				T 7:00 PM 
+					 - 10:00 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	203 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=JPS263" target="_blank">Sustersic, John Phillip</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=220&amp;section=902&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 863-5256</span></p></td>
+		 </tr> 
+</tbody>
+</table>
+
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST230594085" id="fmSeatsIST230594085" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST230594085(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="230" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 230</p>  
+		<p class="course_longname">Language, Logic, and Discrete Mathematics</p>
+		<p class="course_credits">Credits: 3.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">Introduction to formal languages, mathematical logic, and discrete            mathematics, with applications to information sciences and technology. <a name="230" href="http://bulletins.psu.edu/undergrad/courses/I/IST/230/200304SP" target= "_blank">[more]</a></p>
+		
+			<p class="course_description"><strong>Prerequisite:</strong> <a href="http://bulletins.psu.edu/bluebook/university_course_descriptions.cfm?letter=M&amp;courselong=MATH_|110|201213S1" target="_blank">MATH 110</a> or <a href="http://bulletins.psu.edu/bluebook/university_course_descriptions.cfm?letter=M&amp;courselong=MATH_|140|201213S1" target="_blank">MATH 140</a> 
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh230" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST230594085)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>594085</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv594085" class="outputdiv"><span class='red'>   0</span></span>&nbsp;/&nbsp;72</p></td>
+			<td>
+			
+				<p>
+				M W F 11:15 AM 
+					 - 12:05 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	206 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=MUF15" target="_blank">Fisher, Margaret Jane</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594085&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=230&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594088</p></td>
+			<td><p>002</p></td>
+			<td><p><span id="outputdiv594088" class="outputdiv">   3</span>&nbsp;/&nbsp;48</p></td>
+			<td>
+			
+				<p>
+				M W 2:30 PM 
+					 - 3:45 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	202 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+					<a href="http://wang.ist.psu.edu" target="_blank">Wang, James Z</a>
+				</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594088&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=230&amp;section=002&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+</tbody>
+</table>
+
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST235594091" id="fmSeatsIST235594091" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST235594091(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="235" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 235</p>  
+		<p class="course_longname">Gender and the Global Information Technology Sector</p>
+		<p class="course_credits">Credits: 3.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">Integrates information technology and gender studies. Overview issues and     socio-cultural shaping of gender in the IT field. <a name="235" href="http://bulletins.psu.edu/undergrad/courses/I/IST/235/201213S1" target= "_blank">[more]</a></p>
+		<p class="course_description"><strong>May Satisfy:</strong>
+		   U.S. Cultures (US) 
+			</p>
+		
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh235" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST235594091)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>594091</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv594091" class="outputdiv">  20</span>&nbsp;/&nbsp;30</p></td>
+			<td>
+			
+				<p>
+				T R 1:00 PM 
+					 - 2:15 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	202 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=KMB5445" target="_blank">Booth, Kayla M</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=235&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594094</p></td>
+			<td><p>002V</p></td>
+			<td><p><span id="outputdiv594094" class="outputdiv">   2</span>&nbsp;/&nbsp;18</p></td>
+			<td>
+			
+				<p>
+				WEB 
+				</p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=KMB5445" target="_blank">Booth, Kayla M</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=235&amp;section=002V&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+</tbody>
+</table>
+
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST240594097" id="fmSeatsIST240594097" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST240594097(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="240" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 240</p>  
+		<p class="course_longname">Introduction to Computer Languages</p>
+		<p class="course_credits">Credits: 3.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">Introduction to the specification and application of languages and language   paradigms that interact with computers. <a name="240" href="http://bulletins.psu.edu/undergrad/courses/I/IST/240/201516FA" target= "_blank">[more]</a></p>
+		
+			<p class="course_description"><strong>Prerequisite:</strong> <a href="http://bulletins.psu.edu/bluebook/university_course_descriptions.cfm?letter=C&amp;courselong=CMPSC|101|201011FA" target="_blank">CMPSC101</a> or <a href="http://bulletins.psu.edu/bluebook/university_course_descriptions.cfm?letter=I&amp;courselong=IST__|140|201314S1" target="_blank">IST  140</a> 
+			<p class="course_description"><strong>Concurrent:</strong> <a href="http://bulletins.psu.edu/bluebook/university_course_descriptions.cfm?letter=I&amp;courselong=IST__|230|200304SP" target="_blank">IST  230</a> 
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh240" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST240594097)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>594097</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv594097" class="outputdiv">   4</span>&nbsp;/&nbsp;54</p></td>
+			<td>
+			
+				<p>
+				T R 2:30 PM 
+					 - 3:45 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	205 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=DRM1" target="_blank">Mudgett, David Richard</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594097&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=240&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594100</p></td>
+			<td><p>002</p></td>
+			<td><p><span id="outputdiv594100" class="outputdiv">  28</span>&nbsp;/&nbsp;48</p></td>
+			<td>
+			
+				<p>
+				T R 4:15 PM 
+					 - 5:30 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	202 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=DRM1" target="_blank">Mudgett, David Richard</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594100&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=240&amp;section=002&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+</tbody>
+</table>
+
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST242594103" id="fmSeatsIST242594103" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST242594103(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="242" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 242</p>  
+		<p class="course_longname">Intermediate & Object-Oriented Application Development</p>
+		<p class="course_credits">Credits: 3.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">Intermediate application development including algorithms, data structures,   and object-oriented concepts. <a name="242" href="http://bulletins.psu.edu/undergrad/courses/I/IST/242/201314S1" target= "_blank">[more]</a></p>
+		
+			<p class="course_description"><strong>Prerequisite:</strong> <a href="http://bulletins.psu.edu/bluebook/university_course_descriptions.cfm?letter=I&amp;courselong=IST__|140|201314S1" target="_blank">IST  140</a> or <a href="http://bulletins.psu.edu/bluebook/university_course_descriptions.cfm?letter=C&amp;courselong=CMPSC|121|201011FA" target="_blank">CMPSC121</a> or <a href="http://bulletins.psu.edu/bluebook/university_course_descriptions.cfm?letter=I&amp;courselong=IST__|240|201516FA" target="_blank">IST  240</a> 
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh242" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST242594103)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>594103</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv594103" class="outputdiv">  22</span>&nbsp;/&nbsp;48</p></td>
+			<td>
+			
+				<p>
+				T R 9:45 AM 
+					 - 11:00 AM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	202 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=DTR17" target="_blank">Reitter, David T</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594103&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=242&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594106</p></td>
+			<td><p>002</p></td>
+			<td><p><span id="outputdiv594106" class="outputdiv">  11</span>&nbsp;/&nbsp;48</p></td>
+			<td>
+			
+				<p>
+				T R 2:30 PM 
+					 - 3:45 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	202 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=DTR17" target="_blank">Reitter, David T</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594106&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=242&amp;section=002&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+</tbody>
+</table>
+
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST261614914" id="fmSeatsIST261614914" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST261614914(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="261" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 261</p>  
+		<p class="course_longname">Application Development Design Studio I</p>
+		<p class="course_credits">Credits: 3.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">Introductory design and development studio course for IST and SRA students. <a name="261" href="http://bulletins.psu.edu/undergrad/courses/I/IST/261/201516FA" target= "_blank">[more]</a></p>
+		
+			<p class="course_description"><strong>Prerequisite:</strong> <a href="http://bulletins.psu.edu/bluebook/university_course_descriptions.cfm?letter=I&amp;courselong=IST__|242|201314S1" target="_blank">IST  242</a> or approval of the program 
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh261" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST261614914)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>614914</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv614914" class="outputdiv"><span class='red'>   0</span></span>&nbsp;/&nbsp;40</p></td>
+			<td>
+			
+				<p>
+				M W 4:15 PM 
+					 - 5:30 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	203 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=MUF15" target="_blank">Fisher, Margaret Jane</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=614914&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=261&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+</tbody>
+</table>
+
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST294594115" id="fmSeatsIST294594115" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST294594115(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="294" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 294</p>  
+		<p class="course_longname">Research Project</p>
+		<p class="course_credits">Credits: Variable 1.0 - 12.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">Supervised student activities on research projects identified on an individual or small-group basis. <a name="294" href="http://bulletins.psu.edu/undergrad/courses/I/IST/294/201415SP" target= "_blank">[more]</a></p>
+		
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh294" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST294594115)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>594115</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv594115" class="outputdiv">   5</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594115&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=294&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594118</p></td>
+			<td><p>002</p></td>
+			<td><p><span id="outputdiv594118" class="outputdiv">   5</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594118&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=294&amp;section=002&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594121</p></td>
+			<td><p>003</p></td>
+			<td><p><span id="outputdiv594121" class="outputdiv">   5</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594121&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=294&amp;section=003&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594124</p></td>
+			<td><p>004</p></td>
+			<td><p><span id="outputdiv594124" class="outputdiv">   5</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594124&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=294&amp;section=004&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594127</p></td>
+			<td><p>005</p></td>
+			<td><p><span id="outputdiv594127" class="outputdiv">   5</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594127&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=294&amp;section=005&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+</tbody>
+</table>
+
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST296594130" id="fmSeatsIST296594130" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST296594130(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="296" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 296</p>  
+		<p class="course_longname">Independent Studies</p>
+		<p class="course_credits">Credits: Variable 1.0 - 18.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">Creative projects, including research and design, that are supervised on an   individual basis and that fall outside the scope of formal courses. <a name="296" href="http://bulletins.psu.edu/undergrad/courses/I/IST/296/199900SP" target= "_blank">[more]</a></p>
+		
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh296" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST296594130)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>594130</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv594130" class="outputdiv">   4</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=JBM18" target="_blank">Sturdevant, Jan Mahar</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594130&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594133</p></td>
+			<td><p>002</p></td>
+			<td><p><span id="outputdiv594133" class="outputdiv">   4</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=MUF15" target="_blank">Fisher, Margaret Jane</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594133&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=002&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594136</p></td>
+			<td><p>003</p></td>
+			<td><p><span id="outputdiv594136" class="outputdiv">   4</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=KLH365" target="_blank">Hamilton, Katherine Loraine</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594136&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=003&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594139</p></td>
+			<td><p>004</p></td>
+			<td><p><span id="outputdiv594139" class="outputdiv">   4</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			<p>
+				
+					<a href="http://faculty.ist.psu.edu/lkvasny/" target="_blank">Yarger, Lynette Marie</a>
+				</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594139&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=004&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594142</p></td>
+			<td><p>005</p></td>
+			<td><p><span id="outputdiv594142" class="outputdiv">   4</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=ARM193" target="_blank">Murphy, Alison Ryan</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594142&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=005&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594145</p></td>
+			<td><p>006</p></td>
+			<td><p><span id="outputdiv594145" class="outputdiv">   4</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=DRM1" target="_blank">Mudgett, David Richard</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594145&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=006&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594148</p></td>
+			<td><p>007</p></td>
+			<td><p><span id="outputdiv594148" class="outputdiv">  74</span>&nbsp;/&nbsp;75</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=GLH10" target="_blank">Heberling, Gary Lee</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594148&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=007&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594151</p></td>
+			<td><p>008</p></td>
+			<td><p><span id="outputdiv594151" class="outputdiv">   4</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=EJG8" target="_blank">Glantz, Edward J</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594151&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=008&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594154</p></td>
+			<td><p>009</p></td>
+			<td><p><span id="outputdiv594154" class="outputdiv">   4</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=JNK14" target="_blank">Kropczynski, Jessica Nicole</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594154&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=009&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594157</p></td>
+			<td><p>010</p></td>
+			<td><p><span id="outputdiv594157" class="outputdiv">   4</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=JMC56" target="_blank">Carroll, John Millar</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594157&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=010&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594160</p></td>
+			<td><p>011</p></td>
+			<td><p><span id="outputdiv594160" class="outputdiv">   4</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=LFL2" target="_blank">Lenze, Lisa Firing</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594160&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=011&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594163</p></td>
+			<td><p>013</p></td>
+			<td><p><span id="outputdiv594163" class="outputdiv">   5</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594163&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=013&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594166</p></td>
+			<td><p>014</p></td>
+			<td><p><span id="outputdiv594166" class="outputdiv">   5</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594166&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=014&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594169</p></td>
+			<td><p>015</p></td>
+			<td><p><span id="outputdiv594169" class="outputdiv">   5</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594169&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=015&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594172</p></td>
+			<td><p>016</p></td>
+			<td><p><span id="outputdiv594172" class="outputdiv">   5</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594172&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=016&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594175</p></td>
+			<td><p>017</p></td>
+			<td><p><span id="outputdiv594175" class="outputdiv">   5</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594175&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=017&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594178</p></td>
+			<td><p>018</p></td>
+			<td><p><span id="outputdiv594178" class="outputdiv">   5</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594178&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=018&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594181</p></td>
+			<td><p>019</p></td>
+			<td><p><span id="outputdiv594181" class="outputdiv">   5</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594181&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=019&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594184</p></td>
+			<td><p>020</p></td>
+			<td><p><span id="outputdiv594184" class="outputdiv">   5</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594184&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=020&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594187</p></td>
+			<td><p>030</p></td>
+			<td><p><span id="outputdiv594187" class="outputdiv">   5</span>&nbsp;/&nbsp;5</p></td>
+			<td>
+			
+				<p>
+				APPT 
+				</p>
+			
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594187&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=296&amp;section=030&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p><span class='red'>(814) 865-8947</span></p></td>
+		 </tr> 
+</tbody>
+</table>
+
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST297B625000" id="fmSeatsIST297B625000" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST297B625000(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="297B" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 297B</p>  
+		<p class="course_longname">Supervised Experience in Instructional Support</p>
+		<p class="course_credits">Credits: 3.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">Introduction to best practices in and supervision of instructional support    activities such as coaching, team facilitation, grading, and learning          assessment. <a name="297B" href="http://bulletins.psu.edu/undergrad/courses/I/IST/297b/201516SP" target= "_blank">[more]</a></p>
+		
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh297B" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST297B625000)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>625000</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv625000" class="outputdiv">  27</span>&nbsp;/&nbsp;40</p></td>
+			<td>
+			
+				<p>
+				F 3:35 PM 
+					 - 4:50 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	206 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=LFL2" target="_blank">Lenze, Lisa Firing</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 03/04/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=625000&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=297B&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+</tbody>
+</table>
+
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST301594190" id="fmSeatsIST301594190" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST301594190(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="301" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 301</p>  
+		<p class="course_longname">Information and Organizations</p>
+		<p class="course_credits">Credits: 3.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">Overview of organizational structures and functions. Includes information     processing and analytic perspectives of organizations. <a name="301" href="http://bulletins.psu.edu/undergrad/courses/I/IST/301/200203S1" target= "_blank">[more]</a></p>
+		
+			<p class="course_description"><strong>Prerequisite:</strong> <a href="http://bulletins.psu.edu/bluebook/university_course_descriptions.cfm?letter=I&amp;courselong=IST__|210|201516FA" target="_blank">IST  210</a>, <a href="http://bulletins.psu.edu/bluebook/university_course_descriptions.cfm?letter=I&amp;courselong=IST__|220|199899S1" target="_blank">IST  220</a> 
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh301" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST301594190)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>594190</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv594190" class="outputdiv"><span class='red'>   0</span></span>&nbsp;/&nbsp;72</p></td>
+			<td>
+			
+				<p>
+				T R 1:00 PM 
+					 - 2:15 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	206 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=RXO4" target="_blank">Ocker, Rosalie</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594190&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=301&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>670051</p></td>
+			<td><p>002</p></td>
+			<td><p><span id="outputdiv670051" class="outputdiv">   7</span>&nbsp;/&nbsp;48</p></td>
+			<td>
+			
+				<p>
+				M W 8:00 AM 
+					 - 9:15 AM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	202 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=CFM12" target="_blank">Maitland, Carleen Frances</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=670051&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=301&amp;section=002&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+</tbody>
+</table>
+
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST302594193" id="fmSeatsIST302594193" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST302594193(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="302" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 302</p>  
+		<p class="course_longname">IT Project Management</p>
+		<p class="course_credits">Credits: 3.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">Exploration and application of the basic concepts, methodologies, and tools of project management in the field of information sciences and technology. <a name="302" href="http://bulletins.psu.edu/undergrad/courses/I/IST/302/200203S1" target= "_blank">[more]</a></p>
+		
+			<p class="course_description"><strong>Prerequisite:</strong> <a href="http://bulletins.psu.edu/bluebook/university_course_descriptions.cfm?letter=I&amp;courselong=IST__|210|201516FA" target="_blank">IST  210</a>, <a href="http://bulletins.psu.edu/bluebook/university_course_descriptions.cfm?letter=I&amp;courselong=IST__|220|199899S1" target="_blank">IST  220</a> 
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh302" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST302594193)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>594193</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv594193" class="outputdiv">   2</span>&nbsp;/&nbsp;72</p></td>
+			<td>
+			
+				<p>
+				M W 4:15 PM 
+					 - 5:30 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	206 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=JUH26" target="_blank">Hill, John Lawrence</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594193&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=302&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+</tbody>
+</table>
+
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST311594196" id="fmSeatsIST311594196" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST311594196(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="311" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 311</p>  
+		<p class="course_longname">Object-Oriented Design and Software Applications</p>
+		<p class="course_credits">Credits: 3.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">Introduction to object-oriented applications including applications in an     Object Oriented Design (OOD) language or OOD languages. <a name="311" href="http://bulletins.psu.edu/undergrad/courses/I/IST/311/201516FA" target= "_blank">[more]</a></p>
+		
+			<p class="course_description"><strong>Prerequisite:</strong> <a href="http://bulletins.psu.edu/bluebook/university_course_descriptions.cfm?letter=I&amp;courselong=IST__|242|201314S1" target="_blank">IST  242</a> or <a href="http://bulletins.psu.edu/bluebook/university_course_descriptions.cfm?letter=C&amp;courselong=CMPSC|221|200708SP" target="_blank">CMPSC221</a> 
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh311" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST311594196)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>594196</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv594196" class="outputdiv">   9</span>&nbsp;/&nbsp;43</p></td>
+			<td>
+			
+				<p>
+				T R 4:15 PM 
+					 - 5:30 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	110 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=SRH10" target="_blank">Haynes, Steven Raymond</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594196&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=311&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594199</p></td>
+			<td><p>002</p></td>
+			<td><p><span id="outputdiv594199" class="outputdiv">   7</span>&nbsp;/&nbsp;43</p></td>
+			<td>
+			
+				<p>
+				M W 2:30 PM 
+					 - 3:45 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	208 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=JCR127" target="_blank">Rimland, Jeffrey C</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594199&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=311&amp;section=002&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+</tbody>
+</table>
+
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST331594202" id="fmSeatsIST331594202" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST331594202(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="331" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 331</p>  
+		<p class="course_longname">Organization and Design of Information Systems:  User and System Principles</p>
+		<p class="course_credits">Credits: 3.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">Interdisciplinary survey of topics related to the use and usability of        information systems. <a name="331" href="http://bulletins.psu.edu/undergrad/courses/I/IST/331/200304SP" target= "_blank">[more]</a></p>
+		
+			<p class="course_description"><strong>Prerequisite:</strong> <a href="http://bulletins.psu.edu/bluebook/university_course_descriptions.cfm?letter=I&amp;courselong=IST__|230|200304SP" target="_blank">IST  230</a> 
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh331" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST331594202)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>594202</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv594202" class="outputdiv">   1</span>&nbsp;/&nbsp;54</p></td>
+			<td>
+			
+				<p>
+				T R 11:15 AM 
+					 - 12:30 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	205 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=EUC18" target="_blank">Choe, Eun Kyoung</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594202&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=331&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>594205</p></td>
+			<td><p>002</p></td>
+			<td><p><span id="outputdiv594205" class="outputdiv">  10</span>&nbsp;/&nbsp;54</p></td>
+			<td>
+			
+				<p>
+				M W 6:30 PM 
+					 - 7:45 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	205 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=TYP5121" target="_blank">Peyton, Tamara S</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594205&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=331&amp;section=002&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+			<tr class="course_details">
+			<td><p>669676</p></td>
+			<td><p>003V</p></td>
+			<td><p><span id="outputdiv669676" class="outputdiv">   1</span>&nbsp;/&nbsp;50</p></td>
+			<td>
+			
+				<p>
+				WEB 
+				</p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=GLH10" target="_blank">Heberling, Gary Lee</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=669676&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=331&amp;section=003V&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+</tbody>
+</table>
+
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST361594208" id="fmSeatsIST361594208" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST361594208(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="361" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 361</p>  
+		<p class="course_longname">Application Development Design Studio II</p>
+		<p class="course_credits">Credits: 3.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">Second of two design and development studio courses for IST and SRA students. <a name="361" href="http://bulletins.psu.edu/undergrad/courses/I/IST/361/201314S1" target= "_blank">[more]</a></p>
+		
+			<p class="course_description"><strong>Prerequisite:</strong> <a href="http://bulletins.psu.edu/bluebook/university_course_descriptions.cfm?letter=I&amp;courselong=IST__|311|201516FA" target="_blank">IST  311</a> or program approval 
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh361" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST361594208)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>594208</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv594208" class="outputdiv">  14</span>&nbsp;/&nbsp;35</p></td>
+			<td>
+			
+				<p>
+				T R 1:00 PM 
+					 - 2:15 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	203 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=SRH10" target="_blank">Haynes, Steven Raymond</a>
+					</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			<p><a class="modal"   href="controls_popup.cfm?index=594208&amp;sem=Spring">
+					Controls</a></p>
+			
+			</td>
+			<td>
+			
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=361&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+</tbody>
+</table>
+
+
+<a name="IST">&nbsp;</a>
+<form name="fmSeatsIST390594211" id="fmSeatsIST390594211" action="&#x2f;act_search.cfm" method="post" onsubmit="return _CF_checkfmSeatsIST390594211(this)"><input name="crseName" id="crseName"  type="hidden" value="IST" /> <input name="crseNum" id="crseNum"  type="hidden" value="390" /> <input name="semester" id="semester"  type="hidden" value="SPRING 2016" /> <input name="location" id="location"  type="hidden" value="UP" /> <input name="CEcrseloc" id="CEcrseloc"  type="hidden" value="All" /> </form>
+
+
+
+
+			
+	<table>
+	<thead>
+	  <tr>
+		<th scope="col" colspan="12">
+		<p class="course_abbrev">IST 390</p>  
+		<p class="course_longname">Introduction to Professional Development</p>
+		<p class="course_credits">Credits: 1.0</p>
+		</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td colspan="12">
+		
+		<p class="course_description">Interdisciplinary course to introduce students to the issues, concepts and    skills involved in successfully transitioning into professional life. <a name="390" href="http://bulletins.psu.edu/undergrad/courses/I/IST/390/200405S1" target= "_blank">[more]</a></p>
+		
+		</td>
+	  </tr>
+
+
+					  
+	  <tr class="course_header">
+		<td>Schedule #</td>
+		<td>Section</td>
+		<td>Seats 
+					 <input type="image" name="cmdRefresh390" value="Refresh Seats" src="images/refresh.png" title=" Refresh Open Seats " onclick="fnRefreshSeats(fmSeatsIST390594211)" />
+				  
+			<br /><em>Open/Max</em>
+		</td>
+		<td>Day/Time</td>
+		<td>Classroom</td>
+		<td>Instructor</td>
+		<td>Begin/End Dates</td>
+		<td>Notes</td>
+		<td>Section Info</td>
+		<td>Course Materials</td>
+		<td>Location/Contact</td>
+	  </tr>
+     
+
+	  
+
+
+			<tr class="course_details">
+			<td><p>594211</p></td>
+			<td><p>001</p></td>
+			<td><p><span id="outputdiv594211" class="outputdiv">   7</span>&nbsp;/&nbsp;25</p></td>
+			<td>
+			
+				<p>
+				M 1:00 PM 
+					 - 2:15 PM 
+				</p>
+			
+			</td>
+			<td>
+			
+					<p>
+                    	201A 
+						<a href="googleMapRequest.html?cbldgloc=IST" target="_blank">IST Building</a>
+					</p>
+				
+			</td>
+			<td>
+			<p>
+				
+						<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=RAG29" target="_blank">Griffith, Rita</a>
+					</p>
+			<p>
+				
+					<a href="http://www.psu.edu/cgi-bin/ldap/ldap_query.cgi?uid=WPH125" target="_blank">Hinze, Whitney Paige</a>
+				</p>
+			
+			</td>
+			<td><p>01/11/16 - 04/29/16</p></td>
+			<td>
+			
+			</td>
+			<td>
+			
+					<p>RECOMMEND SOPH/JR</p>
+                
+			</td>
+			<td>
+			
+			<p>
+				<a href="view_course_materials.cfm?crse_abbrev=IST&amp;crse_num=390&amp;section=001&amp;term=W16&amp;CrseLoc=UP" target="new">View</a>
+			</p>
+			</td>
+			<td><p>(814) 865-8947</p></td>
+		 </tr> 
+</tbody>
+</table>
+
+</div>
+<ul id="page_nav">
+				
+				
+					<li>
+					
+						<a href="#" class="not_visited">prev</a>
+					
+					</li>
+				
+						<li>
+						
+							<a href="#" class="current_page">1</a>
+						
+						</li>
+					
+						<li>
+						
+								<a href="act_search.cfm?pageIndex=1">2</a>
+							
+						</li>
+					
+						<li>
+						
+								<a href="act_search.cfm?pageIndex=2">3</a>
+							
+						</li>
+					
+						<li>
+						
+								<a href="act_search.cfm?pageIndex=3">4</a>
+							
+						</li>
+					
+					<li>
+					
+						<a href="act_search.cfm?pageIndex=1" class="not_visited">next</a>
+					
+					</li>
+				
+</ul>
+<br />
+<br />
+ 
+	 
+<div id="footer">
+	<p>The Pennsylvania State University &copy; 2010</p>
+	<p>This page is maintained by the <a href="http://registrar.psu.edu" target="_blank">Office of the University Registrar</a></p>
+	<p>Information on this Web site is available in alternative media upon request</p>
+	<p>For more information contact <a href="mailto:registrar@psu.edu">registrar@psu.edu</a></p>
+	
+    
+
+
+</div>
+
+</div>
+</body>
+</html>

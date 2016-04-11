@@ -28,6 +28,7 @@ public class ManualTwitterUI extends JFrame implements ActionListener{
     private TwitterCntl theTwitterCntl;
     private JFrame frame;
     private JScrollPane scrollpane;
+    private JButton shareButton;
     
     public ManualTwitterUI(TwitterCntl parentTwitterCntl){
         super();
@@ -49,6 +50,7 @@ public class ManualTwitterUI extends JFrame implements ActionListener{
         enterTweet = new JLabel("Timeline Tweets");
         timelineTweetText = new JTextArea();
         enterButton = new JButton("Get Timeline");
+        shareButton = new JButton("Share to Twitter");
         scrollpane = new JScrollPane();
         
         enterButton.addActionListener(this);
@@ -59,6 +61,7 @@ public class ManualTwitterUI extends JFrame implements ActionListener{
         tweetPanel.add(enterTweet);
         tweetPanel.add(scrollpane);
         tweetPanel.add(enterButton);
+        tweetPanel.add(shareButton);
         tweetPanel.setVisible(true);
         
         tweetPanel.setSize(250, 300);
@@ -69,7 +72,6 @@ public class ManualTwitterUI extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         enterButtonActionPerformed(e);
-        
     }
     
     public void enterButtonActionPerformed(ActionEvent e){
