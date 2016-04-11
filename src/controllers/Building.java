@@ -12,7 +12,7 @@ public class Building {
     // IST building has a preset amount of three floors for the elevator, so start with that by default
     public Building() {
         this.addFloor(new Floor(1)); // 1
-        this.addFloor(new Floor(2)); // s2
+        this.addFloor(new Floor(2)); // 2
         this.addFloor(new Floor(3)); // 3
     }
     
