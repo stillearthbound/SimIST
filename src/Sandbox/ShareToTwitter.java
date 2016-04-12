@@ -8,6 +8,7 @@ package Sandbox;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import twitter4j.Query;
@@ -26,6 +27,7 @@ public class ShareToTwitter extends JFrame implements ActionListener{
     private JTextField writeTweet;
     private JLabel title;
     private JPanel sharePanel;
+    ArrayList<String> tweet;
     
     ShareToTwitter(){
         initCustomComponents();
@@ -52,6 +54,7 @@ public class ShareToTwitter extends JFrame implements ActionListener{
     public void shareButtonActionPerformed(ActionEvent e){
         //connects to the KeyReader class that has all of the account's credentials
         KeyReader keyreader = new KeyReader();
+        tweet = new ArrayList();
         
         //logs into the 311 twitter account
         ConfigurationBuilder cBuilder = new ConfigurationBuilder();
