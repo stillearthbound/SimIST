@@ -1,12 +1,12 @@
 package controllers;
 
 import Sandbox.ManualTwitterUI;
-import Sandbox.TwitterCntl;
+import Sandbox.WriteTweet;
 
 public class App {
 
-    public static void main(String[] args, TwitterCntl parentTwitterCntl) {
+    public static void main(String[] args) {
 //        FrameTester test = new FrameTester();
-        ManualTwitterUI test = new ManualTwitterUI(parentTwitterCntl);
+        WriteTweet test = new WriteTweet();
     }
 }

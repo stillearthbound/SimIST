@@ -106,12 +106,11 @@ public class WriteTweet extends javax.swing.JFrame {
         cBuilder.setOAuthAccessTokenSecret(keyreader.getAccessTokenSecret());
         
         Twitter tFactory = new TwitterFactory(cBuilder.build()).getInstance();
-        Status status;
         
         try{
-            status = tFactory.sendDirectMessage(tweetText);
+            tFactory.updateStatus(tweetText.getText());
         }catch(TwitterException te){
-            
+            te.printStackTrace();
         }
     }//GEN-LAST:event_postButtonActionPerformed
 
