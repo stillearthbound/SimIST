@@ -5,7 +5,8 @@
  */
 
 package controllers;
-import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 //import java.awt.event; //i have no idea why it doesnt like "event"
 import java.lang.Object;// i dont know what this and the next line do, but its for the timer
 import javax.swing.*;
