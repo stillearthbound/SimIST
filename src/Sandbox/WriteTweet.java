@@ -6,7 +6,9 @@
 package Sandbox;
 
 import java.util.ArrayList;
+import twitter4j.Status;
 import twitter4j.Twitter;
+import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
@@ -33,16 +35,16 @@ public class WriteTweet extends javax.swing.JFrame {
     private void initComponents() {
 
         tweetLabel = new javax.swing.JLabel();
-        tText = new javax.swing.JTextField();
+        tweetText = new javax.swing.JTextField();
         postButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         tweetLabel.setText("Write Tweet");
 
-        tText.addActionListener(new java.awt.event.ActionListener() {
+        tweetText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tTextActionPerformed(evt);
+                tweetTextActionPerformed(evt);
             }
         });
 
@@ -64,7 +66,7 @@ public class WriteTweet extends javax.swing.JFrame {
                         .addComponent(tweetLabel)
                         .addGap(109, 109, 109))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(tText, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tweetText, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(104, 104, 104)
@@ -77,7 +79,7 @@ public class WriteTweet extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addComponent(tweetLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tText, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tweetText, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(postButton)
                 .addContainerGap(9, Short.MAX_VALUE))
@@ -86,9 +88,9 @@ public class WriteTweet extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tTextActionPerformed
+    private void tweetTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tweetTextActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tTextActionPerformed
+    }//GEN-LAST:event_tweetTextActionPerformed
 
     private void postButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postButtonActionPerformed
         // TODO add your handling code here:
@@ -104,8 +106,13 @@ public class WriteTweet extends javax.swing.JFrame {
         cBuilder.setOAuthAccessTokenSecret(keyreader.getAccessTokenSecret());
         
         Twitter tFactory = new TwitterFactory(cBuilder.build()).getInstance();
-
+        Status status;
         
+        try{
+            status = tFactory.sendDirectMessage(tweetText);
+        }catch(TwitterException te){
+            
+        }
     }//GEN-LAST:event_postButtonActionPerformed
 
     /**
@@ -145,7 +152,7 @@ public class WriteTweet extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton postButton;
-    private javax.swing.JTextField tText;
     private javax.swing.JLabel tweetLabel;
+    private javax.swing.JTextField tweetText;
     // End of variables declaration//GEN-END:variables
 }
