@@ -100,7 +100,7 @@ public class Elevator extends Mover {
             currentFloor.setLevel(floorChoice);
             up();
         }
-        else if(currentFloor.getLevel() < floorChoice && canMoveDown()) {
+        else if(currentFloor.getLevel() > floorChoice && canMoveDown()) {
             System.out.println("Going down..");
             currentFloor.setLevel(floorChoice);
             down();
