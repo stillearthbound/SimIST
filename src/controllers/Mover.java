@@ -24,7 +24,7 @@ public abstract class Mover {
     }
     
     //Needs to be overridden by child classes.
-    public abstract void moveUp(Unit passenger);
+    public abstract void moveUp(Person passenger);
     
-    public abstract void moveDown(Unit passenger);
+    public abstract void moveDown(Person passenger);
 }
