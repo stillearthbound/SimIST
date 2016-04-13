@@ -29,7 +29,7 @@ public class Clock{
         time = new ISTTime();
         progressionOfTime = new Timer();
         speed = 1;
-
+        display = timeDateDisplay(time);
         task = new TimerTask(){
             @Override
             public void run(){ 

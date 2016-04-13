@@ -30,6 +30,7 @@ public class ClockPanel extends JPanel implements ActionListener{
     public ClockPanel() throws ParseException{
         this.clock = new ClockControl();
         
+        String display = clock.display();
         speedUpButton = new JButton("speed up");
         slowDownButton = new JButton("slow down");
         pauseButton = new JButton("pause");
@@ -64,7 +65,8 @@ public class ClockPanel extends JPanel implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            timeDisplay.setText(clock.display());
+            String display = clock.display();
+            timeDisplay.setText(display);
             timeDisplay.repaint();
         }
         
