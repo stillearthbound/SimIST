@@ -47,10 +47,11 @@ public class Clock{
                    hours = 3;
                    time.setTime(hours);
                }
-             
                display = timeDateDisplay(time);
+
                }
-        };           
+        };
+        startTimer();
     }
     
     public void startTimer(){

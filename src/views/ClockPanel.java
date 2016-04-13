@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import sandbox.Clock;
 import sandbox.ClockControl;
 
 /**
@@ -40,8 +41,8 @@ public class ClockPanel extends JPanel implements ActionListener{
         slowDownButton.addActionListener(this);
         pauseButton.addActionListener(this);
         
-        //updater = new Timer(60000,new UpdateTimer());
-        //updater.start();
+        updater = new Timer(60000,new UpdateTimer());
+        updater.start();
         
         this.add(speedUpButton);
         this.add(slowDownButton);
