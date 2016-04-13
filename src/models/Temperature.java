@@ -6,6 +6,7 @@
 package models;
 import sandbox.ISTTime;
 import java.time.*;
+import java.time.temporal.*;
 
 
 /**
@@ -20,7 +21,8 @@ public class Temperature {
     LocalDateTime timeOfDay;
     double minTemp; //calculated in randomize temp mehtod
     double maxTemp; //calculated in randomize temp mehtod
-    double tempIncrement; //the max temperature change in 1 hour
+    double tempIncrement = 2; //the max positive temperature change in 1 hour
+    double tempDecrement = -3;
     double tempChange; //hold the chnage hour to hour.
     int month;
     final double JAN_AVG_TEMP = 34;
@@ -80,10 +82,38 @@ public class Temperature {
     
     }
     
-    private void getTemp(LocalDateTime timeOfDay)
+    private void getTemp()
     {
         
          tempChange= (Double) (Math.random() * ((tempIncrement - 0)+1));
+         
+         switch(timeOfDay.get(CLOCK_HOUR_OF_DAY)){
+            case 1: initialRawTemp = tempChange= (Double) (Math.random() * ((tempDecrement - 0)+1)); break;
+            case 2: initialRawTemp = tempChange= (Double) (Math.random() * ((tempDecrement - 0)+1)); break;
+            case 3: initialRawTemp = tempChange= (Double) (Math.random() * ((tempDecrement - 0)+1)); break;
+            case 4: initialRawTemp = tempChange= (Double) (Math.random() * ((tempDecrement - 0)+1)); break;
+            case 5: initialRawTemp = tempChange= (Double) (Math.random() * ((tempIncrement - 0)+1)); break;
+            case 6: initialRawTemp = tempChange= (Double) (Math.random() * ((tempIncrement - 0)+1)); break;
+            case 7: initialRawTemp = tempChange= (Double) (Math.random() * ((tempIncrement - 0)+1)); break;
+            case 8: initialRawTemp = tempChange= (Double) (Math.random() * ((tempIncrement - 0)+1)); break;
+            case 9: initialRawTemp = tempChange= (Double) (Math.random() * ((tempIncrement - 0)+1)); break;
+            case 10: initialRawTemp = tempChange= (Double) (Math.random() * ((tempIncrement - 0)+1)); break;
+            case 11: initialRawTemp = tempChange= (Double) (Math.random() * ((tempIncrement - 0)+1)); break;
+            case 12: initialRawTemp = tempChange= (Double) (Math.random() * ((tempIncrement - 0)+1)); break;
+            case 13: initialRawTemp = tempChange= (Double) (Math.random() * ((tempIncrement - 0)+1)); break;
+            case 14: initialRawTemp = tempChange= (Double) (Math.random() * ((tempIncrement - 0)+1)); break;
+            case 15: initialRawTemp = tempChange= (Double) (Math.random() * ((tempIncrement - 0)+1)); break;
+            case 16: initialRawTemp = tempChange= (Double) (Math.random() * ((tempIncrement - 0)+1)); break;
+            case 17: initialRawTemp = tempChange= (Double) (Math.random() * ((tempDecrement - 0)+1)); break;
+            case 18: initialRawTemp = tempChange= (Double) (Math.random() * ((tempDecrement - 0)+1)); break;
+            case 19: initialRawTemp = tempChange= (Double) (Math.random() * ((tempDecrement - 0)+1)); break;
+            case 20: initialRawTemp = tempChange= (Double) (Math.random() * ((tempDecrement - 0)+1)); break;
+            case 21: initialRawTemp = tempChange= (Double) (Math.random() * ((tempDecrement - 0)+1)); break;
+            case 22: initialRawTemp = tempChange= (Double) (Math.random() * ((tempDecrement - 0)+1)); break;
+            case 23: initialRawTemp = tempChange= (Double) (Math.random() * ((tempDecrement - 0)+1)); break;
+            case 24: initialRawTemp = tempChange= (Double) (Math.random() * ((tempDecrement - 0)+1)); break;
+            
+        }
          
     }
     
