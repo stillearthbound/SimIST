@@ -17,7 +17,7 @@ import twitter4j.conf.ConfigurationBuilder;
  * @author laurenritter
  */
 public class WriteTweet extends javax.swing.JFrame {
-
+    private TwitterCntl theTwitterCntl;
 
     /**
      * Creates new form WriteTweet
@@ -38,6 +38,7 @@ public class WriteTweet extends javax.swing.JFrame {
         tweetLabel = new javax.swing.JLabel();
         tweetText = new javax.swing.JTextField();
         postButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,6 +57,13 @@ public class WriteTweet extends javax.swing.JFrame {
             }
         });
 
+        backButton.setText("Back ");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -67,12 +75,13 @@ public class WriteTweet extends javax.swing.JFrame {
                         .addComponent(tweetLabel)
                         .addGap(109, 109, 109))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(tweetText, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(postButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(backButton))
+                            .addComponent(tweetText, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(40, 40, 40))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(104, 104, 104)
-                .addComponent(postButton)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,7 +91,9 @@ public class WriteTweet extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tweetText, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(postButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(postButton)
+                    .addComponent(backButton))
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
@@ -114,6 +125,12 @@ public class WriteTweet extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_postButtonActionPerformed
 
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        // TODO add your handling code here:
+        theTwitterCntl = new TwitterCntl();
+        theTwitterCntl.switchhToTwitterUI();
+    }//GEN-LAST:event_backButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -127,6 +144,7 @@ public class WriteTweet extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backButton;
     private javax.swing.JButton postButton;
     private javax.swing.JLabel tweetLabel;
     private javax.swing.JTextField tweetText;

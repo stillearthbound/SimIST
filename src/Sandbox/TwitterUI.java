@@ -17,7 +17,7 @@ import twitter4j.conf.ConfigurationBuilder;
  * @author jakedotts
  */
 public class TwitterUI extends javax.swing.JFrame {
-    
+    private TwitterCntl theTwitterCntl;
     /**
      * Creates new form TwitterUI
      */
@@ -28,8 +28,6 @@ public class TwitterUI extends javax.swing.JFrame {
         
     public TwitterUI() {
         initComponents();
-        
-        
     }
 
     /**
@@ -46,6 +44,7 @@ public class TwitterUI extends javax.swing.JFrame {
         TimelineTweetLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         timelineTweetText = new javax.swing.JTextArea();
+        postButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,6 +61,13 @@ public class TwitterUI extends javax.swing.JFrame {
         timelineTweetText.setRows(5);
         jScrollPane1.setViewportView(timelineTweetText);
 
+        postButton.setText("Post to Twitter");
+        postButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                postButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -71,9 +77,11 @@ public class TwitterUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(131, 131, 131)
+                                .addGap(35, 35, 35)
                                 .addComponent(jButton1)
-                                .addGap(141, 141, 141)
+                                .addGap(86, 86, 86)
+                                .addComponent(postButton)
+                                .addGap(54, 54, 54)
                                 .addComponent(TimelineTweetLabel))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(136, 136, 136)
@@ -96,7 +104,9 @@ public class TwitterUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(postButton))
                 .addContainerGap())
         );
 
@@ -140,6 +150,12 @@ public class TwitterUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void postButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postButtonActionPerformed
+        // TODO add your handling code here:
+        theTwitterCntl = new TwitterCntl();
+        theTwitterCntl.switchToWriteTweet();
+    }//GEN-LAST:event_postButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -180,6 +196,7 @@ public class TwitterUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton postButton;
     private javax.swing.JTextArea timelineTweetText;
     // End of variables declaration//GEN-END:variables
 }

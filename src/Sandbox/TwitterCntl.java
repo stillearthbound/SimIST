@@ -5,15 +5,28 @@
  */
 package Sandbox;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author laurenritter
  */
 public class TwitterCntl {
-    private ManualTwitterUI theManualTwitterUI;
+    private WriteTweet theWriteTweet;
+    private TwitterUI theTwitterUI;
     
     public TwitterCntl(){
-        theManualTwitterUI = new ManualTwitterUI(this);
-        theManualTwitterUI.setVisible(true);
+//        theWriteTweet = new WriteTweet();
+//        theWriteTweet.setVisible(true);
+    }
+    
+    public void switchhToTwitterUI(){
+        theTwitterUI = new TwitterUI();
+        theTwitterUI.setVisible(true);
+    }
+    
+    public void switchToWriteTweet(){
+        theWriteTweet = new WriteTweet();
+        theWriteTweet.setVisible(true);
     }
 }
