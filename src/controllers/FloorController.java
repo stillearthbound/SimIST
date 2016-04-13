@@ -7,6 +7,7 @@ import views.*;
 public class FloorController {
     private GameFrame frame1;
     private Floor1 floor1;
+    private Room room1;
    
     
     public FloorController(){
@@ -38,6 +39,7 @@ public class FloorController {
     public void floorToRoom(Room room1){
         frame1.remove(floor1);
         frame1.add(room1);
+        this.room1 = room1;
         room1.setFocusable(true);
         room1.requestFocusInWindow();
         frame1.revalidate();
@@ -52,5 +54,14 @@ public class FloorController {
         frame1.revalidate();
         frame1.repaint();
     }
+    
+    public void roomToFloor(Floor1 floor)
+    {
+        frame1.remove(room1);
+        frame1.add(floor);
+        frame1.revalidate();
+        frame1.repaint();
+    }
+            
 
 }
