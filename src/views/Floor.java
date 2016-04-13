@@ -58,7 +58,7 @@ public class Floor extends JPanel implements ActionListener, KeyListener {
        setFocusable(true);
        requestFocusInWindow();
    }
-   
+   //test
    
    public String getFloorName(){
        return this.floorName;
