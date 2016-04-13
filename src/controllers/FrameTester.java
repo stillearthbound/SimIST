@@ -23,6 +23,7 @@ public class FrameTester {
 
     private JButton auBon;
     private JButton floor;
+    private JButton meetingRoom;
 
     public FrameTester() {
         frame = new TestFrame();
@@ -43,12 +44,15 @@ public class FrameTester {
 
         auBon = new JButton("Au Bon Pain");
         floor = new JButton("Floor");
+        meetingRoom = new JButton("MeetingRoom");
 
         frame.add(auBon);
         frame.add(floor);
+        frame.add(meetingRoom);
 
         auBon.addActionListener(new PanelSwitcher());
         floor.addActionListener(new PanelSwitcher());
+        meetingRoom.addActionListener(new PanelSwitcher());
     }
 
     private void refreshPane() {
@@ -59,6 +63,7 @@ public class FrameTester {
     private void removeButtons() {
         frame.remove(auBon);
         frame.remove(floor);
+        frame.remove(meetingRoom);
     }
 
     private class PanelSwitcher implements ActionListener {
@@ -83,6 +88,15 @@ public class FrameTester {
                 floorPanel.requestFocusInWindow();
                 refreshPane();
             }
+            
+            if (o == meetingRoom) {
+                try {
+                    MRController m = new MRController();
+                } catch (Exception ex) {
+                    System.err.println(ex);
+                }
+            }
+            
         }
     }
 }
