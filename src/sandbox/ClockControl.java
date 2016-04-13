@@ -29,11 +29,14 @@ public class ClockControl {
     }
     
     public void pause(){
-        clock.speed = 0;
+        clock.speed = 0;   
     }
     
     public String display(){
         return clock.display;
     }
-            
+      
+    public int getSpeed(){
+        return clock.speed;
+    }
 }

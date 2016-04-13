@@ -26,6 +26,7 @@ public class ClockPanel extends JPanel implements ActionListener{
     private JButton slowDownButton;
     private JButton pauseButton;
     private JLabel timeDisplay;
+    private JLabel speedDisplay;
     
     
     public ClockPanel() throws ParseException{
@@ -36,10 +37,12 @@ public class ClockPanel extends JPanel implements ActionListener{
         slowDownButton = new JButton("slow down");
         pauseButton = new JButton("pause");
         timeDisplay = new JLabel(clock.display());
+        speedDisplay = new JLabel("Current Speed: " +Integer.toString(clock.getSpeed()));        
         
         speedUpButton.addActionListener(this);
         slowDownButton.addActionListener(this);
         pauseButton.addActionListener(this);
+
         
         updater = new Timer(60000,new UpdateTimer());
         updater.start();
@@ -48,6 +51,7 @@ public class ClockPanel extends JPanel implements ActionListener{
         this.add(slowDownButton);
         this.add(pauseButton);
         this.add(timeDisplay);
+        this.add(speedDisplay);
     }  
     
     @Override
@@ -59,7 +63,10 @@ public class ClockPanel extends JPanel implements ActionListener{
         if (o == slowDownButton)
             clock.slowdown();
         if (o == pauseButton)
-            clock.pause();        
+            clock.pause();
+        
+        speedDisplay.setText("Current Speed: " +Integer.toString(clock.getSpeed()));  
+        speedDisplay.repaint();
     }
     
     class UpdateTimer implements ActionListener{
@@ -69,6 +76,7 @@ public class ClockPanel extends JPanel implements ActionListener{
             String display = clock.display();
             timeDisplay.setText(display);
             timeDisplay.repaint();
+            
         }
         
     }
