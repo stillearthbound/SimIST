@@ -24,11 +24,6 @@ public class Elevator extends Mover {
     }
     
     /*
-    // primary method for the elevator
-    public void move() {
-        
-    }
-    
     // pick up all passengers going in the same direction
     public void pickUp() {
         
@@ -41,9 +36,9 @@ public class Elevator extends Mover {
     */
     
     // move to the top floor
-    public void moveUp(Person passenger){
+    public void moveUp(Person passenger) {
         // check if the bottom floor actually contains the passenger
-        if(bottom.getUnitList().contains(passenger)) {
+        if (bottom.getUnitList().contains(passenger)) {
             // move passenger to another floor
             bottom.removeUnit(passenger);
             top.addUnit(passenger);
@@ -51,28 +46,66 @@ public class Elevator extends Mover {
     }
     
     // move to the bottom floor
-    public void moveDown(Person passenger){
+    public void moveDown(Person passenger) {
         // check if the top floor actually contains the passenger
-        if(top.getUnitList().contains(passenger)) {
+        if (top.getUnitList().contains(passenger)) {
             // move passenger to another floor
             top.removeUnit(passenger);
             bottom.addUnit(passenger);
         }
     }
     
-    
-    public void move(int floorChoice){
-     // if (unitChoice1 > unitChoice2){
-        if(currentFloor.getLevel() < floorChoice) {
-        System.out.println("Going up..");
-        currentFloor.setLevel(floorChoice);
+    public Boolean canMoveUp() {
+        if (currentFloor.getLevel() == super.top.getLevel()) { // on top floor
+            return false; // could not move up since elevator at top floor
+        } else {
+            return true; // true means you can
         }
-        else if(currentFloor.getLevel() < floorChoice) {
-         System.out.println("Going down..");
-         currentFloor.setLevel(floorChoice);
-        }
+    }
+
+    public Boolean canMoveDown() {
+        if (currentFloor.getLevel() == super.bottom.getLevel()) { // on bottom floor
+            return false; // could not move down since elevator at bottom floor
+        } else {
+            return true;
         }
     }
     
+    //setup only for three floors
+    public Boolean up() {
+        if (canMoveUp()) { // on top floor
+            return false; // could not move up since elevator at top floor
+        } else if (currentFloor.getLevel() == 2-1) { // on middle floor
+            currentFloor = super.building.getFloor(3-1);
+        } else if (currentFloor.getLevel() == 1-1) { // on bottom floor
+            currentFloor = super.building.getFloor(2-1);
+        }
+        return true; // true means movement is successful
+    }
+    
+    // setup only for three floors
+    public Boolean down() {
+        if (canMoveDown()) { // on bottom floor
+            return false; // could not move down since elevator at bottom floor
+        } else if (currentFloor.getLevel() == 2-1) { // on middle floor
+            currentFloor = super.building.getFloor(1-1);
+        } else if (currentFloor.getLevel() == 3-1) { // on bottom floor
+            currentFloor = super.building.getFloor(2-1);
+        }
+        return true;
+    }
+    public void move(int floorChoice) {
+        if(currentFloor.getLevel() < floorChoice && canMoveUp()) {
+            System.out.println("Going up..");
+            currentFloor.setLevel(floorChoice);
+            up();
+        }
+        else if(currentFloor.getLevel() < floorChoice && canMoveDown()) {
+            System.out.println("Going down..");
+            currentFloor.setLevel(floorChoice);
+            down();
+        }
+    }
+}
     
 
