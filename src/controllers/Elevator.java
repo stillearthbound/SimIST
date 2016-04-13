@@ -71,7 +71,7 @@ public class Elevator extends Mover {
         }
     }
     
-    //setup only for three floors
+    // moves the whole elevator: setup only for three floors
     public Boolean up() {
         if (canMoveUp()) { // on top floor
             return false; // could not move up since elevator at top floor
@@ -83,7 +83,7 @@ public class Elevator extends Mover {
         return true; // true means movement is successful
     }
     
-    // setup only for three floors
+    // moves the whole elevator: setup only for three floors
     public Boolean down() {
         if (canMoveDown()) { // on bottom floor
             return false; // could not move down since elevator at bottom floor
@@ -94,16 +94,21 @@ public class Elevator extends Mover {
         }
         return true;
     }
+    
     public void move(int floorChoice) {
         if(currentFloor.getLevel() < floorChoice && canMoveUp()) {
             System.out.println("Going up..");
             currentFloor.setLevel(floorChoice);
-            up();
+            this.up();
+            // dropOff();
+            // pickUp();
         }
         else if(currentFloor.getLevel() > floorChoice && canMoveDown()) {
             System.out.println("Going down..");
             currentFloor.setLevel(floorChoice);
-            down();
+            this.down();
+            // dropOff();
+            // pickUp();
         }
     }
 }
