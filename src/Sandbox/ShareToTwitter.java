@@ -24,10 +24,9 @@ import twitter4j.conf.ConfigurationBuilder;
  */
 public class ShareToTwitter extends JFrame implements ActionListener{
     private JButton shareButton;
-    private JTextField writeTweet;
+    private JTextField tweet;
     private JLabel title;
     private JPanel sharePanel;
-    ArrayList<String> tweet;
     
     ShareToTwitter(){
         initCustomComponents();
@@ -35,14 +34,14 @@ public class ShareToTwitter extends JFrame implements ActionListener{
     
     public void initCustomComponents(){
         shareButton = new JButton("Share");
-        writeTweet = new JTextField();
+        tweet = new JTextField();
         title = new JLabel("Write Post");
         sharePanel = new JPanel();
         
         shareButton.addActionListener(this);
         
         sharePanel.add(title);
-        sharePanel.add(writeTweet);
+        sharePanel.add(tweet);
         sharePanel.add(shareButton);
     }
 
@@ -54,7 +53,6 @@ public class ShareToTwitter extends JFrame implements ActionListener{
     public void shareButtonActionPerformed(ActionEvent e){
         //connects to the KeyReader class that has all of the account's credentials
         KeyReader keyreader = new KeyReader();
-        tweet = new ArrayList();
         
         //logs into the 311 twitter account
         ConfigurationBuilder cBuilder = new ConfigurationBuilder();
@@ -64,7 +62,11 @@ public class ShareToTwitter extends JFrame implements ActionListener{
         cBuilder.setOAuthAccessTokenSecret(keyreader.getAccessTokenSecret());
         
         Twitter tFactory = new TwitterFactory(cBuilder.build()).getInstance();
-
         
+        try{
+            tFactory.updateStatus(tweet.getText());
+        }catch(TwitterException te){
+            te.printStackTrace();
+        }
     }
 }
