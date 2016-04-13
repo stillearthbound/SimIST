@@ -4,21 +4,24 @@
  * and open the template in the editor.
  */
 package views;
+
 import javax.swing.*;
 import java.awt.event.*;
+
 /**
  *
- * @author Paul
+ * @author greg
  */
 public class TestFrame extends JFrame {
-    
+
     public TestFrame()
     {
         super();
         setSize(800,600);
+        setResizable(false);
         setVisible(true);
         validate();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setFocusable(false);
     }
-    
 }
