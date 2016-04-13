@@ -35,7 +35,7 @@ public class ElevatorTest {
         System.out.println("moveUp");
         Unit passenger = null;
         Elevator instance = null;
-        instance.moveUp(passenger);
+        //sinstance.moveUp(passenger);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -48,7 +48,7 @@ public class ElevatorTest {
         System.out.println("moveDown");
         Unit passenger = null;
         Elevator instance = null;
-        instance.moveDown(passenger);
+        //instance.moveDown(passenger);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
