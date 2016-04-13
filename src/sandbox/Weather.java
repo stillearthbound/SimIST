@@ -54,6 +54,21 @@ public class Weather {
         }
         
         
+        if (rain = true){
+            // rainy.gif
+        }
+        else if(cloudy = true){
+            //cloudy.gif
+        }
+        else if(snow = true){
+            //snowy.gif
+        }
+        else if(sun = true){
+            //sunny.gif
+        }
+        else{
+            //error? other weather code?
+        }
         System.out.println(weatherCodeString[(weatherCode)]);  
         System.out.println(temp + "°F");  
         
