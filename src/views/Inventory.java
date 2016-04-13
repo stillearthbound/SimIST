@@ -28,9 +28,6 @@ public class Inventory extends JFrame{
     private JLabel actualItem;
     private JLabel actualCost;
     private JLabel actualQuantity;
-    private JButton grabItems;
-    private JSpinner quantSpin;
-    private ArrayList<JSpinner> allSpinners = new ArrayList<JSpinner>();
     private int offset = 2;
     private GridBagConstraints layoutConst = new GridBagConstraints();
     private JPanel content = new JPanel();
@@ -71,11 +68,11 @@ public class Inventory extends JFrame{
             layoutConst.gridy = i + offset;
             content.add(actualQuantity, layoutConst);
             
-//            actualCost = new JLabel(String.format("$%.2f",charInventory.getInventoryObjects().get(i).getCost()));
+//            actualCost = new JLabel(String.format("$%.2f",charInventory.getInventoryObjects().get(i).getCost()*charInventory.getMap().get((String)keys.get(i))));
 //            layoutConst.gridx = 2;
 //            layoutConst.gridy = i + offset;
 //            content.add(actualCost, layoutConst);
-            
+//            
             i++;
         }
         
