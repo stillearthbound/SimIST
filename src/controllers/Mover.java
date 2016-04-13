@@ -4,27 +4,23 @@ import java.util.ArrayList;
 
 public abstract class Mover {
     protected Building building;
-    protected ArrayList<Floor> floors;
+    protected ArrayList<Floor> floorList;
+    protected Floor top;         // top floor
+    protected Floor bottom;      // bottom floor
 
     public Mover(Building building) {
         this.building = building;
-        ArrayList<Floor> floors = new ArrayList<Floor>();
-    }
-
-    public void addFloor(Floor f) {
-        floors.add(f);
-    }
-
-    public void removeFloor(Floor f) {
-        floors.remove(f);
+        this.floorList = building.getFloorList();       // get all available floors in this building
+        this.bottom = floorList.get(1 - 1);             // index starts at 0, so subtract 1
+        this.top = floorList.get(floorList.size() - 1); // top floor is the maximum floor
     }
 
     public ArrayList<Floor> getFloors() {
-        return floors;
+        return this.floorList;
     }
-
-    public void setFloors(ArrayList<Floor> floors) {
-        this.floors = floors;
+    
+    public Building getBuilding() {
+        return this.building;
     }
     
     //Needs to be overridden by child classes.
