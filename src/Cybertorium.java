@@ -26,11 +26,13 @@ public class Cybertorium extends JPanel
         table3 = new JButton();
         table4 = new JButton();
         table5 = new JButton();
+        
         add(table1);
         add(table2);
         add(table3);
         add(table4);
         add(table5);
+        
         table1.setOpaque(false);
         table1.setContentAreaFilled(false);
         table1.setBorderPainted(false);
