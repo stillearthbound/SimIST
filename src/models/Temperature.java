@@ -7,6 +7,7 @@ package models;
 import sandbox.ISTTime;
 import java.time.*;
 
+
 /**
  *
  * @author Alex
@@ -17,6 +18,10 @@ public class Temperature {
     double initialTemp;
     double initialRawTemp;
     LocalDateTime timeOfDay;
+    double minTemp; //calculated in randomize temp mehtod
+    double maxTemp; //calculated in randomize temp mehtod
+    double tempIncrement; //the max temperature change in 1 hour
+    double tempChange; //hold the chnage hour to hour.
     int month;
     final double JAN_AVG_TEMP = 34;
     final double FEB_AVG_TEMP = 38;
@@ -40,30 +45,49 @@ public class Temperature {
       
      this.month=month;
      this.timeOfDay= time;
+     
+     this.initializeTemp(month);
+     this.randomizeTemp(initialRawTemp);
+     
     }
     
-    private double initializeTemp(String month)
+    private void initializeTemp(int month)
     {
         switch(month){
-            case "1": initialRawTemp = 34; break;
-            case "2": initialRawTemp = 38; break;
-            case "3": initialRawTemp = 46; break;
-            case "4": initialRawTemp = 60; break;
-            case "5": initialRawTemp = 70; break;
-            case "6": initialRawTemp = 78; break;
-            case "7": initialRawTemp = 82; break;
-            case "8": initialRawTemp = 80; break;
-            case "9": initialRawTemp = 72; break;
-            case "10": initialRawTemp = 61; break;
-            case "11": initialRawTemp = 50; break;
-            case "12": initialRawTemp = 38; break;
+            case 1: initialRawTemp = 34; break;
+            case 2: initialRawTemp = 38; break;
+            case 3: initialRawTemp = 46; break;
+            case 4: initialRawTemp = 60; break;
+            case 5: initialRawTemp = 70; break;
+            case 6: initialRawTemp = 78; break;
+            case 7: initialRawTemp = 82; break;
+            case 8: initialRawTemp = 80; break;
+            case 9: initialRawTemp = 72; break;
+            case 10: initialRawTemp = 61; break;
+            case 11: initialRawTemp = 50; break;
+            case 12: initialRawTemp = 38; break;
             default: initialRawTemp = 59.1; //this is the avg temp year round in happy valley isn't that neat?
         }
-    return initialTemp;
+    
     }
         
-    //private double RandomizeTemp(initialRawTemp)
-    //{
-    //return initialTemp
-    //}
+    private void randomizeTemp( double initialRawTemp)
+    {
+     minTemp = initialRawTemp - 30;  //these 30 degree temps represent the max swing giving the algo in 1 day a max range of + or - 6 degrees from the start
+     maxTemp = initialRawTemp + 30;
+        
+    initialTemp= minTemp + (int)(Math.random() * ((maxTemp - minTemp) + 1));
+    
+    }
+    
+    private void getTemp(LocalDateTime timeOfDay)
+    {
+        
+         tempChange= (Double) (Math.random() * ((tempIncrement - 0)+1));
+         
+    }
+    
+    
+    
+    
 }
