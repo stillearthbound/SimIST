@@ -18,8 +18,8 @@ public class BuildingHVAC {
     public double outsideTemp;
     private boolean heat;
     private boolean ac;
-    private double setRoomTemp;
-    public double currentRoomTemp;
+    private double setIndoorTemp;
+    public double currentIndoorTemp;
     private double tempChange;
     
     private int delay;
@@ -28,11 +28,11 @@ public class BuildingHVAC {
     
     public BuildingHVAC(double outsideTemp){
         this.outsideTemp= outsideTemp;
-        setRoomTemp=60.0;
-        this.currentRoomTemp=this.outsideTemp; 
+        setIndoorTemp=60.0;
+        this.currentIndoorTemp=this.outsideTemp; 
         //TODO does this refresh every time? can i change currentTemp & not outsideTemp?
         //also: how do i use the TODO tag? 
-        this.tempChange=(setRoomTemp-this.outsideTemp);
+        this.tempChange=(setIndoorTemp-this.outsideTemp);
         
         if(tempChange>0){
             heat();
@@ -52,17 +52,17 @@ public class BuildingHVAC {
         };
         Timer timer=new Timer(delay, listener);
         timer.start();
-        while(this.currentRoomTemp==setRoomTemp){
+        while(this.currentIndoorTemp==setIndoorTemp){
             timer.stop();
         }
     }
     
     public void heat(){
-        this.currentRoomTemp++;
+        this.currentIndoorTemp++;
     }
     
     public void ac(){
-        this.currentRoomTemp--;
+        this.currentIndoorTemp--;
     }
     
 //    public double runTimer()
