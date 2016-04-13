@@ -9,7 +9,7 @@ public class Stairs extends Mover {
     }
     
     // move to the top floor
-    public void moveUp(Unit passenger){
+    public void moveUp(Person passenger){
         // check if the bottom floor actually contains the passenger
         if(super.bottom.getUnitList().contains(passenger)) {
             // move passenger to another floor
@@ -19,7 +19,7 @@ public class Stairs extends Mover {
     }
     
     // move to the bottom floor
-    public void moveDown(Unit passenger){
+    public void moveDown(Person passenger){
         // check if the top floor actually contains the passenger
         if(super.top.getUnitList().contains(passenger)) {
             // move passenger to another floor
