@@ -57,4 +57,20 @@ public class Elevator extends Mover {
             bottom.addUnit(passenger);
         }
     }
-}
+    
+    
+    public void move(int floorChoice){
+     // if (unitChoice1 > unitChoice2){
+        if(currentFloor.getLevel() < floorChoice) {
+        System.out.println("Going up..");
+        currentFloor.setLevel(floorChoice);
+        }
+        else if(currentFloor.getLevel() < floorChoice) {
+         System.out.println("Going down..");
+         currentFloor.setLevel(floorChoice);
+        }
+        }
+    }
+    
+    
+
