@@ -8,7 +8,7 @@ import java.util.TreeMap;
 public class Elevator extends Mover {
     protected int direction = 0; // -1 for down, 0 for no direction, 1 for up.
     protected Floor currentFloor;
-    ArrayList<Unit> passengers = new ArrayList<Unit>();
+    ArrayList<Person> passengers = new ArrayList<Person>();
     // which floors have the buttons activated
     
     public Elevator(Building building) {
@@ -41,7 +41,7 @@ public class Elevator extends Mover {
     */
     
     // move to the top floor
-    public void moveUp(Unit passenger){
+    public void moveUp(Person passenger){
         // check if the bottom floor actually contains the passenger
         if(bottom.getUnitList().contains(passenger)) {
             // move passenger to another floor
@@ -51,7 +51,7 @@ public class Elevator extends Mover {
     }
     
     // move to the bottom floor
-    public void moveDown(Unit passenger){
+    public void moveDown(Person passenger){
         // check if the top floor actually contains the passenger
         if(top.getUnitList().contains(passenger)) {
             // move passenger to another floor
