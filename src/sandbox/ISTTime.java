@@ -45,5 +45,9 @@ public class ISTTime {
     public String showTime(){
         return now.format(DateTimeFormatter.ofPattern("HH:mm"));
     }
+    public int getMonthValue()
+    {
+    return now.getMonthValue();
+    }
     
 }
