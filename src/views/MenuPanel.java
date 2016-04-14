@@ -19,6 +19,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JSpinner.DefaultEditor;
 import java.awt.*;
+import java.util.List;
 
 /**
  *
@@ -39,6 +40,8 @@ public class MenuPanel extends JFrame{
     private int offset = 2;
     private GridBagConstraints layoutConst = new GridBagConstraints();
     private JPanel content = new JPanel();
+    
+    
     
     
     public void populateFoodMenu(FoodStations station){
@@ -124,10 +127,77 @@ public class MenuPanel extends JFrame{
         return infStation.getStationObjects();
     }
     
-    public void populateTrashMenu(TrashStation trashStation)
+    public void populateTrashMenu(TrashStation trashStation, CharacterInventory charInventory)
     {
+
+
+
+    JLabel item;
+    JLabel cost;
+     JLabel quantity;
+     JLabel actualItem;
+     JLabel actualCost;
+     JLabel actualQuantity;
+     JButton grabItems;
+     JSpinner quantSpin;
+     ArrayList<JSpinner> allSpinners = new ArrayList<JSpinner>();
+     int offset = 2;
+     GridBagConstraints layoutConst = new GridBagConstraints();
+     JPanel content = new JPanel();
+    
+        content.setLayout(new GridBagLayout());
+        layoutConst.insets = new Insets(10, 10, 10, 10);
+       
+        item = new JLabel("Item");
+        layoutConst.gridx = 0;
+        layoutConst.gridy = 1;
+        content.add(item, layoutConst);
         
+        quantity = new JLabel("Quantity");
+        layoutConst.gridx = 1;
+        layoutConst.gridy = 1;
+        content.add(quantity, layoutConst);
+        
+        cost = new JLabel("Cost");
+        layoutConst.gridx = 2;
+        layoutConst.gridy = 1;
+        content.add(cost, layoutConst);
+        
+        int i = 0;
+        List keys = new ArrayList(charInventory.getMap().keySet());
+        List values = new ArrayList(charInventory.getMap().values());
+        
+                   
+        while (i < charInventory.getMap().size()){
+            
+            actualItem = new JLabel((String)keys.get(i));
+            layoutConst.gridx = 0;
+            layoutConst.gridy = i + offset;
+            content.add(actualItem, layoutConst);
+            
+            actualQuantity = new JLabel(Integer.toString((int)values.get(i)));
+            layoutConst.gridx = 1;
+            layoutConst.gridy = i + offset;
+            content.add(actualQuantity, layoutConst);
+            
+//            actualCost = new JLabel(String.format("$%.2f",charInventory.getInventoryObjects().get(i).getCost()));
+//            layoutConst.gridx = 2;
+//            layoutConst.gridy = i + offset;
+//            content.add(actualCost, layoutConst);
+            
+            i++;
+        }
+        
+        setContentPane(content);
+        pack();
+        setTitle("TRASH MENU");
+        setVisible(true);
+        setResizable(false);
     }
+    
+
+
+    
     
     public void populateCounterMenu(FrontCounterStation counterStation)
     {
