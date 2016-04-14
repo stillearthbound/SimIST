@@ -13,7 +13,9 @@ import javax.swing.JPanel;
  */
 public class TwitterCntl {
     private WriteTweet theWriteTweet;
+//    private ManualTweetUI theManualTweetUI;
     private TwitterUI theTwitterUI;
+//    private ManualTwitterUI theManualTwitterUI;
     
     public TwitterCntl(){
 //        theWriteTweet = new WriteTweet();
@@ -23,10 +25,14 @@ public class TwitterCntl {
     public void switchhToTwitterUI(){
         theTwitterUI = new TwitterUI();
         theTwitterUI.setVisible(true);
+//        theManualTwitterUI = new ManualTwitterUI(this);
+//        theManualTwitterUI.setVisible(true);
     }
     
     public void switchToWriteTweet(){
         theWriteTweet = new WriteTweet();
         theWriteTweet.setVisible(true);
+//        theManualTweetUI = new ManualTweetUI();
+//        theManualTweetUI.setVisible(true);
     }
 }

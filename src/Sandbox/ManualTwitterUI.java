@@ -66,7 +66,7 @@ public class ManualTwitterUI extends JFrame implements ActionListener{
         
         tweetPanel.setSize(250, 300);
         frame.add(tweetPanel);
-        frame.pack();
+//        frame.pack();
     }
 
     @Override
