@@ -12,11 +12,12 @@ import java.util.*;
 public class StoreObjects {
     
     protected String name;
+    protected String filepath;
     protected float cost;
     protected int quantity;
     protected boolean paidFor;
     protected ObjectType TYPE;
-    
+    protected int numInv = 0;
     
     
     public StoreObjects()
@@ -31,6 +32,15 @@ public class StoreObjects {
         cost = inf_cost;
         quantity = inf_quantity;
         paidFor = false;
+    }
+    
+    public StoreObjects(String inf_name, float inf_cost, int inf_quantity, String inf_filepath)
+    {
+        name = inf_name;
+        cost = inf_cost;
+        quantity = inf_quantity;
+        paidFor = false;
+        filepath = inf_filepath;
     }
     
    public String getName()
@@ -63,6 +73,21 @@ public class StoreObjects {
        paidFor = set;
        
        
+   }
+   
+   public void setNumInv(int set)
+   {
+       numInv = set;
+   }
+   
+   public int getNumInv()
+   {
+       return numInv;
+   }
+   
+   public String getFilePath()
+   {
+       return filepath;
    }
    
    

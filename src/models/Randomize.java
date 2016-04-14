@@ -25,7 +25,7 @@ public class Randomize {
         
         fruitObjects = new StoreObjects[]{ new StoreObjects("Apple",2.5f, rand.nextInt(20)) , new StoreObjects("Banana",7.0f, rand.nextInt(20)) , new StoreObjects("Orange",10.00f, rand.nextInt(20)) };
         soupObjects = new StoreObjects[]{ new StoreObjects("Tomato Soup",6.0f, rand.nextInt(20)) , new StoreObjects("Broccoli Cheddar Soup",6.0f, rand.nextInt(20)) , new StoreObjects("Chicken Noodle Soup",6.0f, rand.nextInt(20)) };
-        coffeeObjects = new StoreObjects[]{ new StoreObjects("French Vanilla Coffee",2.50f, rand.nextInt(20)) , new StoreObjects("Regular Coffee",2.50f, rand.nextInt(20)) , new StoreObjects("Seasonal Coffee",2.50f, rand.nextInt(20)) };
+        coffeeObjects = new StoreObjects[]{ new StoreObjects("French Vanilla Coffee",2.50f, rand.nextInt(20), "coffee1.png") , new StoreObjects("Regular Coffee",2.50f, rand.nextInt(20), "coffee.png") , new StoreObjects("Seasonal Coffee",2.50f, rand.nextInt(20), "coffee.png")};
         coolerObjects = new StoreObjects[]{ new StoreObjects("Caesar Salad",9.0f, rand.nextInt(20)) , new StoreObjects("Chef Salad",12.5f, rand.nextInt(20)) , new StoreObjects("Ham Wrap",8.5f, rand.nextInt(20)), new StoreObjects("Turkey Wrap",8.5f, rand.nextInt(20)) , new StoreObjects("Veggie Wrap",9.5f, rand.nextInt(20)) };
         bakeryObjects = new StoreObjects[]{ new StoreObjects("Bagel",3.5f, rand.nextInt(20)) , new StoreObjects("Croissant",5.0f, rand.nextInt(20)) , new StoreObjects("Donut",4.99f, rand.nextInt(20)) };
     
