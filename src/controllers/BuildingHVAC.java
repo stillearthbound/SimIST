@@ -5,58 +5,67 @@
  */
 
 package controllers;
+import sandbox.Weather;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-//import java.awt.event; //i have no idea why it doesnt like "event"
-import java.lang.Object;// i dont know what this and the next line do, but its for the timer
+import java.lang.Object;
 import javax.swing.*;
 /**
  *
  * @author Laura
  */
-public class BuildingHVAC {
+public class BuildingHVAC implements ActionListener{
     public double outsideTemp;
     private boolean heat;
     private boolean ac;
     private double setIndoorTemp;
+    private double setLowerBoundIndoorTemp;
+    private double setUpperBoundIndoorTemp;
     public double currentIndoorTemp;
     private double tempChange;
     
     private int delay;
     private ActionListener listener;
-//    public Timer time=new Timer(delay, listener); //timer is created in constructor. this one is not needed
+//    private Weather weather=new Weather();
+    
+    public int peopleCount;
     
     public BuildingHVAC(double outsideTemp){
-        this.outsideTemp= outsideTemp;
+//        this.outsideTemp=weather.getTemp();
+        this.outsideTemp=25;
         setIndoorTemp=60.0;
+        setLowerBoundIndoorTemp=57;
+        setUpperBoundIndoorTemp=63;
         this.currentIndoorTemp=this.outsideTemp; 
-        //TODO does this refresh every time? can i change currentTemp & not outsideTemp?
-        //also: how do i use the TODO tag? 
+        //TODO: does this refresh every time? can i change currentTemp & not outsideTemp?
         this.tempChange=(setIndoorTemp-this.outsideTemp);
         
+        delay=1000;
+        Timer timer=new Timer(delay, this); //this = actionListener bc this class extends actionListener
+        timer.start();
+    }
+    public void actionPerformed(ActionEvent evt) {
+        double lastTemp=0;
         if(tempChange>0){
-            heat();
+            if(this.currentIndoorTemp<setIndoorTemp){
+                heat();
+            }
+            else if(this.currentIndoorTemp==this.setIndoorTemp){
+                ac();
+            }
+            else if(this.currentIndoorTemp<setIndoorTemp){
+                ac();
+            }
         }
         else if(tempChange<0){
             ac();
         }
-        listener = new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                if(tempChange>0){
-                   heat();
-                }
-                else if(tempChange<0){
-                    ac();
-                }
-            }
-        };
-        Timer timer=new Timer(delay, listener);
-        timer.start();
-        while(this.currentIndoorTemp==setIndoorTemp){
-            timer.stop();
-        }
+        System.out.println(this.currentIndoorTemp);
     }
-    
+//    public void resetOutsideTemp(){
+//        this.outsideTemp=weather.getTemp();
+//    }
     public void heat(){
         this.currentIndoorTemp++;
     }
@@ -64,7 +73,12 @@ public class BuildingHVAC {
     public void ac(){
         this.currentIndoorTemp--;
     }
-    
-//    public double runTimer()
-    
+    public double getCurrentIndoorTemp(){
+        return currentIndoorTemp;
+    }
+    public void setPeopleCount(){
+        //TODO: set people count
+        //this number would determine an increase in temperature due to crowding. 
+    }
+   
 }
