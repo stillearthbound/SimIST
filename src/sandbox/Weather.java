@@ -87,34 +87,39 @@ public class Weather {
     ImageIcon rainyImage;
     ImageIcon snowyImage;
     JLabel tempLable;
-    JButton weatherIcon;
+    JLabel weatherIcon;
     
         JFrame f = new JFrame();
         JPanel p = new JPanel();
         tempLable = new JLabel();
-        weatherIcon = new JButton();
+        weatherIcon = new JLabel();
+        
         f.setVisible(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(150,150);
+        f.setSize(300,300);
         f.setResizable(false);
         f.add(p);
         p.add(tempLable);
         p.add(weatherIcon);
-        sunnyImage = new ImageIcon("src/sandbox/WeatherImages/Sunny.gif");
-        cloudyImage = new ImageIcon("src/sandbox/WeatherImages/Cloudy.gif");
-        rainyImage = new ImageIcon("src/sandbox/WeatherImages/Rainy.gif");
-        snowyImage = new ImageIcon("src/sandbox/WeatherImages/Snowy.gif");   
+        sunnyImage = new ImageIcon("src/sandbox/Weather Images/unny.gif");
+        cloudyImage = new ImageIcon("src/sandbox/Weather Images/Cloudy.gif");
+        rainyImage = new ImageIcon("src/sandbox/Weather Images/Rainy.gif");
+        snowyImage = new ImageIcon("src/sandbox/Weather Images/Snowy.gif");   
         if (rain == true){
         weatherIcon.setIcon(rainyImage);
+        weatherIcon.setSize(80,80);
         }
         else if(cloudy == true){
         weatherIcon.setIcon(cloudyImage);
+        weatherIcon.setSize(80,80);
         }
         else if(snow == true){
         weatherIcon.setIcon(snowyImage);
+        weatherIcon.setSize(80,80);
         }
         else if(sunny == true){
         weatherIcon.setIcon(sunnyImage);
+        weatherIcon.setSize(80,80);
         }
         else{
          weatherIcon.setText("ERROR");
