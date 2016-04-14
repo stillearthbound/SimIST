@@ -44,6 +44,7 @@ public class Weather {
        // System.out.println(inputLine);
         if ((weatherCode > 25 && weatherCode < 31 )|| weatherCode == 44){
             cloudy = true;
+            
         }
         else if(weatherCode < 5 ||(weatherCode >7 && weatherCode < 13 )|| weatherCode == 17 || weatherCode ==35 || (weatherCode >36 && weatherCode < 41) || weatherCode == 45 || weatherCode == 47){
             rain = true;
@@ -56,26 +57,25 @@ public class Weather {
         }
         
         
-        if (rain = true){
+        if (rain == true){
             System.out.println("Rainy"); 
-            // rainy.gif
+            
         }
-        else if(cloudy = true){
+        else if(cloudy == true){
             System.out.println("Cloudy"); 
-            //cloudy.gif
+            
         }
-        else if(snow = true){
+        else if(snow == true){
             System.out.println("Snow"); 
-            //snowy.gif
+            
         }
-        else if(sunny = true){
+        else if(sunny == true){
             System.out.println("Sunny"); 
-            //sunny.gif
+            
         }
         else{
             System.out.println("error"); 
         }
-       System.out.println(weatherCode);  
         System.out.println(temp + "°F"); 
         
         
@@ -104,16 +104,16 @@ public class Weather {
         cloudyImage = new ImageIcon("src/sandbox/WeatherImages/Cloudy.gif");
         rainyImage = new ImageIcon("src/sandbox/WeatherImages/Rainy.gif");
         snowyImage = new ImageIcon("src/sandbox/WeatherImages/Snowy.gif");   
-        if (rain = true){
+        if (rain == true){
         weatherIcon.setIcon(rainyImage);
         }
-        else if(cloudy = true){
+        else if(cloudy == true){
         weatherIcon.setIcon(cloudyImage);
         }
-        else if(snow = true){
+        else if(snow == true){
         weatherIcon.setIcon(snowyImage);
         }
-        else if(sunny = true){
+        else if(sunny == true){
         weatherIcon.setIcon(sunnyImage);
         }
         else{
