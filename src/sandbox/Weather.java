@@ -1,4 +1,5 @@
 package sandbox;
+
 import java.net.*;
 import java.io.*;
 import java.util.*;
@@ -28,7 +29,7 @@ public class Weather {
         boolean cloudy = false;
         boolean rain = false;
         boolean snow = false;
-        boolean sun =false;
+        boolean sunny =false;
         
                 
         
@@ -44,34 +45,50 @@ public class Weather {
         if ((weatherCode > 25 && weatherCode < 31 )|| weatherCode == 44){
             cloudy = true;
         }
-        else if(weatherCode < 5 ||(weatherCode >7 && weatherCode < 13 )|| weatherCode == 17 || weatherCode ==35 || (weatherCode >36 && weatherCode > 41) || weatherCode == 45 || weatherCode == 47){
+        else if(weatherCode < 5 ||(weatherCode >7 && weatherCode < 13 )|| weatherCode == 17 || weatherCode ==35 || (weatherCode >36 && weatherCode < 41) || weatherCode == 45 || weatherCode == 47){
             rain = true;
         }
         else if(weatherCode > 4 && weatherCode < 8 || weatherCode >12 && weatherCode < 17 || weatherCode >40 && weatherCode < 44 || weatherCode == 46){
             snow = true;
         }
         else if(weatherCode > 22 && weatherCode < 26 || weatherCode > 30 && weatherCode < 35|| weatherCode == 36){
-            sun = true;
+            sunny = true;
         }
         
         
-        System.out.println(weatherCodeString[(weatherCode)]);  
-        System.out.println(temp + "°F");  
-         
+        if (rain = true){
+            System.out.println("Rainy"); 
+            // rainy.gif
+        }
+        else if(cloudy = true){
+            System.out.println("Cloudy"); 
+            //cloudy.gif
+        }
+        else if(snow = true){
+            System.out.println("Snow"); 
+            //snowy.gif
+        }
+        else if(sunny = true){
+            System.out.println("Sunny"); 
+            //sunny.gif
+        }
+        else{
+            System.out.println("error"); 
+        }
+       System.out.println(weatherCode);  
+        System.out.println(temp + "°F"); 
+        
         
         in.close();
         
         
-       
-        }
-    public class WeatherFrame extends JFrame{
     ImageIcon sunnyImage;
     ImageIcon cloudyImage;
     ImageIcon rainyImage;
     ImageIcon snowyImage;
     JLabel tempLable;
     JButton weatherIcon;
-    WeatherFrame(boolean rain, boolean cloudy, boolean snow, boolean sun, int temp){
+    
         JFrame f = new JFrame();
         JPanel p = new JPanel();
         tempLable = new JLabel();
@@ -88,24 +105,26 @@ public class Weather {
         rainyImage = new ImageIcon("src/sandbox/WeatherImages/Rainy.gif");
         snowyImage = new ImageIcon("src/sandbox/WeatherImages/Snowy.gif");   
         if (rain = true){
-        //WeatherFrame.weatherIcon.setIcon(WeatherFrame.rainyImage);
+        weatherIcon.setIcon(rainyImage);
         }
         else if(cloudy = true){
-        //WeatherFrame.weatherIcon.setIcon(WeatherFrame.cloudyImage);
+        weatherIcon.setIcon(cloudyImage);
         }
         else if(snow = true){
-        // WeatherFrame.weatherIcon.setIcon(WeatherFrame.snowyImage);
+        weatherIcon.setIcon(snowyImage);
         }
-        else if(sun = true){
-        // WeatherFrame.weatherIcon.setIcon(WeatherFrame.sunnyImage);
+        else if(sunny = true){
+        weatherIcon.setIcon(sunnyImage);
         }
         else{
-         // WeatherFrame.weatherIcon.setText("ERROR");
+         weatherIcon.setText("ERROR");
         }
-        //WeatherFrame.tempLable.setText(temp + "°F"); 
+        tempLable.setText(temp + "°F"); 
         
         
 
+    
+       
+        }
+
     }
-    }
-}
