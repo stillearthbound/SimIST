@@ -27,20 +27,26 @@ import java.awt.image.BufferedImage;
  */
 public class Inventory extends JFrame {
 
-    private JLabel item;
-    private JLabel cost;
-    private JLabel quantity;
-    private JLabel actualItem;
-    private JLabel actualCost;
-    private JLabel actualQuantity;
     private ArrayList<JButton> items;
-    private int offset = 2;
+    private Box gap;
     private GridBagConstraints layoutConst = new GridBagConstraints();
     private JPanel content;
     private JPanel sideBar;
     private JPanel container;
 
     public Inventory(CharacterInventory inventory) {
+
+        items = new ArrayList<>();
+
+        setSize(378, 305);
+        setTitle("CHARACTER INVENTORY");
+        setVisible(true);
+
+        container = new JPanel();
+        container.setSize(this.getSize());
+        container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
+
+        setContentPane(container);
 
         content = new JPanel() {
 
@@ -49,7 +55,7 @@ public class Inventory extends JFrame {
 
                 super.paintComponent(g);
 
-                g.drawImage(new ImageIcon("inventory.png").getImage(), 0, 0, null);
+                g.drawImage(new ImageIcon("inventory.png").getImage(), 0, 0, (int) Math.round(this.getWidth()), (int) Math.round(container.getHeight()), null);
 
             }
         };
@@ -60,38 +66,29 @@ public class Inventory extends JFrame {
 
                 super.paintComponent(g);
 
-                g.drawImage(new ImageIcon("sidebar.png").getImage(), 0, 0, null);
+                g.drawImage(new ImageIcon("sidebar.png").getImage(), 0, 0, (int) Math.round(this.getWidth()), (int) Math.round(container.getHeight()), null);
 
             }
         };
-        setLayout(new BorderLayout());
-        setSize(378, 305);
-        container = new JPanel();
-        container.setPreferredSize(this.getSize());
-        items = new ArrayList<>();
-        add(container, BorderLayout.CENTER);
-        container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
+
         container.add(content);
         container.add(sideBar);
-        content.setPreferredSize(new Dimension((int) Math.round(this.getWidth() * .714), (int) Math.round(this.getHeight() * .885)));
-        content.setMinimumSize(content.getPreferredSize());
-        content.setMaximumSize(content.getPreferredSize());
 
-        sideBar.setPreferredSize(new Dimension((int) Math.round(this.getWidth() * .238), (int) Math.round(this.getHeight() * .885)));
-        sideBar.setMinimumSize(content.getPreferredSize());
-        sideBar.setMaximumSize(content.getPreferredSize());
+        content.setPreferredSize(new Dimension((int) Math.round(container.getWidth() * .714), (int) Math.round(container.getHeight() * .885)));
 
-        setTitle("CHARACTER INVENTORY");
-        setVisible(true);
-        //setResizable(false);
+        sideBar.setPreferredSize(new Dimension((int) Math.round(container.getWidth() * .238), (int) Math.round(container.getHeight() * .885)));
+        content.setMaximumSize(new Dimension(1000, 1000));
+        sideBar.setMaximumSize(new Dimension(1000, 1000));
+        getContentPane().setPreferredSize(new Dimension(content.getWidth() + sideBar.getWidth(), content.getHeight() + sideBar.getHeight()));
 
         content.setLayout(new GridLayout(4, 5));
-        sideBar.setLayout(null);
-        item = new JLabel("<html><font color='white'>Item</font></html>");
-        item.setBounds(35, 20, 50, 20);
+        sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.Y_AXIS));
+        JLabel item = new JLabel("<html><font color='white'>Item</font></font></html>", SwingConstants.CENTER);
+        JLabel name = new JLabel("<html><font color='white'>Name</font></font></html>", SwingConstants.CENTER);
 
         sideBar.add(item);
-        layoutConst.fill = GridBagConstraints.CENTER;
+        sideBar.add(Box.createVerticalStrut(container.getSize().height / 6));
+        sideBar.add(name);
 
 //        while (i < inventory.getInventoryObjects().size()) {
 //
@@ -118,16 +115,15 @@ public class Inventory extends JFrame {
 
             final ImageIcon itemPic = new ImageIcon(inventoryObject.getFilePath());
 
-            items.add(new JButton("<html><font color='white'>" + Integer.toString(inventoryObject.getNumInv()) + "</font></html>") {
+            items.add(new JButton("<html><font color='white'>" + Integer.toString(inventoryObject.getNumInv()) + "</font></font></html>") {
                 @Override
                 public void paint(Graphics g) {
                     super.paint(g);
-                    g.drawImage(itemPic.getImage(), 15, 15, 40, 40, null);
+                    g.drawImage(itemPic.getImage(), 0, 0, content.getWidth() / 4, content.getHeight() / 4, null);
                 }
             ;
             });
             items.get(inventory.getInventoryObjects().indexOf(inventoryObject)).setOpaque(false);
-            // items.get(inventory.getInventoryObjects().indexOf(inventoryObject)).setIcon(itemPic);
             items.get(inventory.getInventoryObjects().indexOf(inventoryObject)).setContentAreaFilled(false);
             items.get(inventory.getInventoryObjects().indexOf(inventoryObject)).setFocusPainted(false);
             items.get(inventory.getInventoryObjects().indexOf(inventoryObject)).setHorizontalAlignment(SwingConstants.RIGHT);
