@@ -22,14 +22,36 @@ public class ServerNetworking
 {
     private static int connectionID;
     private ArrayList<ClientThread> connectionList;
-    private int port;
+    private static int port = 44221;
     private boolean running;
     
     
     public ServerNetworking(int port){
         this.port = port;
+        connectionList = new ArrayList<ClientThread>();
     }
     
+    public static void main(String[] args) 
+    {
+        switch(args.length)
+        {
+            case 1:
+                try{
+                    port = Integer.parseInt(args[0]);
+                } 
+                catch(Exception e)
+                {
+                    System.out.println("Invalid port number");
+                    System.out.println("Usage is: > java Server [port]");
+                }
+            case 0:
+                break;
+            default:
+                System.out.println("Usage is: > java Server [port]");
+        }
+        ServerNetworking server = new ServerNetworking(port);
+        server.start();
+    }
     
     public void start()
     {
