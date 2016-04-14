@@ -10,6 +10,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.*;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequencer;
 import views.*;
@@ -44,7 +45,7 @@ public class ABPController {
         randomize = new Randomize();
         menuPanel = new MenuPanel();
         charInventory = new CharacterInventory();
-        
+
         testFrame.add(abp);
 
         addKeyListener();
@@ -60,8 +61,6 @@ public class ABPController {
         sequence.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
         sequence.start();
         is.close();
-        
-        
 
     }
 
@@ -71,8 +70,7 @@ public class ABPController {
         public void actionPerformed(ActionEvent ae) {
 
             abp.repaint();
-            if(inventory!=null)
-            {
+            if (inventory != null) {
                 inventory.getContainer().repaint();
             }
 
@@ -84,11 +82,9 @@ public class ABPController {
     }
 
     private void addKeyListener() {
-        
-        
-        
+
         abp.requestFocusInWindow();
-        
+
         abp.setKeyListener(new KeyListener() {
 
             @Override
@@ -98,14 +94,15 @@ public class ABPController {
 
             @Override
             public void keyPressed(KeyEvent ke) {
-                if(menuPanel!=null) menuPanel.dispose();
-                if(inventory!=null) inventory.dispose();
+                if (menuPanel != null) {
+                    menuPanel.dispose();
+                }
+                if (inventory != null) {
+                    inventory.dispose();
+                }
                 int oldX = student.x;
                 int oldY = student.y;
-                
-                
-                
-                
+
                 if (ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_D) {
                     if (charMovement.getFrame() < 5) {
                         charMovement.setAnimation(student.getAnimation()[0]);
@@ -152,15 +149,14 @@ public class ABPController {
                     }
                     student.y = student.y + 5;
                 }
-                
-                if(ke.getKeyCode() == KeyEvent.VK_I)
-                {
+
+                if (ke.getKeyCode() == KeyEvent.VK_I) {
                     inventory = new Inventory(charInventory);
                     inventory.setLocationRelativeTo(abp);
                 }
-                
+
                 if (ke.getKeyCode() == KeyEvent.VK_SPACE && charMovement.getIsInteracting()) {
-                
+
                     switch (charMovement.getStationNumber()) {
 
                         case 0:
@@ -183,6 +179,7 @@ public class ABPController {
                             break;
                         case 3:
 //                            System.out.println("trash initiated");
+                            menuPanel.populateTrashMenu(new TrashStation(), charInventory);
                             break;
                         case 4:
 //                            System.out.println("bakery initiated");
@@ -200,26 +197,43 @@ public class ABPController {
 //                            System.out.println("cooler initiated");
                             menuPanel.populateFoodMenu(new CoolerStation(randomize.getCoolerObjects()));
                             break;
-                            
-                    }
-                    
-                menuPanel.addItemsToInv((new ActionListener(){
 
-                @Override
-                public void actionPerformed(ActionEvent ae) {
-                    StoreObjects[] objectsTemp = menuPanel.getStoreObjects();
-                
-                    for(int i = 0 ; i < objectsTemp.length ; i++)
-                    {
-                        charInventory.addItem(objectsTemp[i], menuPanel.getSpinnerValue(i));
                     }
-                    }
-                }));
-                    
+
+                    menuPanel.addItemsToInv((new ActionListener() {
+
+                        @Override
+                        public void actionPerformed(ActionEvent ae) {
+                            StoreObjects[] objectsTemp = menuPanel.getStoreObjects();
+
+                            for (int i = 0; i < objectsTemp.length; i++) {
+                                charInventory.addItem(objectsTemp[i], menuPanel.getSpinnerValue(i));
+                            }
+                        }
+                    }));
 
                 }
-                
-                
+
+                menuPanel.removeItemsFromInv((new ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        ArrayList<StoreObjects> objectsTemp = charInventory.getInventoryObjects();
+
+                        for (int i = 0; i < objectsTemp.size(); i++) {
+                            charInventory.removeItem(objectsTemp.get(i), menuPanel.getSpinnerValue(i));
+
+                        }
+                        for (StoreObjects item : objectsTemp) {
+                            charInventory.removeItem(item, menuPanel.getSpinnerValue(objectsTemp.indexOf(item)));
+                            if (item.getNumInv() < 1) {
+                                objectsTemp.remove(objectsTemp.indexOf(item));
+                            }
+                        }
+
+                    }
+                }));
+
                 if (!charMovement.getAnimation().equals(charMovement.getFacing())) {
                     charMovement.setIsInteracting(false);
                 }
@@ -241,7 +255,6 @@ public class ABPController {
 
             }
         });
-        
-        
+
     }
 }

@@ -31,10 +31,10 @@ public class CharacterInventory {
         int quantity = (int) inf_quantity;
         if (quantity > 0) {
             if (map.get(item.getName()) != null && map.get(item.getName()) > 0) {
-                
+
                 map.put(item.getName(), map.get(item.getName()) + quantity);
                 item.setNumInv(map.get(item.getName()) + quantity);
-                
+
             } else {
 
                 map.put(item.getName(), quantity);
@@ -42,6 +42,18 @@ public class CharacterInventory {
                 item.setNumInv(quantity);
             }
         }
+    }
+
+    public void removeItem(StoreObjects item, double inf_quantity) {
+        int quantity = (int) inf_quantity;
+
+        map.put(item.getName(), map.get(item.getName()) - quantity);
+        item.setNumInv(map.get(item.getName()) - quantity);
+
+        if (item.getNumInv() < 1) {
+            inventoryObjects.remove(item);
+        }
+
     }
 
     public Map<String, Integer> getMap() {

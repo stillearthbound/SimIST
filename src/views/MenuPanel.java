@@ -155,7 +155,7 @@ public class MenuPanel extends JFrame{
             layoutConst.gridy = i + offset;
             content.add(actualItem, layoutConst);
             
-            actualQuantity = new JLabel((String)values.get(i));
+            actualQuantity = new JLabel(Integer.toString((int)values.get(i)));
             layoutConst.gridx = 1;
             layoutConst.gridy = i + offset;
             content.add(actualQuantity, layoutConst);
@@ -174,7 +174,7 @@ public class MenuPanel extends JFrame{
             i++;
             allSpinners.add(quantSpin);
         }
-        tossItems = new JButton("Grab Items");
+        tossItems = new JButton("Toss Items");
         layoutConst.gridx = 0;
         layoutConst.gridy = i + offset + 1;
         content.add(grabItems, layoutConst);
