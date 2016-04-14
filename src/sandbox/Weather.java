@@ -55,28 +55,31 @@ public class Weather {
         
         
         if (rain = true){
-            // rainy.gif
+        // WeatherFrame.weatherIcon.setIcon(WeatherFrame.rainyImage);
         }
         else if(cloudy = true){
-            //cloudy.gif
+        // WeatherFrame.weatherIcon.setIcon(WeatherFrame.cloudyImage);
         }
         else if(snow = true){
-            //snowy.gif
+        // WeatherFrame.weatherIcon.setIcon(WeatherFrame.snowyImage);
         }
         else if(sun = true){
-            //sunny.gif
+        // WeatherFrame.weatherIcon.setIcon(WeatherFrame.sunnyImage);
         }
         else{
-            //error? other weather code?
+         // WeatherFrame.weatherIcon.setText("ERROR");
         }
         System.out.println(weatherCodeString[(weatherCode)]);  
         System.out.println(temp + "°F");  
+        
+      //  WeatherFrame.tempLable.setText(temp + "°F");  
         
         in.close();
         
         
        
-        } 
+        }
+        
 
     }
 
