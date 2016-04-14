@@ -38,6 +38,7 @@ public class Inventory extends JFrame {
     private GridBagConstraints layoutConst = new GridBagConstraints();
     private JPanel content;
     private JPanel sideBar;
+    private JPanel container;
 
     public Inventory(CharacterInventory inventory) {
 
@@ -63,26 +64,26 @@ public class Inventory extends JFrame {
 
             }
         };
-
+        setLayout(new BorderLayout());
         setSize(378, 305);
-        JPanel container = new JPanel();
-        container.setSize(this.getSize());
+        container = new JPanel();
+        container.setPreferredSize(this.getSize());
         items = new ArrayList<>();
-        add(container);
+        add(container, BorderLayout.CENTER);
         container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
         container.add(content);
         container.add(sideBar);
-        content.setPreferredSize(new Dimension(270, 270));
+        content.setPreferredSize(new Dimension((int) Math.round(this.getWidth() * .714), (int) Math.round(this.getHeight() * .885)));
         content.setMinimumSize(content.getPreferredSize());
         content.setMaximumSize(content.getPreferredSize());
 
-        sideBar.setPreferredSize(new Dimension(90, 270));
+        sideBar.setPreferredSize(new Dimension((int) Math.round(this.getWidth() * .238), (int) Math.round(this.getHeight() * .885)));
         sideBar.setMinimumSize(content.getPreferredSize());
         sideBar.setMaximumSize(content.getPreferredSize());
 
         setTitle("CHARACTER INVENTORY");
         setVisible(true);
-        setResizable(false);
+        //setResizable(false);
 
         content.setLayout(new GridLayout(4, 5));
         sideBar.setLayout(null);
@@ -149,6 +150,11 @@ public class Inventory extends JFrame {
 
             i++;
         }
+
+    }
+
+    public JPanel getContainer() {
+        return container;
     }
 
 }

@@ -1,5 +1,6 @@
 package controllers;
 
+import java.awt.Component;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -59,6 +60,8 @@ public class ABPController {
         sequence.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
         sequence.start();
         is.close();
+        
+        
 
     }
 
@@ -68,6 +71,10 @@ public class ABPController {
         public void actionPerformed(ActionEvent ae) {
 
             abp.repaint();
+            if(inventory!=null)
+            {
+                inventory.getContainer().repaint();
+            }
 
         }
     }
@@ -149,6 +156,7 @@ public class ABPController {
                 if(ke.getKeyCode() == KeyEvent.VK_I)
                 {
                     inventory = new Inventory(charInventory);
+                    inventory.setLocationRelativeTo(abp);
                 }
                 
                 if (ke.getKeyCode() == KeyEvent.VK_SPACE && charMovement.getIsInteracting()) {
