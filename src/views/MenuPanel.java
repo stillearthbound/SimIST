@@ -34,6 +34,7 @@ public class MenuPanel extends JFrame{
     private JLabel actualCost;
     private JLabel actualQuantity;
     private JButton grabItems = new JButton();
+    private JButton tossItems = new JButton();
     private JSpinner quantSpin;
     private FoodStations infStation = new FoodStations();
     private ArrayList<JSpinner> allSpinners = new ArrayList<JSpinner>();
@@ -116,7 +117,9 @@ public class MenuPanel extends JFrame{
     public void addItemsToInv(ActionListener al){    
        grabItems.addActionListener(al);
     }
-    
+    public void removeItemsFromInv(ActionListener al){    
+       tossItems.addActionListener(al);
+    }
     public double getSpinnerValue(int i)
     {
         return (double) allSpinners.get(i).getValue();
@@ -129,25 +132,9 @@ public class MenuPanel extends JFrame{
     
     public void populateTrashMenu(TrashStation trashStation, CharacterInventory charInventory)
     {
-
-
-
-    JLabel item;
-    JLabel cost;
-     JLabel quantity;
-     JLabel actualItem;
-     JLabel actualCost;
-     JLabel actualQuantity;
-     JButton grabItems;
-     JSpinner quantSpin;
-     ArrayList<JSpinner> allSpinners = new ArrayList<JSpinner>();
-     int offset = 2;
-     GridBagConstraints layoutConst = new GridBagConstraints();
-     JPanel content = new JPanel();
-    
-        content.setLayout(new GridBagLayout());
-        layoutConst.insets = new Insets(10, 10, 10, 10);
-       
+        allSpinners.clear();
+        content.removeAll();
+        
         item = new JLabel("Item");
         layoutConst.gridx = 0;
         layoutConst.gridy = 1;
@@ -158,24 +145,17 @@ public class MenuPanel extends JFrame{
         layoutConst.gridy = 1;
         content.add(quantity, layoutConst);
         
-        cost = new JLabel("Cost");
-        layoutConst.gridx = 2;
-        layoutConst.gridy = 1;
-        content.add(cost, layoutConst);
-        
         int i = 0;
         List keys = new ArrayList(charInventory.getMap().keySet());
         List values = new ArrayList(charInventory.getMap().values());
         
-                   
         while (i < charInventory.getMap().size()){
-            
             actualItem = new JLabel((String)keys.get(i));
             layoutConst.gridx = 0;
             layoutConst.gridy = i + offset;
             content.add(actualItem, layoutConst);
             
-            actualQuantity = new JLabel(Integer.toString((int)values.get(i)));
+            actualQuantity = new JLabel((String)values.get(i));
             layoutConst.gridx = 1;
             layoutConst.gridy = i + offset;
             content.add(actualQuantity, layoutConst);
@@ -185,8 +165,19 @@ public class MenuPanel extends JFrame{
 //            layoutConst.gridy = i + offset;
 //            content.add(actualCost, layoutConst);
             
+            quantSpin = new JSpinner(new SpinnerNumberModel(0.0, 0.0, (int)values.get(i), 1.0));
+            layoutConst.gridx = 2;
+            layoutConst.gridy = i + offset;
+            content.add(quantSpin, layoutConst);
+            
+            ((DefaultEditor) quantSpin.getEditor()).getTextField().setEditable(false);
             i++;
+            allSpinners.add(quantSpin);
         }
+        tossItems = new JButton("Grab Items");
+        layoutConst.gridx = 0;
+        layoutConst.gridy = i + offset + 1;
+        content.add(grabItems, layoutConst);
         
         setContentPane(content);
         pack();
@@ -194,10 +185,6 @@ public class MenuPanel extends JFrame{
         setVisible(true);
         setResizable(false);
     }
-    
-
-
-    
     
     public void populateCounterMenu(FrontCounterStation counterStation)
     {
