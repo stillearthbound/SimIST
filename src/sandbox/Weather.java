@@ -2,6 +2,7 @@ package sandbox;
 import java.net.*;
 import java.io.*;
 import java.util.*;
+import javax.swing.*;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -54,11 +55,43 @@ public class Weather {
         }
         
         
+        System.out.println(weatherCodeString[(weatherCode)]);  
+        System.out.println(temp + "°F");  
+         
+        
+        in.close();
+        
+        
+       
+        }
+    public class WeatherFrame extends JFrame{
+    ImageIcon sunnyImage;
+    ImageIcon cloudyImage;
+    ImageIcon rainyImage;
+    ImageIcon snowyImage;
+    JLabel tempLable;
+    JButton weatherIcon;
+    WeatherFrame(boolean rain, boolean cloudy, boolean snow, boolean sun, int temp){
+        JFrame f = new JFrame();
+        JPanel p = new JPanel();
+        tempLable = new JLabel();
+        weatherIcon = new JButton();
+        f.setVisible(true);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setSize(150,150);
+        f.setResizable(false);
+        f.add(p);
+        p.add(tempLable);
+        p.add(weatherIcon);
+        sunnyImage = new ImageIcon("src/sandbox/WeatherImages/Sunny.gif");
+        cloudyImage = new ImageIcon("src/sandbox/WeatherImages/Cloudy.gif");
+        rainyImage = new ImageIcon("src/sandbox/WeatherImages/Rainy.gif");
+        snowyImage = new ImageIcon("src/sandbox/WeatherImages/Snowy.gif");   
         if (rain = true){
-        // WeatherFrame.weatherIcon.setIcon(WeatherFrame.rainyImage);
+        //WeatherFrame.weatherIcon.setIcon(WeatherFrame.rainyImage);
         }
         else if(cloudy = true){
-        // WeatherFrame.weatherIcon.setIcon(WeatherFrame.cloudyImage);
+        //WeatherFrame.weatherIcon.setIcon(WeatherFrame.cloudyImage);
         }
         else if(snow = true){
         // WeatherFrame.weatherIcon.setIcon(WeatherFrame.snowyImage);
@@ -69,17 +102,10 @@ public class Weather {
         else{
          // WeatherFrame.weatherIcon.setText("ERROR");
         }
-        System.out.println(weatherCodeString[(weatherCode)]);  
-        System.out.println(temp + "°F");  
+        //WeatherFrame.tempLable.setText(temp + "°F"); 
         
-      //  WeatherFrame.tempLable.setText(temp + "°F");  
-        
-        in.close();
-        
-        
-       
-        }
         
 
     }
-
+    }
+}
