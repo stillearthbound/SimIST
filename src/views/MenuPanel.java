@@ -26,6 +26,8 @@ import java.util.List;
  * @author greg
  */
 public class MenuPanel extends JFrame{
+    
+    private String initiated;
     private JLabel stationName;
     private JLabel item;
     private JLabel cost;
@@ -33,8 +35,8 @@ public class MenuPanel extends JFrame{
     private JLabel actualItem;
     private JLabel actualCost;
     private JLabel actualQuantity;
-    private JButton grabItems = new JButton();
-    private JButton tossItems = new JButton();
+    private JButton grabItems = new JButton("Grab Items");
+    private JButton tossItems = new JButton("Toss Items");
     private JSpinner quantSpin;
     private FoodStations infStation = new FoodStations();
     private ArrayList<JSpinner> allSpinners = new ArrayList<JSpinner>();
@@ -101,7 +103,7 @@ public class MenuPanel extends JFrame{
             allSpinners.add(quantSpin);
 
         }
-        grabItems = new JButton("Grab Items");
+        //grabItems = new JButton("Grab Items");
         layoutConst.gridx = 0;
         layoutConst.gridy = i + offset + 1;
         content.add(grabItems, layoutConst);
@@ -111,6 +113,7 @@ public class MenuPanel extends JFrame{
         this.setTitle(station.getStationName());
         setVisible(true);
         setResizable(false);
+        initiated = "foodstation";
     }
     
     
@@ -128,6 +131,16 @@ public class MenuPanel extends JFrame{
     public StoreObjects[] getStoreObjects()
     {
         return infStation.getStationObjects();
+    }
+    
+    public String getInitiated()
+    {
+        return initiated;
+    }
+    
+    public JButton getGrabItems()
+    {
+        return grabItems;
     }
     
     public void populateTrashMenu(TrashStation trashStation, CharacterInventory charInventory)
@@ -174,7 +187,6 @@ public class MenuPanel extends JFrame{
             i++;
             allSpinners.add(quantSpin);
         }
-        tossItems = new JButton("Toss Items");
         layoutConst.gridx = 0;
         layoutConst.gridy = i + offset + 1;
         content.add(grabItems, layoutConst);
@@ -184,6 +196,8 @@ public class MenuPanel extends JFrame{
         setTitle("TRASH MENU");
         setVisible(true);
         setResizable(false);
+        initiated = "trash";
+        
     }
     
     public void populateCounterMenu(FrontCounterStation counterStation)

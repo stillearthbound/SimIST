@@ -16,6 +16,7 @@ import javax.sound.midi.Sequencer;
 import views.*;
 import models.*;
 import javax.swing.Timer;
+import javax.swing.*;
 
 /**
  *
@@ -82,7 +83,9 @@ public class ABPController {
     }
 
     private void addKeyListener() {
+        menuPanel.addItemsToInv(new AddItemListener());
 
+        menuPanel.removeItemsFromInv(new RemoveItemListener());
         abp.requestFocusInWindow();
 
         abp.setKeyListener(new KeyListener() {
@@ -200,40 +203,7 @@ public class ABPController {
 
                     }
 
-                    menuPanel.addItemsToInv((new ActionListener() {
-
-                        @Override
-                        public void actionPerformed(ActionEvent ae) {
-                            StoreObjects[] objectsTemp = menuPanel.getStoreObjects();
-
-                            for (int i = 0; i < objectsTemp.length; i++) {
-                                charInventory.addItem(objectsTemp[i], menuPanel.getSpinnerValue(i));
-                            }
-                        }
-                    }));
-
                 }
-
-                menuPanel.removeItemsFromInv((new ActionListener() {
-
-                    @Override
-                    public void actionPerformed(ActionEvent ae) {
-                        ArrayList<StoreObjects> objectsTemp = charInventory.getInventoryObjects();
-
-                        for (int i = 0; i < objectsTemp.size(); i++) {
-                            charInventory.removeItem(objectsTemp.get(i), menuPanel.getSpinnerValue(i));
-
-                        }
-                        for (StoreObjects item : objectsTemp) {
-                            charInventory.removeItem(item, menuPanel.getSpinnerValue(objectsTemp.indexOf(item)));
-                            if (item.getNumInv() < 1) {
-                                objectsTemp.remove(objectsTemp.indexOf(item));
-                            }
-                        }
-
-                    }
-                }));
-
                 if (!charMovement.getAnimation().equals(charMovement.getFacing())) {
                     charMovement.setIsInteracting(false);
                 }
@@ -257,4 +227,40 @@ public class ABPController {
         });
 
     }
+
+    public class AddItemListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            StoreObjects[] objectsTemp = menuPanel.getStoreObjects();
+
+            for (int i = 0; i < objectsTemp.length; i++) {
+                charInventory.addItem(objectsTemp[i], menuPanel.getSpinnerValue(i));
+            }
+
+            //((AbstractButton) ae.getSource()).removeActionListener(this);
+        }
+    }
+
+    public class RemoveItemListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            ArrayList<StoreObjects> objectsTemp = charInventory.getInventoryObjects();
+            System.out.println("INSIDE ACTIONL");
+
+            for (int i = 0; i < objectsTemp.size(); i++) {
+                charInventory.removeItem(objectsTemp.get(i), menuPanel.getSpinnerValue(i));
+
+            }
+            for (StoreObjects item : objectsTemp) {
+                charInventory.removeItem(item, menuPanel.getSpinnerValue(objectsTemp.indexOf(item)));
+                if (item.getNumInv() < 1) {
+                    objectsTemp.remove(objectsTemp.indexOf(item));
+                }
+            }
+            //((AbstractButton) ae.getSource()).removeActionListener(this);
+        }
+    }
+
 }
