@@ -17,7 +17,6 @@ public class TestFrame extends JFrame {
     public TestFrame()
     {
         super();
-        setUndecorated(true);
         setSize(800,600);
         setResizable(false);
         setVisible(true);
