@@ -20,10 +20,10 @@ public class TestFrame extends JFrame {
         setSize(800,600);
         setResizable(false);
         setVisible(true);
-        
+        setLocationRelativeTo(null);
         validate();
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setFocusable(false);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setFocusable(false);
         
     }
 }

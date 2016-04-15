@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class MenuPanel extends JFrame{
     
-    private String initiated;
+
     private JLabel stationName;
     private JLabel item;
     private JLabel cost;
@@ -48,6 +48,7 @@ public class MenuPanel extends JFrame{
     
     
     public void populateFoodMenu(FoodStations station){
+       
         this.infStation = station;
         allSpinners.clear();
         content.removeAll();
@@ -113,7 +114,8 @@ public class MenuPanel extends JFrame{
         this.setTitle(station.getStationName());
         setVisible(true);
         setResizable(false);
-        initiated = "foodstation";
+        setLocation(MouseInfo.getPointerInfo().getLocation().x-(getWidth()/2),MouseInfo.getPointerInfo().getLocation().y-(getHeight()/2));
+
     }
     
     
@@ -139,10 +141,6 @@ public class MenuPanel extends JFrame{
         return infStation.getStationObjects();
     }
     
-    public String getInitiated()
-    {
-        return initiated;
-    }
     
     public JButton getGrabItems()
     {
@@ -179,11 +177,6 @@ public class MenuPanel extends JFrame{
             layoutConst.gridy = i + offset;
             content.add(actualQuantity, layoutConst);
             
-//            actualCost = new JLabel(String.format("$%.2f",charInventory.getInventoryObjects().get(i).getCost()));
-//            layoutConst.gridx = 2;
-//            layoutConst.gridy = i + offset;
-//            content.add(actualCost, layoutConst);
-            
             quantSpin = new JSpinner(new SpinnerNumberModel(0.0, 0.0, (int)values.get(i), 1.0));
             layoutConst.gridx = 2;
             layoutConst.gridy = i + offset;
@@ -202,7 +195,7 @@ public class MenuPanel extends JFrame{
         setTitle("TRASH MENU");
         setVisible(true);
         setResizable(false);
-        initiated = "trash";
+        setLocation(MouseInfo.getPointerInfo().getLocation().x-(getWidth()/2),MouseInfo.getPointerInfo().getLocation().y-(getHeight()/2));
         
     }
     
