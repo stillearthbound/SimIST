@@ -1,6 +1,5 @@
 package controllers;
 
-import java.awt.Component;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +15,6 @@ import javax.sound.midi.Sequencer;
 import views.*;
 import models.*;
 import javax.swing.Timer;
-import javax.swing.*;
 
 /**
  *
@@ -62,6 +60,7 @@ public class ABPController {
         sequence.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
         sequence.start();
         is.close();
+        
 
     }
 
@@ -78,156 +77,12 @@ public class ABPController {
         }
     }
 
-    public static void triggerMenu(StoreObjects[] storeObjects, FoodStations station) {
-        //MenuPanel menuPanel = new MenuPanel(storeObjects, station);
-    }
-
     private void addKeyListener() {
-//        menuPanel.addItemsToInv(new AddItemListener());
-//        menuPanel.removeItemsFromInv(new RemoveItemListener());
-
-        menuPanel.getGrabItems().addActionListener(new AddItemListener());
-        menuPanel.getTossItems().addActionListener(new RemoveItemListener());
-
+        menuPanel.addItemsToInv(new AddItemListener());
+        menuPanel.removeItemsFromInv(new RemoveItemListener());
         abp.requestFocusInWindow();
-
-        abp.setKeyListener(new KeyListener() {
-
-            @Override
-            public void keyTyped(KeyEvent ke) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent ke) {
-                if (menuPanel != null) {
-                    menuPanel.dispose();
-                }
-                if (inventory != null) {
-                    inventory.dispose();
-                }
-                int oldX = student.x;
-                int oldY = student.y;
-
-                if (ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_D) {
-                    if (charMovement.getFrame() < 5) {
-                        charMovement.setAnimation(student.getAnimation()[0]);
-                        charMovement.setFrame(charMovement.getFrame() + 1);
-                    } else if (charMovement.getFrame() >= 5 && charMovement.getFrame() < 10) {
-                        charMovement.setAnimation(student.getAnimation()[1]);
-                        charMovement.setFrame(charMovement.getFrame() + 1);
-                    } else if (charMovement.getFrame() > 9) {
-                        charMovement.setFrame(0);
-                    }
-                    student.x = student.x + 5;
-                } else if (ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_A) {
-
-                    if (charMovement.getFrame() < 5) {
-                        charMovement.setAnimation(student.getAnimation()[2]);
-                        charMovement.setFrame(charMovement.getFrame() + 1);
-                    } else if (charMovement.getFrame() >= 5 && charMovement.getFrame() < 10) {
-                        charMovement.setAnimation(student.getAnimation()[3]);
-                        charMovement.setFrame(charMovement.getFrame() + 1);
-                    } else if (charMovement.getFrame() > 9) {
-                        charMovement.setFrame(0);
-                    }
-                    student.x = student.x - 5;
-                } else if (ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_W) {
-                    if (charMovement.getFrame() < 5) {
-                        charMovement.setAnimation(student.getAnimation()[4]);
-                        charMovement.setFrame(charMovement.getFrame() + 1);
-                    } else if (charMovement.getFrame() >= 5 && charMovement.getFrame() < 10) {
-                        charMovement.setAnimation(student.getAnimation()[5]);
-                        charMovement.setFrame(charMovement.getFrame() + 1);
-                    } else if (charMovement.getFrame() > 9) {
-                        charMovement.setFrame(0);
-                    }
-                    student.y = student.y - 5;
-                } else if (ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_S) {
-                    if (charMovement.getFrame() < 5) {
-                        charMovement.setAnimation(student.getAnimation()[6]);
-                        charMovement.setFrame(charMovement.getFrame() + 1);
-                    } else if (charMovement.getFrame() >= 5 && charMovement.getFrame() < 10) {
-                        charMovement.setAnimation(student.getAnimation()[7]);
-                        charMovement.setFrame(charMovement.getFrame() + 1);
-                    } else if (charMovement.getFrame() > 9) {
-                        charMovement.setFrame(0);
-                    }
-                    student.y = student.y + 5;
-                }
-
-                if (ke.getKeyCode() == KeyEvent.VK_I) {
-                    inventory = new Inventory(charInventory);
-                    inventory.setLocationRelativeTo(abp);
-                }
-
-                if (ke.getKeyCode() == KeyEvent.VK_SPACE && charMovement.getIsInteracting()) {
-
-                    switch (charMovement.getStationNumber()) {
-
-                        case 0:
-                            System.out.println("counter initiated");
-//                    FrontCounterStation fC = new FrontCounterStation();
-//                    Counter c = new Counter();
-//                    try{
-//                        ABPController abp = new ABPController(c, fC);
-//                    }
-//                    catch(Exception e){
-
-//                    }
-                            break;
-                        case 1:
-//                            System.out.println("coffee initiated");
-                            menuPanel.populateFoodMenu(new CoffeeStation(randomize.getCoffeeObjects()));
-                            break;
-                        case 2:
-//                            System.out.println("sign initiated");
-                            break;
-                        case 3:
-//                            System.out.println("trash initiated");
-                            menuPanel.populateTrashMenu(new TrashStation(), charInventory);
-                            break;
-                        case 4:
-//                            System.out.println("bakery initiated");
-                            menuPanel.populateFoodMenu(new BreadStation(randomize.getBakeryObjects()));
-                            break;
-                        case 5:
-//                            System.out.println("fruit initiated");
-                            menuPanel.populateFoodMenu(new FruitStation(randomize.getFruitObjects()));
-                            break;
-                        case 6:
-//                            System.out.println("soup initiated");
-                            menuPanel.populateFoodMenu(new SoupStation(randomize.getSoupObjects()));
-                            break;
-                        case 7:
-//                            System.out.println("cooler initiated");
-                            menuPanel.populateFoodMenu(new CoolerStation(randomize.getCoolerObjects()));
-                            break;
-
-                    }
-
-                }
-                if (!charMovement.getAnimation().equals(charMovement.getFacing())) {
-                    charMovement.setIsInteracting(false);
-                }
-
-                for (Rectangle station : abp.getStations()) {
-                    if (student.intersects(station)) {
-                        charMovement.setIsInteracting(true);
-                        charMovement.setFacing(charMovement.getAnimation());
-                        student.x = oldX;
-                        student.y = oldY;
-                        charMovement.setStationNumber(abp.getStations().indexOf(station));
-                    }
-
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent ke) {
-
-            }
-        });
+        abp.addKeyListener(new MovementKeyListener(abp.getStations()));
+        abp.addKeyListener(new InteractKeyListener());
 
     }
 
@@ -257,13 +112,175 @@ public class ABPController {
                 }
 
             }
-            for(StoreObjects remove : toRemove)
-            {
-            charInventory.getInventoryObjects().remove(remove);
-            charInventory.getMap().remove((String)remove.getName());
+            for (StoreObjects remove : toRemove) {
+                charInventory.getInventoryObjects().remove(remove);
+                charInventory.getMap().remove((String) remove.getName());
             }
 
         }
     }
+    /*
+    
+          MOVEMENT LISTENER, INPUT ARRAYLIST OF RECTANGLES FOR COLLISION
+    
+    */
+    public class MovementKeyListener implements KeyListener {
+        
+        private ArrayList<Rectangle> obstacles;
+        public MovementKeyListener(ArrayList<Rectangle> inf_obstacles)
+        {
+            obstacles = inf_obstacles;
+        }
 
+        @Override
+        public void keyTyped(KeyEvent ke) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent ke) {
+            if (menuPanel != null) {
+                menuPanel.dispose();
+            }
+            if (inventory != null) {
+                inventory.dispose();
+            }
+            int oldX = student.x;
+            int oldY = student.y;
+
+            if (ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_D) {
+                if (charMovement.getFrame() < 5) {
+                    charMovement.setAnimation(student.getAnimation()[0]);
+                    charMovement.setFrame(charMovement.getFrame() + 1);
+                } else if (charMovement.getFrame() >= 5 && charMovement.getFrame() < 10) {
+                    charMovement.setAnimation(student.getAnimation()[1]);
+                    charMovement.setFrame(charMovement.getFrame() + 1);
+                } else if (charMovement.getFrame() > 9) {
+                    charMovement.setFrame(0);
+                }
+                student.x = student.x + 5;
+            } else if (ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_A) {
+
+                if (charMovement.getFrame() < 5) {
+                    charMovement.setAnimation(student.getAnimation()[2]);
+                    charMovement.setFrame(charMovement.getFrame() + 1);
+                } else if (charMovement.getFrame() >= 5 && charMovement.getFrame() < 10) {
+                    charMovement.setAnimation(student.getAnimation()[3]);
+                    charMovement.setFrame(charMovement.getFrame() + 1);
+                } else if (charMovement.getFrame() > 9) {
+                    charMovement.setFrame(0);
+                }
+                student.x = student.x - 5;
+            } else if (ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_W) {
+                if (charMovement.getFrame() < 5) {
+                    charMovement.setAnimation(student.getAnimation()[4]);
+                    charMovement.setFrame(charMovement.getFrame() + 1);
+                } else if (charMovement.getFrame() >= 5 && charMovement.getFrame() < 10) {
+                    charMovement.setAnimation(student.getAnimation()[5]);
+                    charMovement.setFrame(charMovement.getFrame() + 1);
+                } else if (charMovement.getFrame() > 9) {
+                    charMovement.setFrame(0);
+                }
+                student.y = student.y - 5;
+            } else if (ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_S) {
+                if (charMovement.getFrame() < 5) {
+                    charMovement.setAnimation(student.getAnimation()[6]);
+                    charMovement.setFrame(charMovement.getFrame() + 1);
+                } else if (charMovement.getFrame() >= 5 && charMovement.getFrame() < 10) {
+                    charMovement.setAnimation(student.getAnimation()[7]);
+                    charMovement.setFrame(charMovement.getFrame() + 1);
+                } else if (charMovement.getFrame() > 9) {
+                    charMovement.setFrame(0);
+                }
+                student.y = student.y + 5;
+            }
+
+            if (ke.getKeyCode() == KeyEvent.VK_I) {
+                inventory = new Inventory(charInventory);
+                inventory.setLocationRelativeTo(abp);
+            }
+            
+            if (!charMovement.getAnimation().equals(charMovement.getFacing())) {
+                    charMovement.setIsInteracting(false);
+                }
+
+                for (Rectangle station : obstacles) {
+                    if (student.intersects(station)) {
+                        charMovement.setIsInteracting(true);
+                        charMovement.setFacing(charMovement.getAnimation());
+                        student.x = oldX;
+                        student.y = oldY;
+                        charMovement.setStationNumber(abp.getStations().indexOf(station));
+                    }
+
+                }
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent ke) {
+
+        }
+    }
+
+    public class InteractKeyListener implements KeyListener {
+
+        @Override
+        public void keyTyped(KeyEvent ke) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent ke) {
+            if (menuPanel != null) {
+                menuPanel.dispose();
+            }
+
+            if (ke.getKeyCode() == KeyEvent.VK_SPACE && charMovement.getIsInteracting()) {
+
+                switch (charMovement.getStationNumber()) {
+
+                    case 0:
+                        System.out.println("counter initiated");
+
+                        break;
+                    case 1:
+//                            System.out.println("coffee initiated");
+                        menuPanel.populateFoodMenu(new CoffeeStation(randomize.getCoffeeObjects()));
+                        break;
+                    case 2:
+//                            System.out.println("sign initiated");
+                        break;
+                    case 3:
+//                            System.out.println("trash initiated");
+                        menuPanel.populateTrashMenu(new TrashStation(), charInventory);
+                        break;
+                    case 4:
+//                            System.out.println("bakery initiated");
+                        menuPanel.populateFoodMenu(new BreadStation(randomize.getBakeryObjects()));
+                        break;
+                    case 5:
+//                            System.out.println("fruit initiated");
+                        menuPanel.populateFoodMenu(new FruitStation(randomize.getFruitObjects()));
+                        break;
+                    case 6:
+//                            System.out.println("soup initiated");
+                        menuPanel.populateFoodMenu(new SoupStation(randomize.getSoupObjects()));
+                        break;
+                    case 7:
+//                            System.out.println("cooler initiated");
+                        menuPanel.populateFoodMenu(new CoolerStation(randomize.getCoolerObjects()));
+                        break;
+
+                }
+
+            }
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent ke) {
+
+        }
+    }
 }
