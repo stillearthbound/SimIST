@@ -123,6 +123,12 @@ public class MenuPanel extends JFrame{
     public void removeItemsFromInv(ActionListener al){    
        tossItems.addActionListener(al);
     }
+    
+    public JButton getTossItems()
+    {
+        return tossItems;
+    }
+    
     public double getSpinnerValue(int i)
     {
         return (double) allSpinners.get(i).getValue();
@@ -189,7 +195,7 @@ public class MenuPanel extends JFrame{
         }
         layoutConst.gridx = 0;
         layoutConst.gridy = i + offset + 1;
-        content.add(grabItems, layoutConst);
+        content.add(tossItems, layoutConst);
         
         setContentPane(content);
         pack();

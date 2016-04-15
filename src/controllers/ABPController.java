@@ -83,9 +83,12 @@ public class ABPController {
     }
 
     private void addKeyListener() {
-        menuPanel.addItemsToInv(new AddItemListener());
+//        menuPanel.addItemsToInv(new AddItemListener());
+//        menuPanel.removeItemsFromInv(new RemoveItemListener());
 
-        menuPanel.removeItemsFromInv(new RemoveItemListener());
+        menuPanel.getGrabItems().addActionListener(new AddItemListener());
+        menuPanel.getTossItems().addActionListener(new RemoveItemListener());
+
         abp.requestFocusInWindow();
 
         abp.setKeyListener(new KeyListener() {
@@ -238,7 +241,6 @@ public class ABPController {
                 charInventory.addItem(objectsTemp[i], menuPanel.getSpinnerValue(i));
             }
 
-            //((AbstractButton) ae.getSource()).removeActionListener(this);
         }
     }
 
@@ -246,20 +248,21 @@ public class ABPController {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            ArrayList<StoreObjects> objectsTemp = charInventory.getInventoryObjects();
-            System.out.println("INSIDE ACTIONL");
-
-            for (int i = 0; i < objectsTemp.size(); i++) {
-                charInventory.removeItem(objectsTemp.get(i), menuPanel.getSpinnerValue(i));
-
-            }
-            for (StoreObjects item : objectsTemp) {
-                charInventory.removeItem(item, menuPanel.getSpinnerValue(objectsTemp.indexOf(item)));
-                if (item.getNumInv() < 1) {
-                    objectsTemp.remove(objectsTemp.indexOf(item));
+            ArrayList<StoreObjects> toRemove = new ArrayList<>();
+            for (StoreObjects item : charInventory.getInventoryObjects()) {
+                charInventory.removeItem(item, menuPanel.getSpinnerValue(charInventory.getInventoryObjects().indexOf(item)));
+                if (charInventory.getMap().get(item.getName()) < 1) {
+                    toRemove.add(item);
+                    //charInventory.getInventoryObjects().remove(charInventory.getInventoryObjects().indexOf(item));
                 }
+
             }
-            //((AbstractButton) ae.getSource()).removeActionListener(this);
+            for(StoreObjects remove : toRemove)
+            {
+            charInventory.getInventoryObjects().remove(remove);
+            charInventory.getMap().remove((String)remove.getName());
+            }
+
         }
     }
 

@@ -115,7 +115,7 @@ public class Inventory extends JFrame {
 
             final ImageIcon itemPic = new ImageIcon(inventoryObject.getFilePath());
 
-            items.add(new JButton("<html><font color='white'>" + Integer.toString(inventoryObject.getNumInv()) + "</font></font></html>") {
+            items.add(new JButton("<html><font color='white'>" + Integer.toString(inventory.getMap().get((String)inventoryObject.getName())) + "</font></font></html>") {
                 @Override
                 public void paint(Graphics g) {
                     super.paint(g);

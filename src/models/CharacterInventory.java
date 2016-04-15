@@ -16,6 +16,8 @@ public class CharacterInventory {
 
     private ArrayList<StoreObjects> inventoryObjects;
     private Map<String, Integer> map;
+    private List keys;
+    private List values;
 
     public CharacterInventory() {
         inventoryObjects = new ArrayList<>();
@@ -29,6 +31,8 @@ public class CharacterInventory {
 
     public void addItem(StoreObjects item, double inf_quantity) {
         int quantity = (int) inf_quantity;
+        keys = new ArrayList(map.keySet());
+        values = new ArrayList(map.values());
         if (quantity > 0) {
             if (map.get(item.getName()) != null && map.get(item.getName()) > 0) {
 
@@ -48,11 +52,11 @@ public class CharacterInventory {
         int quantity = (int) inf_quantity;
 
         map.put(item.getName(), map.get(item.getName()) - quantity);
-        item.setNumInv(map.get(item.getName()) - quantity);
+        //item.setNumInv(map.get(item.getName()) - quantity);
 
-        if (item.getNumInv() < 1) {
-            inventoryObjects.remove(item);
-        }
+//        if (item.getNumInv() < 1) {
+//            inventoryObjects.remove(item);
+//        }
 
     }
 
