@@ -50,13 +50,9 @@ public class CharacterInventory {
 
     public void removeItem(StoreObjects item, double inf_quantity) {
         int quantity = (int) inf_quantity;
-
+        System.out.println("TRYING TO DELETE VALUE FOR KEY: "+item);
         map.put(item.getName(), map.get(item.getName()) - quantity);
-        //item.setNumInv(map.get(item.getName()) - quantity);
 
-//        if (item.getNumInv() < 1) {
-//            inventoryObjects.remove(item);
-//        }
 
     }
 

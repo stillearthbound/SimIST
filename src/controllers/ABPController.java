@@ -44,12 +44,11 @@ public class ABPController {
         randomize = new Randomize();
         menuPanel = new MenuPanel();
         charInventory = new CharacterInventory();
+        inventory = new Inventory();
 
         testFrame.add(abp);
 
-        addKeyListener();
-        gameTimer = new Timer(5, new GameTimer());
-        gameTimer.start();
+        addKeyListeners();
 
         InputStream is;
         Sequencer sequence;
@@ -60,10 +59,38 @@ public class ABPController {
         sequence.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
         sequence.start();
         is.close();
+
+    }
+
+    private void addKeyListeners() {
+        /*
+         STARTING TIMER
+         */
+        gameTimer = new Timer(5, new GameTimer());
+        gameTimer.start();
+
+        /*
+         SETTING LISTENERS ON BUTTONS FOR ADDING/SUBTRACTING/USING FROM INVENTORY
+         */
+        menuPanel.addItemsToInv(new AddItemListener());
+        menuPanel.removeItemsFromInv(new RemoveItemListener());
+        inventory.addUseListener(new UseItemListener());
+
+        /*
+         SETTING KEYLISTENERS ON THE PANEL TO DETECT MOVEMENT
+         */
+        abp.requestFocusInWindow();
+        abp.addKeyListener(new MovementKeyListener(abp.getStations()));
+        abp.addKeyListener(new InteractKeyListener());
         
 
     }
 
+    /*
+    
+     TIMER RUNS EVERY .05 SECONDS TO REFRESH
+
+     */
     class GameTimer implements ActionListener {
 
         @Override
@@ -77,15 +104,11 @@ public class ABPController {
         }
     }
 
-    private void addKeyListener() {
-        menuPanel.addItemsToInv(new AddItemListener());
-        menuPanel.removeItemsFromInv(new RemoveItemListener());
-        abp.requestFocusInWindow();
-        abp.addKeyListener(new MovementKeyListener(abp.getStations()));
-        abp.addKeyListener(new InteractKeyListener());
-
-    }
-
+    /*
+    
+     ADD ITEM FROM STATION BUTTON
+    
+     */
     public class AddItemListener implements ActionListener {
 
         @Override
@@ -99,6 +122,11 @@ public class ABPController {
         }
     }
 
+    /*
+    
+     REMOVE ITEM FROM STATION BUTTON
+    
+     */
     public class RemoveItemListener implements ActionListener {
 
         @Override
@@ -119,16 +147,44 @@ public class ABPController {
 
         }
     }
+
     /*
     
-          MOVEMENT LISTENER, INPUT ARRAYLIST OF RECTANGLES FOR COLLISION
+     USE ITEM FROM INVENTORY
     
-    */
+     */
+    public class UseItemListener implements ActionListener {
+
+  
+
+        public UseItemListener() {
+            
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            charInventory.removeItem(inventory.getItemSelected(), 1.0);
+
+            if (charInventory.getMap().get(inventory.getItemSelected().getName()) < 1) {
+                charInventory.getInventoryObjects().remove(inventory.getItemSelected());
+                charInventory.getMap().remove((String) inventory.getItemSelected().getName());
+            }
+            
+            inventory.popUpInventory(charInventory);
+
+        }
+    }
+
+    /*
+    
+     MOVEMENT LISTENER, INPUT ARRAYLIST OF RECTANGLES FOR COLLISION
+    
+     */
     public class MovementKeyListener implements KeyListener {
-        
+
         private ArrayList<Rectangle> obstacles;
-        public MovementKeyListener(ArrayList<Rectangle> inf_obstacles)
-        {
+
+        public MovementKeyListener(ArrayList<Rectangle> inf_obstacles) {
             obstacles = inf_obstacles;
         }
 
@@ -195,25 +251,32 @@ public class ABPController {
                 student.y = student.y + 5;
             }
 
+            /*
+            
+             PRESSING 'I' POPS UP INVENTORY
+            
+             */
             if (ke.getKeyCode() == KeyEvent.VK_I) {
-                inventory = new Inventory(charInventory);
+                inventory.popUpInventory(charInventory);
                 inventory.setLocationRelativeTo(abp);
             }
-            
+
             if (!charMovement.getAnimation().equals(charMovement.getFacing())) {
-                    charMovement.setIsInteracting(false);
+                charMovement.setIsInteracting(false);
+            }
+
+            for (Rectangle station : obstacles) {
+                if (student.intersects(station)) {
+                    student.x = oldX;
+                    student.y = oldY;
+
+                    charMovement.setIsInteracting(true);
+                    charMovement.setFacing(charMovement.getAnimation());
+                    charMovement.setStationNumber(abp.getStations().indexOf(station));
+
                 }
 
-                for (Rectangle station : obstacles) {
-                    if (student.intersects(station)) {
-                        charMovement.setIsInteracting(true);
-                        charMovement.setFacing(charMovement.getAnimation());
-                        student.x = oldX;
-                        student.y = oldY;
-                        charMovement.setStationNumber(abp.getStations().indexOf(station));
-                    }
-
-                }
+            }
 
         }
 
@@ -223,6 +286,11 @@ public class ABPController {
         }
     }
 
+    /*
+    
+     INTERACTING WITH STATIONS
+    
+     */
     public class InteractKeyListener implements KeyListener {
 
         @Override

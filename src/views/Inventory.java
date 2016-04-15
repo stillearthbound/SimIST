@@ -8,6 +8,7 @@ package views;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import models.*;
+import java.awt.event.ActionListener;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
@@ -19,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 
 /**
@@ -30,17 +32,19 @@ public class Inventory extends JFrame {
     private ArrayList<JButton> items;
     private Box gap;
     private GridBagConstraints layoutConst = new GridBagConstraints();
+    protected StoreObjects itemSelected;
     private JPanel content;
     private JPanel sideBar;
     private JPanel container;
+    private JButton useItem = new JButton("USE ME");
 
-    public Inventory(CharacterInventory inventory) {
+    public Inventory() {
 
         items = new ArrayList<>();
 
-        setSize(378, 305);
+        //setSize(378, 305);
+        setSize(420, 325);
         setTitle("CHARACTER INVENTORY");
-        setVisible(true);
 
         container = new JPanel();
         container.setSize(this.getSize());
@@ -83,39 +87,21 @@ public class Inventory extends JFrame {
 
         content.setLayout(new GridLayout(4, 5));
         sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.Y_AXIS));
-        JLabel item = new JLabel("<html><font color='white'>Item</font></font></html>", SwingConstants.CENTER);
-        JLabel name = new JLabel("<html><font color='white'>Name</font></font></html>", SwingConstants.CENTER);
 
-        sideBar.add(item);
-        sideBar.add(Box.createVerticalStrut(container.getSize().height / 6));
-        sideBar.add(name);
-
-//        while (i < inventory.getInventoryObjects().size()) {
-//
-//            actualItem = new JLabel(inventory.getInventoryObjects().get(i).getName());
-//            layoutConst.gridx = 1;
-//            layoutConst.gridy = i ;
-//            sideBar.add(actualItem, layoutConst);
-//
-//            actualQuantity = new JLabel(Integer.toString(inventory! .getInventoryObjects().get(i).getQuantity()));
-//            layoutConst.gridx = 1;
-//            layoutConst.gridy = i;
-//            sideBar.add(actualQuantity, layoutConst);
-//
-//            actualCost = new JLabel(String.format("$%.2f", inventory.getInventoryObjects().get(i).getCost()));
-//            layoutConst.gridx = 1;
-//            layoutConst.gridy = i ;
-//            sideBar.add(actualCost, layoutConst);
-//
-//            i++;
-//        }
-        int numItems = 0;
-        int i = 0;
+    }
+  
+    
+    public void popUpInventory(CharacterInventory inventory)
+    {
+        setVisible(true);
+        items.clear();
+        content.removeAll();
         for (StoreObjects inventoryObject : inventory.getInventoryObjects()) {
-
+            
+            
             final ImageIcon itemPic = new ImageIcon(inventoryObject.getFilePath());
 
-            items.add(new JButton("<html><font color='white'>" + Integer.toString(inventory.getMap().get((String)inventoryObject.getName())) + "</font></font></html>") {
+            items.add(new JButton("<html><font color='white'>" + Integer.toString(inventory.getMap().get((String) inventoryObject.getName())) + "</font></font></html>") {
                 @Override
                 public void paint(Graphics g) {
                     super.paint(g);
@@ -128,12 +114,15 @@ public class Inventory extends JFrame {
             items.get(inventory.getInventoryObjects().indexOf(inventoryObject)).setFocusPainted(false);
             items.get(inventory.getInventoryObjects().indexOf(inventoryObject)).setHorizontalAlignment(SwingConstants.RIGHT);
             items.get(inventory.getInventoryObjects().indexOf(inventoryObject)).setVerticalAlignment(SwingConstants.BOTTOM);
+            items.get(inventory.getInventoryObjects().indexOf(inventoryObject)).addActionListener(new ItemListener(inventoryObject));
             content.add(items.get(inventory.getInventoryObjects().indexOf(inventoryObject)));
+            
 
-            numItems += inventoryObject.getNumInv();
+            
+            
         }
 
-        System.out.println(numItems);
+        int i = 0;
         while (i < (16) - items.size()) {
 
             JButton empty = new JButton();
@@ -146,11 +135,51 @@ public class Inventory extends JFrame {
 
             i++;
         }
+        
+        container.repaint();
+        container.revalidate();
+    }
 
+    public void addUseListener(ActionListener al) {
+        useItem.addActionListener(al);
     }
 
     public JPanel getContainer() {
         return container;
+    }
+
+    public StoreObjects getItemSelected() {
+        return itemSelected;
+    }
+
+    public class ItemListener implements ActionListener {
+
+        private StoreObjects item;
+
+        public ItemListener(StoreObjects inf_inventoryObject) {
+
+            item = inf_inventoryObject;
+
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            itemSelected = item;
+            JLabel title = new JLabel("<html><font color='white'>Name</font></font></html>", SwingConstants.CENTER);
+            JLabel name = new JLabel("<html><font color='white'>" + item.getName() + "</font></font></html>", SwingConstants.CENTER);
+            useItem.setPreferredSize(new Dimension(sideBar.getSize().width, sideBar.getSize().height / 4));
+            System.out.println(itemSelected.getName());
+            sideBar.removeAll();
+            sideBar.add(title);
+            sideBar.add(Box.createVerticalStrut(container.getSize().height / 8));
+            sideBar.add(name);
+            sideBar.add(Box.createVerticalStrut(container.getSize().height / 8));
+            sideBar.add(Box.createHorizontalStrut((30)));
+            sideBar.add(useItem);
+            sideBar.repaint();
+            sideBar.revalidate();
+        }
+
     }
 
 }
