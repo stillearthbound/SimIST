@@ -20,7 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
 /**
@@ -51,6 +51,10 @@ public class Inventory extends JFrame {
         container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
 
         setContentPane(container);
+        getContentPane().setPreferredSize(new Dimension(420,300));
+        pack();
+
+        
 
         content = new JPanel() {
 
@@ -58,7 +62,7 @@ public class Inventory extends JFrame {
             protected void paintComponent(Graphics g) {
 
                 super.paintComponent(g);
-
+                getParent().getParent().requestFocus();
                 g.drawImage(new ImageIcon("inventory.png").getImage(), 0, 0, (int) Math.round(this.getWidth()), (int) Math.round(container.getHeight()), null);
 
             }
@@ -69,7 +73,7 @@ public class Inventory extends JFrame {
             protected void paintComponent(Graphics g) {
 
                 super.paintComponent(g);
-
+                getParent().getParent().requestFocus();
                 g.drawImage(new ImageIcon("sidebar.png").getImage(), 0, 0, (int) Math.round(this.getWidth()), (int) Math.round(container.getHeight()), null);
 
             }
@@ -77,6 +81,10 @@ public class Inventory extends JFrame {
 
         container.add(content);
         container.add(sideBar);
+
+        container.setFocusable(false);
+        content.setFocusable(false);
+        sideBar.setFocusable(false);
 
         content.setPreferredSize(new Dimension((int) Math.round(container.getWidth() * .714), (int) Math.round(container.getHeight() * .885)));
 
@@ -86,19 +94,18 @@ public class Inventory extends JFrame {
         getContentPane().setPreferredSize(new Dimension(content.getWidth() + sideBar.getWidth(), content.getHeight() + sideBar.getHeight()));
 
         content.setLayout(new GridLayout(4, 5));
-        sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.Y_AXIS));
-
+        sideBar.setLayout(new GridBagLayout());
+        //sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.Y_AXIS));
+        
     }
-  
-    
-    public void popUpInventory(CharacterInventory inventory)
-    {
+
+    public void popUpInventory(CharacterInventory inventory) {
         setVisible(true);
+        
         items.clear();
         content.removeAll();
         for (StoreObjects inventoryObject : inventory.getInventoryObjects()) {
-            
-            
+
             final ImageIcon itemPic = new ImageIcon(inventoryObject.getFilePath());
 
             items.add(new JButton("<html><font color='white'>" + Integer.toString(inventory.getMap().get((String) inventoryObject.getName())) + "</font></font></html>") {
@@ -116,10 +123,7 @@ public class Inventory extends JFrame {
             items.get(inventory.getInventoryObjects().indexOf(inventoryObject)).setVerticalAlignment(SwingConstants.BOTTOM);
             items.get(inventory.getInventoryObjects().indexOf(inventoryObject)).addActionListener(new ItemListener(inventoryObject));
             content.add(items.get(inventory.getInventoryObjects().indexOf(inventoryObject)));
-            
 
-            
-            
         }
 
         int i = 0;
@@ -135,9 +139,12 @@ public class Inventory extends JFrame {
 
             i++;
         }
-        
+
         container.repaint();
         container.revalidate();
+        System.out.println("FOCUS OWNER: "+getMostRecentFocusOwner());
+        
+       
     }
 
     public void addUseListener(ActionListener al) {
@@ -148,8 +155,21 @@ public class Inventory extends JFrame {
         return container;
     }
 
+    public JPanel getSideBar() {
+
+        return sideBar;
+    }
+
     public StoreObjects getItemSelected() {
         return itemSelected;
+    }
+
+    public class CloseListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            
+        }
     }
 
     public class ItemListener implements ActionListener {
@@ -178,6 +198,7 @@ public class Inventory extends JFrame {
             sideBar.add(useItem);
             sideBar.repaint();
             sideBar.revalidate();
+            System.out.println("FOCUS OWNER: "+getMostRecentFocusOwner());
         }
 
     }

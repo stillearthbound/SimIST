@@ -15,6 +15,8 @@ import javax.sound.midi.Sequencer;
 import views.*;
 import models.*;
 import javax.swing.Timer;
+import java.awt.*;
+import javax.swing.*;
 
 /**
  *
@@ -31,21 +33,21 @@ public class ABPController {
     private MenuPanel menuPanel;
     private Inventory inventory;
     private CharacterInventory charInventory;
+    private TestFrame testFrame;
+
 
     public ABPController() throws Exception {
-
-        TestFrame testFrame = new TestFrame();
+        testFrame = new TestFrame();
         student = new Customer();
         charMovement = new CharacterMovement();
         stations = new FoodStations();
         abp = new AuBonPainPanel(student, charMovement);
-        testFrame.setFocusable(false);
         abp.setFocusable(true);
         randomize = new Randomize();
         menuPanel = new MenuPanel();
         charInventory = new CharacterInventory();
         inventory = new Inventory();
-
+        
         testFrame.add(abp);
 
         addKeyListeners();
@@ -168,6 +170,7 @@ public class ABPController {
             if (charInventory.getMap().get(inventory.getItemSelected().getName()) < 1) {
                 charInventory.getInventoryObjects().remove(inventory.getItemSelected());
                 charInventory.getMap().remove((String) inventory.getItemSelected().getName());
+                inventory.getSideBar().removeAll();
             }
             
             inventory.popUpInventory(charInventory);
@@ -338,6 +341,9 @@ public class ABPController {
                     case 7:
 //                            System.out.println("cooler initiated");
                         menuPanel.populateFoodMenu(new CoolerStation(randomize.getCoolerObjects()));
+                        break;
+                    case 8:
+
                         break;
 
                 }

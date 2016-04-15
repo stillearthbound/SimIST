@@ -72,6 +72,7 @@ public   class AuBonPainPanel extends JPanel {
         fruit = new Rectangle();
         soup = new Rectangle();
         cooler = new Rectangle();
+        exitCompSci = new Rectangle();
         
         
     }
@@ -86,12 +87,12 @@ public   class AuBonPainPanel extends JPanel {
         fruit.setBounds(28, 5, FRUITWIDTH, FRUITHEIGHT);
         soup.setBounds(146, 17, SOUPWIDTH, SOUPHEIGHT);
         cooler.setBounds(318, 26, COOLERWIDTH, COOLERHEIGHT);
-
+        exitCompSci.setBounds(0,410, 20,100);
     }
     
     public ArrayList<Rectangle> getStations()
     {
-        return new ArrayList<>(Arrays.asList(counter, coffee, sign, trash, bakery, fruit, soup, cooler));
+        return new ArrayList<>(Arrays.asList(counter, coffee, sign, trash, bakery, fruit, soup, cooler, exitCompSci));
     }
     
     public void setKeyListener(KeyListener kl)
