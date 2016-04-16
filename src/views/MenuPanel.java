@@ -147,6 +147,11 @@ public class MenuPanel extends JFrame{
         return grabItems;
     }
     
+    public JPanel getContent()
+    {
+        return content;
+    }
+    
     public void populateTrashMenu(TrashStation trashStation, CharacterInventory charInventory)
     {
         allSpinners.clear();

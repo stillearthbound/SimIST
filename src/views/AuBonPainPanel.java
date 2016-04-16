@@ -9,7 +9,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
 
-public   class AuBonPainPanel extends JPanel {
+public class AuBonPainPanel extends JPanel {
+
     public static final int COUNTERWIDTH = 160;
     public static final int COUNTERHEIGHT = 192;
     public static final int COFFEEWIDTH = 309;
@@ -45,18 +46,17 @@ public   class AuBonPainPanel extends JPanel {
     public AuBonPainPanel(Customer inf_Student, CharacterMovement inf_characterMovement) {
         super();
         student = inf_Student;
-        setSize(800, 600);
+        characterMovement = inf_characterMovement;
+
+        setPreferredSize(new Dimension(800, 600));
         setLayout(null);
         add(temp);
         temp.setBounds(200, 200, 200, 200);
         init();
-        placeStations();
-        characterMovement = inf_characterMovement;
+
         this.addMouseMotionListener(new MouseAdapter() {
             @Override
-            public void mouseMoved(MouseEvent e)
-            {
-//                System.out.println(e.getPoint());
+            public void mouseMoved(MouseEvent e) {
                 temp.setText(e.getPoint().toString());
             }
         });
@@ -73,42 +73,53 @@ public   class AuBonPainPanel extends JPanel {
         soup = new Rectangle();
         cooler = new Rectangle();
         exitCompSci = new Rectangle();
-        
-        
+
     }
 
-    private void placeStations() {
-        student.setBounds(700, 400, student.width, student.height);
-        counter.setBounds(622, 158, COUNTERWIDTH, COUNTERHEIGHT);
-        coffee.setBounds(201, 513, COFFEEWIDTH, COFFEEHEIGHT);
-        sign.setBounds(86, 355, SIGNWIDTH, SIGNHEIGHT);
-        trash.setBounds(59, 492, TRASHWIDTH, TRASHHEIGHT);
-        bakery.setBounds(5, 132, BAKERYWIDTH, BAKERYHEIGHT);
-        fruit.setBounds(28, 5, FRUITWIDTH, FRUITHEIGHT);
-        soup.setBounds(146, 17, SOUPWIDTH, SOUPHEIGHT);
-        cooler.setBounds(318, 26, COOLERWIDTH, COOLERHEIGHT);
-        exitCompSci.setBounds(0,410, 20,100);
-    }
-    
-    public ArrayList<Rectangle> getStations()
-    {
+    public ArrayList<Rectangle> getStations() {
         return new ArrayList<>(Arrays.asList(counter, coffee, sign, trash, bakery, fruit, soup, cooler, exitCompSci));
     }
-    
-    public void setKeyListener(KeyListener kl)
-    {
+
+    public void setKeyListener(KeyListener kl) {
         addKeyListener(kl);
     }
-    
 
     @Override
     protected void paintComponent(Graphics g) {
-
+        setPreferredSize(getParent().getSize());
         super.paintComponent(g);
+        double playerHeight = getParent().getHeight() * .125;
+        double playerWidth = getParent().getWidth() * .06;
+        g.drawImage(new ImageIcon("floor.png").getImage(), 0, 0, getParent().getWidth(), getParent().getHeight(), null);
+        g.drawImage(new ImageIcon(characterMovement.getAnimation()).getImage(), student.x, student.y, (int) playerWidth, (int) playerHeight, null);
 
-        g.drawImage(new ImageIcon("floor.png").getImage(), 0, 0, null);
-        g.drawImage(new ImageIcon(characterMovement.getAnimation()).getImage(), student.x, student.y, null);
+        refreshStations();
+        
+        
+        ///TESTING LOCATIONS OF RECTANGLES
+        
+        
+//        g.setColor(Color.red);
+//        g.fillRect(student.x, student.y, student.width, student.height);
+//
+//        for (Rectangle rec : new ArrayList<>(Arrays.asList(counter, coffee, sign, trash, bakery, fruit, soup, cooler, exitCompSci))) {
+//
+//            g.fillRect(rec.x, rec.y, rec.width, rec.height);
+//        }
 
+    }
+
+    public void refreshStations() {
+        student.setBounds(Math.round(student.x), student.y, Math.round(getParent().getWidth() * .06f), Math.round(getParent().getHeight() * .125f));
+        counter.setBounds(Math.round(getParent().getWidth() * .8f), Math.round(getParent().getHeight() * .26f), Math.round(getParent().getWidth() * .2f), Math.round(getParent().getHeight() * .32f));
+        coffee.setBounds(Math.round(getParent().getWidth() * .25f), Math.round(getParent().getHeight() * .86f), Math.round(getParent().getWidth() * .4f), Math.round(getParent().getHeight() * .067f));
+        sign.setBounds(Math.round(getParent().getWidth() * .105f), Math.round(getParent().getHeight() * .6f), Math.round(getParent().getWidth() * .06f), Math.round(getParent().getHeight() * .075f));
+        trash.setBounds(Math.round(getParent().getWidth() * .074f), Math.round(getParent().getHeight() * .82f), Math.round(getParent().getWidth() * .14f), Math.round(getParent().getHeight() * .1f));
+        bakery.setBounds(0, Math.round(getParent().getHeight() * .22f), Math.round(getParent().getWidth() * .063f), Math.round(getParent().getHeight() * .25f));
+        fruit.setBounds(0, 0, Math.round(getParent().getWidth() * .15f), Math.round(getParent().getHeight() * .15f));
+        soup.setBounds(Math.round(getParent().getWidth() * .18f), 0, Math.round(getParent().getWidth() * .18f), Math.round(getParent().getHeight() * .067f));
+        cooler.setBounds(Math.round(getParent().getWidth() * .4f), 0, Math.round(getParent().getWidth() * .4f), Math.round(getParent().getHeight() * .08f));
+        exitCompSci.setBounds(0, Math.round(getParent().getHeight() * .7f), 10, Math.round(getParent().getHeight() * .17f));
     }
 
 }

@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyListener;
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -16,6 +17,7 @@ import views.*;
 import models.*;
 import javax.swing.Timer;
 import java.awt.*;
+import java.awt.event.ComponentEvent;
 import javax.swing.*;
 
 /**
@@ -35,10 +37,9 @@ public class ABPController {
     private CharacterInventory charInventory;
     private TestFrame testFrame;
 
-
     public ABPController() throws Exception {
         testFrame = new TestFrame();
-        student = new Customer();
+        student = new Customer(testFrame.getSize());
         charMovement = new CharacterMovement();
         stations = new FoodStations();
         abp = new AuBonPainPanel(student, charMovement);
@@ -47,8 +48,8 @@ public class ABPController {
         menuPanel = new MenuPanel();
         charInventory = new CharacterInventory();
         inventory = new Inventory();
-        
-        testFrame.add(abp);
+
+        testFrame.add(abp, BorderLayout.CENTER);
 
         addKeyListeners();
 
@@ -82,9 +83,14 @@ public class ABPController {
          SETTING KEYLISTENERS ON THE PANEL TO DETECT MOVEMENT
          */
         abp.requestFocusInWindow();
-        abp.addKeyListener(new MovementKeyListener(abp.getStations()));
+        abp.addKeyListener(new MovementKeyListener());
         abp.addKeyListener(new InteractKeyListener());
         
+        /*
+          ADD THE RESIZING LISTENER ON FRAME
+        */
+        
+        testFrame.addComponentListener(new Resizer());
 
     }
 
@@ -99,6 +105,7 @@ public class ABPController {
         public void actionPerformed(ActionEvent ae) {
 
             abp.repaint();
+
             if (inventory != null) {
                 inventory.getContainer().repaint();
             }
@@ -119,8 +126,9 @@ public class ABPController {
 
             for (int i = 0; i < objectsTemp.length; i++) {
                 charInventory.addItem(objectsTemp[i], menuPanel.getSpinnerValue(i));
+                
             }
-
+            menuPanel.dispose();
         }
     }
 
@@ -146,6 +154,7 @@ public class ABPController {
                 charInventory.getInventoryObjects().remove(remove);
                 charInventory.getMap().remove((String) remove.getName());
             }
+            menuPanel.dispose();
 
         }
     }
@@ -157,10 +166,8 @@ public class ABPController {
      */
     public class UseItemListener implements ActionListener {
 
-  
-
         public UseItemListener() {
-            
+
         }
 
         @Override
@@ -172,7 +179,7 @@ public class ABPController {
                 charInventory.getMap().remove((String) inventory.getItemSelected().getName());
                 inventory.getSideBar().removeAll();
             }
-            
+
             inventory.popUpInventory(charInventory);
 
         }
@@ -185,10 +192,8 @@ public class ABPController {
      */
     public class MovementKeyListener implements KeyListener {
 
-        private ArrayList<Rectangle> obstacles;
+        public MovementKeyListener() {
 
-        public MovementKeyListener(ArrayList<Rectangle> inf_obstacles) {
-            obstacles = inf_obstacles;
         }
 
         @Override
@@ -198,6 +203,9 @@ public class ABPController {
 
         @Override
         public void keyPressed(KeyEvent ke) {
+            double tempLeftRight = testFrame.getWidth() * .00625;
+            double tempUpDown = testFrame.getHeight() * .00833333;
+
             if (menuPanel != null) {
                 menuPanel.dispose();
             }
@@ -217,7 +225,7 @@ public class ABPController {
                 } else if (charMovement.getFrame() > 9) {
                     charMovement.setFrame(0);
                 }
-                student.x = student.x + 5;
+                student.x = student.x + (int) tempLeftRight;
             } else if (ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_A) {
 
                 if (charMovement.getFrame() < 5) {
@@ -229,7 +237,7 @@ public class ABPController {
                 } else if (charMovement.getFrame() > 9) {
                     charMovement.setFrame(0);
                 }
-                student.x = student.x - 5;
+                student.x = student.x - (int) tempLeftRight;
             } else if (ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_W) {
                 if (charMovement.getFrame() < 5) {
                     charMovement.setAnimation(student.getAnimation()[4]);
@@ -240,7 +248,7 @@ public class ABPController {
                 } else if (charMovement.getFrame() > 9) {
                     charMovement.setFrame(0);
                 }
-                student.y = student.y - 5;
+                student.y = student.y - (int) tempUpDown;
             } else if (ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_S) {
                 if (charMovement.getFrame() < 5) {
                     charMovement.setAnimation(student.getAnimation()[6]);
@@ -251,7 +259,7 @@ public class ABPController {
                 } else if (charMovement.getFrame() > 9) {
                     charMovement.setFrame(0);
                 }
-                student.y = student.y + 5;
+                student.y = student.y + (int) tempUpDown;
             }
 
             /*
@@ -267,8 +275,8 @@ public class ABPController {
             if (!charMovement.getAnimation().equals(charMovement.getFacing())) {
                 charMovement.setIsInteracting(false);
             }
-
-            for (Rectangle station : obstacles) {
+            abp.refreshStations();
+            for (Rectangle station : abp.getStations()) {
                 if (student.intersects(station)) {
                     student.x = oldX;
                     student.y = oldY;
@@ -356,5 +364,31 @@ public class ABPController {
         public void keyReleased(KeyEvent ke) {
 
         }
+    }
+
+    public class Resizer implements ComponentListener {
+        
+        
+        
+        @Override
+        public void componentResized(ComponentEvent ce) {
+            
+            JFrame placeHolder = (JFrame) ce.getSource();
+            student.setBounds(placeHolder.getWidth()-student.width*2,Math.round(placeHolder.getHeight()-student.height*2.5f),student.width,student.height);
+        }
+
+        @Override
+        public void componentMoved(ComponentEvent ce) {
+
+        }
+
+        @Override
+        public void componentShown(ComponentEvent ce) {
+        }
+
+        @Override
+        public void componentHidden(ComponentEvent ce) {
+        }
+
     }
 }

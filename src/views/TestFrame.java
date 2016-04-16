@@ -7,18 +7,22 @@ package views;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.awt.*;
 
 /**
  *
  * @author greg
  */
 public class TestFrame extends JFrame {
+    
 
+    
     public TestFrame()
     {
         super();
         setSize(800,600);
-        setResizable(false);
+        setPreferredSize(new Dimension(800,600));
+        //setResizable(false);
         setVisible(true);
         setLocationRelativeTo(null);
         validate();

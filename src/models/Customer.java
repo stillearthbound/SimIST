@@ -12,15 +12,20 @@ package models;
 import java.awt.*;
 public class Customer extends Rectangle{
     
-    private String name;
-    private String gender;
     private String[] animation;
+ 
     
-    public Customer()
+    public Customer(Dimension inf_FrameSize)
     {
         animation = new String [] {"right1.png" , "right2.png" , "left1.png" , "left2.png" , "up1.png" , "up2.png" , "down1.png" , "down2.png"};
-        height = 75;
-        width = 25;
+        double tempHeight = inf_FrameSize.height * .125;
+        double tempWidth = inf_FrameSize.width * .05;
+        double tempX = inf_FrameSize.width * .875;
+        double tempY = inf_FrameSize.height * .666;
+        height = (int) tempHeight;
+        width = (int) tempWidth;
+        x = (int) tempX;
+        y = (int) tempY;
     }
     
     

@@ -4,7 +4,7 @@ package models;
  *
  * @author Paul
  */
-
+import java.awt.*;
 public class CharacterMovement  {
 
     private String animation = "left1.png";
@@ -13,8 +13,9 @@ public class CharacterMovement  {
     private int frame = 0;
     private int stationNumber;
 
+
     public CharacterMovement() {
-        
+     
 
     }
 
