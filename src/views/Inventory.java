@@ -27,23 +27,22 @@ import java.awt.image.BufferedImage;
  *
  * @author greg
  */
-public class Inventory extends JFrame {
+public class Inventory extends JFrame implements ComponentListener{
 
     private ArrayList<JButton> items;
-    private Box gap;
     private GridBagConstraints layoutConst = new GridBagConstraints();
     protected StoreObjects itemSelected;
     private JPanel content;
     private JPanel sideBar;
     private JPanel container;
-    private JButton useItem = new JButton("USE ME");
+    private JButton useItem = new JButton("USE ITEM");
+    protected CharacterInventory inventory;
 
     public Inventory() {
 
         items = new ArrayList<>();
 
-        //setSize(378, 305);
-        setSize(420, 325);
+        setSize(520,400);
         setTitle("CHARACTER INVENTORY");
 
         container = new JPanel();
@@ -51,10 +50,8 @@ public class Inventory extends JFrame {
         container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
 
         setContentPane(container);
-        getContentPane().setPreferredSize(new Dimension(420,300));
+        getContentPane().setPreferredSize(new Dimension(520, 400));
         pack();
-
-        
 
         content = new JPanel() {
 
@@ -64,7 +61,6 @@ public class Inventory extends JFrame {
                 super.paintComponent(g);
                 getParent().getParent().requestFocus();
                 g.drawImage(new ImageIcon("inventory.png").getImage(), 0, 0, (int) Math.round(this.getWidth()), (int) Math.round(container.getHeight()), null);
-
             }
         };
 
@@ -95,13 +91,12 @@ public class Inventory extends JFrame {
 
         content.setLayout(new GridLayout(4, 5));
         sideBar.setLayout(new GridBagLayout());
-        //sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.Y_AXIS));
-        
+
     }
 
-    public void popUpInventory(CharacterInventory inventory) {
+    public void popUpInventory(CharacterInventory inf_inventory) {
         setVisible(true);
-        
+        inventory = inf_inventory;
         items.clear();
         content.removeAll();
         for (StoreObjects inventoryObject : inventory.getInventoryObjects()) {
@@ -142,9 +137,7 @@ public class Inventory extends JFrame {
 
         container.repaint();
         container.revalidate();
-        System.out.println("FOCUS OWNER: "+getMostRecentFocusOwner());
-        
-       
+
     }
 
     public void addUseListener(ActionListener al) {
@@ -160,15 +153,33 @@ public class Inventory extends JFrame {
         return sideBar;
     }
 
+
     public StoreObjects getItemSelected() {
         return itemSelected;
+    }
+
+    @Override
+    public void componentResized(ComponentEvent ce) {
+        sideBar.repaint();
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent ce) {
+    }
+
+    @Override
+    public void componentShown(ComponentEvent ce) {
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent ce) {
     }
 
     public class CloseListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            
+
         }
     }
 
@@ -184,21 +195,39 @@ public class Inventory extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
+            GridBagConstraints layoutConst = new GridBagConstraints();
             itemSelected = item;
-            JLabel title = new JLabel("<html><font color='white'>Name</font></font></html>", SwingConstants.CENTER);
+            JLabel title = new JLabel("<html><font color='white'>Name: </font></font></html>", SwingConstants.CENTER);
             JLabel name = new JLabel("<html><font color='white'>" + item.getName() + "</font></font></html>", SwingConstants.CENTER);
+            JLabel cost = new JLabel("<html><font color='white'>Total Cost: </font></font></html>", SwingConstants.CENTER);
+            JLabel itemCost = new JLabel(String.format("<html><font color='white'>$%.2f", item.getCost()*inventory.getMap().get((String)item.getName())) + "</font></font></html>", SwingConstants.CENTER);
+            JLabel paidFor = new JLabel("<html><font color='white'>Paid For: </font></font></html>", SwingConstants.CENTER);
+            JLabel itemPaidFor = new JLabel("<html><font color='white'>" + item.getPaidFor() + "</font></font></html>", SwingConstants.CENTER);
             useItem.setPreferredSize(new Dimension(sideBar.getSize().width, sideBar.getSize().height / 4));
-            System.out.println(itemSelected.getName());
             sideBar.removeAll();
-            sideBar.add(title);
-            sideBar.add(Box.createVerticalStrut(container.getSize().height / 8));
-            sideBar.add(name);
-            sideBar.add(Box.createVerticalStrut(container.getSize().height / 8));
-            sideBar.add(Box.createHorizontalStrut((30)));
-            sideBar.add(useItem);
+            layoutConst.gridx = 1;
+            layoutConst.gridy = GridBagConstraints.RELATIVE;
+            layoutConst.anchor = GridBagConstraints.NORTH;
+            
+            inventory.getMap().get((String)item.getName());
+
+            //ADDING LABELS
+            sideBar.add(title, layoutConst);
+            sideBar.add(name, layoutConst);
+            sideBar.add(Box.createVerticalStrut(container.getSize().height / 8), layoutConst);
+
+            sideBar.add(cost, layoutConst);
+            sideBar.add(itemCost, layoutConst);
+            sideBar.add(Box.createVerticalStrut(container.getSize().height / 8), layoutConst);
+
+            sideBar.add(paidFor, layoutConst);
+            sideBar.add(itemPaidFor, layoutConst);
+            sideBar.add(Box.createVerticalStrut(container.getSize().height / 8), layoutConst);
+
+            sideBar.add(useItem, layoutConst);
+
             sideBar.repaint();
             sideBar.revalidate();
-            System.out.println("FOCUS OWNER: "+getMostRecentFocusOwner());
         }
 
     }
