@@ -9,12 +9,6 @@ public class CharacterMovement  {
 
     private String animation = "left1.png";
     private String facing = "";
-<<<<<<< Updated upstream
-=======
-    private int stationFound;
-    private ArrayList<Rectangle> stations = new ArrayList<>();
-    private ArrayList<Rectangle> room206items = new ArrayList<>();
->>>>>>> Stashed changes
     private boolean isInteracting = false;
     private int frame = 0;
     private int stationNumber;
