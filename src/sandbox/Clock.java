@@ -23,17 +23,17 @@ public class Clock{
     int speed;
     int hours;
     String display;
-    
+
     public Clock() throws ParseException{
-        
+
         time = new ISTTime();
         progressionOfTime = new Timer();
         speed = 1;
         display = timeDateDisplay(time);
         task = new TimerTask(){
             @Override
-            public void run(){ 
-                
+            public void run(){
+
                if(speed == 0){
                    hours = 0;
                    time.setTime(hours);
@@ -53,7 +53,7 @@ public class Clock{
         };
         startTimer();
     }
-    
+
     public void startTimer(){
         progressionOfTime.scheduleAtFixedRate(task, 1000, 60000);
     }
@@ -62,4 +62,3 @@ public class Clock{
         return time.showTime() + "    " + time.showDate();
     }
 }
-

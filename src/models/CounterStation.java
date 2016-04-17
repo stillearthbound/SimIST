@@ -9,10 +9,6 @@ package models;
  *
  * @author greg
  */
-public class CoffeeStation extends FoodStations{
+public class CounterStation  {
     
-    public CoffeeStation(StoreObjects[] inf_station){
-        stationName = "Coffee Station";
-        station = inf_station;
-    }
 }

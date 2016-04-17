@@ -15,33 +15,33 @@ import java.time.format.DateTimeFormatter;
  */
 public class ISTTime {
     LocalDateTime now;
-    
+
 
 
     public ISTTime() throws ParseException{
         this.now = LocalDateTime.of(2016,4,1,8,0);
     }
-    
+
     public LocalTime getTime(){
       return now.toLocalTime();
     }
-    
+
     public LocalDate getDate(){
         return now.toLocalDate();
     }
-    
+
     public void setTime(int hours){
         now = now.plusHours(hours);
     }
-    
+
     public void setDate(LocalDate newDate){
         now = newDate.atTime(getTime());
     }
-    
-    public String showDate(){  
+
+    public String showDate(){
         return now.format(DateTimeFormatter.ofPattern("d MMM uuuu"));
     }
-    
+
     public String showTime(){
         return now.format(DateTimeFormatter.ofPattern("HH:mm"));
     }
@@ -49,5 +49,5 @@ public class ISTTime {
     {
     return now.getMonthValue();
     }
-    
+
 }
