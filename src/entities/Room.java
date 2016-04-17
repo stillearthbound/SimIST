@@ -29,14 +29,14 @@ public class Room extends JPanel implements ActionListener, KeyListener{
     private ArrayList<Object> computers;
     private Image roomImage;
     private Player player1;
-    private GameFrame theFrame;
+    //private GameFrame theFrame;
     
     public Room(int theRoomNumber){
        super();
        this.addKeyListener(this);
        this.player1 = new Player(500, 500);
        
-       this.theFrame = new GameFrame(this);
+       //this.theFrame = new GameFrame(this);
        this.setFocusable(true);
        this.roomNumber =  theRoomNumber;
        this.currentClass = "";
@@ -310,14 +310,14 @@ class Player extends Rectangle{
  *
  * @author Graham
  */
-class GameFrame extends JFrame{
-    
-    public GameFrame(Room theRoom){
-        this.setSize(new Dimension(500, 500));
-        this.add(theRoom);
-        this.validate();
-        this.setVisible(true);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
-    }
-}
+//class GameFrame extends JFrame{
+//    
+//    public GameFrame(Room theRoom){
+//        this.setSize(new Dimension(500, 500));
+//        //this.add(theRoom);
+//        this.validate();
+//        this.setVisible(true);
+//        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//        this.setLocationRelativeTo(null);
+//    }
+//}
