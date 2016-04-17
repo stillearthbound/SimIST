@@ -9,6 +9,12 @@ package models;
  *
  * @author greg
  */
-public class FruitStation {
+public class FruitStation extends FoodStations{
     
+    public FruitStation(StoreObjects[] inf_station){
+        stationName = "Fruit Station";
+        station = inf_station;
+    }
+
+
 }
