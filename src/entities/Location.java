@@ -18,31 +18,11 @@ public class Location {
     private int xValue;
     private int yValue;
     //Assuming we will use tile based positions system.
-    private boolean isOccupied;
-    
-   //Temporary room and floor classes to show what we think they will loook like.
-    public class Room{
-        private int RoomNumber;
         
-        public class Floor{
-            private int floorNumber;
-            private ArrayList <Room> RoomList;
-            
-            Floor(int floorNumber, ArrayList<Room> RoomList){
-                this.floorNumber = floorNumber;
-                this.RoomList = RoomList;
-            }
-            private Floor floor;
-        }
-        
-        
-    }
-    
-    Location(/*Floor floor, */Room room, int xValue, int yValue, boolean isOccupied){
+    Location(/*Floor floor, */Room room, int xValue, int yValue){
         this.room = room;
         this.xValue = xValue;
         this.yValue = yValue;
-        this.isOccupied = isOccupied;
         //this.floor = floor;
     }
     
@@ -92,22 +72,6 @@ public class Location {
      */
     public void setyValue(int yValue) {
         this.yValue = yValue;
-    }
-
-    /**
-     * @return the isOccupied
-     */
-    public boolean isIsOccupied() {
-        return isOccupied;
-    }
-
-    /**
-     * @param isOccupied the isOccupied to set
-     */
-    //Will eventually be replaced with a more complex method once we have the graphical components and know how they work.
-    public void setIsOccupied(boolean isOccupied) {
-        this.isOccupied = isOccupied;
-    }
-    
+    }    
             
 }
