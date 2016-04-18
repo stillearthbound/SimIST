@@ -4,13 +4,14 @@ package models;
  *
  * @author Paul
  */
+import entities.Room;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import views.AuBonPainPanel;
 import views.Inventory;
 import views.MenuPanel;
 import views.TestFrame;
 import java.awt.event.KeyListener;
+import views.GameRoom;
 
 public class CharacterMovement implements KeyListener {
 
@@ -19,14 +20,14 @@ public class CharacterMovement implements KeyListener {
     private Customer mStudent;
     private Inventory mInventory;
     private CharacterInventory mCharInventory;
-    private AuBonPainPanel mPanel;
+    private GameRoom mPanel;
     private String animation = "left1.png";
     private String facing = "";
     private boolean isInteracting = false;
     private int frame = 0;
     private int stationNumber;
 
-    public CharacterMovement(TestFrame testFrame, MenuPanel menuPanel, Customer student, Inventory inventory, AuBonPainPanel panel, CharacterInventory charInventory) {
+    public CharacterMovement(TestFrame testFrame, MenuPanel menuPanel, Customer student, Inventory inventory, GameRoom panel, CharacterInventory charInventory) {
         mTestFrame = testFrame;
         mMenuPanel = menuPanel;
         mStudent = student;
@@ -119,6 +120,7 @@ public class CharacterMovement implements KeyListener {
 
         if (!animation.equals(facing)) {
             isInteracting = false;
+            
         }
 
         for (Rectangle station : mPanel.getStations()) {

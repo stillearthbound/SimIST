@@ -112,7 +112,7 @@ public class FrameTester {
 
             if (o == meetingRoom) {
                 try {
-                    MRController m = new MRController();
+                    //MRController m = new MRController();
                 } catch (Exception ex) {
                     System.err.println(ex);
                 }

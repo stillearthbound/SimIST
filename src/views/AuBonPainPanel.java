@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
 
-public class AuBonPainPanel extends JPanel {
+public class AuBonPainPanel extends GameRoom {
 
     public static final int COUNTERWIDTH = 160;
     public static final int COUNTERHEIGHT = 192;
@@ -93,19 +93,6 @@ public class AuBonPainPanel extends JPanel {
         g.drawImage(new ImageIcon(student.getAnimation()).getImage(), student.x, student.y, (int) playerWidth, (int) playerHeight, null);
 
         refreshStations();
-        
-        
-        ///TESTING LOCATIONS OF RECTANGLES
-        
-        
-//        g.setColor(Color.red);
-//        g.fillRect(student.x, student.y, student.width, student.height);
-//
-//        for (Rectangle rec : new ArrayList<>(Arrays.asList(counter, coffee, sign, trash, bakery, fruit, soup, cooler, exitCompSci))) {
-//
-//            g.fillRect(rec.x, rec.y, rec.width, rec.height);
-//        }
-
     }
 
     public void refreshStations() {

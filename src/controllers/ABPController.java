@@ -26,7 +26,7 @@ import javax.swing.*;
  */
 public class ABPController {
 
-    private AuBonPainPanel abp;
+    private GameRoom abp;
     private Timer gameTimer;
     private Customer student;
     private CharacterMovement charMovement;
