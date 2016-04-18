@@ -158,6 +158,8 @@ public class MenuPanel extends JFrame{
     {
         allSpinners.clear();
         content.removeAll();
+        content.setLayout(new GridBagLayout());
+        layoutConst.insets = new Insets(10, 10, 10, 10);
         
         item = new JLabel("Item");
         layoutConst.gridx = 0;
@@ -214,7 +216,8 @@ public class MenuPanel extends JFrame{
     public void populateSignMenu(String objectName, float objectCost)
     {
         content.removeAll();
-        
+        content.setLayout(new GridBagLayout());
+        layoutConst.insets = new Insets(10, 10, 10, 10);
         signIntro = new JLabel("Welcome to Au Bon Pain!");
         layoutConst.gridx = 0;
         layoutConst.gridy = 0;
@@ -233,6 +236,7 @@ public class MenuPanel extends JFrame{
         setContentPane(content);
         setTitle("ABP Sign");
         setVisible(true);
+        pack();
         setResizable(false);
         setLocationRelativeTo(null);    }
 }
