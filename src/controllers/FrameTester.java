@@ -40,13 +40,13 @@ public class FrameTester {
         frame = new TestFrame();
         frame.setLocationRelativeTo(null);
         student = new Customer(new Dimension(800,600));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setup();
         refreshPane();
     }
 
     public FrameTester(JPanel panel) {
         frame = new TestFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(panel);
         panel.setFocusable(true);
         panel.requestFocusInWindow();
