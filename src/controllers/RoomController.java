@@ -46,7 +46,6 @@ public class RoomController {
         menuPanel = new MenuPanel();
         inventory = new Inventory();
         charInventory = new CharacterInventory();
-        charMovement = new CharacterMovement(testFrame, menuPanel, student, inventory, room, charInventory);
         
         testFrame.add(room);
         

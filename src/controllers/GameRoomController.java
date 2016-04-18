@@ -34,7 +34,6 @@ public class GameRoomController {
     private Randomize randomize;
     private MenuPanel menuPanel;
     private Inventory inventory;
-    private CharacterInventory charInventory;
     private TestFrame testFrame;
     private static Timer signTimer;
     private static TimerTask updateSaleTask;
@@ -48,12 +47,10 @@ public class GameRoomController {
         room = inf_room;
         testFrame.setSize(room.getSize());
         room.setFocusable(true);
-
         randomize = new Randomize();
         menuPanel = new MenuPanel();
-        charInventory = new CharacterInventory();
         inventory = new Inventory();
-        charMovement = new CharacterMovement(testFrame, menuPanel, student, inventory, room, charInventory);
+        charMovement = new CharacterMovement(testFrame, menuPanel, student, inventory, room);
         testFrame.add(room, BorderLayout.CENTER);
 
         addKeyListeners();
@@ -154,7 +151,7 @@ public class GameRoomController {
             StoreObjects[] objectsTemp = menuPanel.getStoreObjects();
 
             for (int i = 0; i < objectsTemp.length; i++) {
-                charInventory.addItem(objectsTemp[i], menuPanel.getSpinnerValue(i));
+                student.getInventory().addItem(objectsTemp[i], menuPanel.getSpinnerValue(i));
 
             }
             menuPanel.dispose();
@@ -171,17 +168,17 @@ public class GameRoomController {
         @Override
         public void actionPerformed(ActionEvent ae) {
             ArrayList<StoreObjects> toRemove = new ArrayList<>();
-            for (StoreObjects item : charInventory.getInventoryObjects()) {
-                charInventory.removeItem(item, menuPanel.getSpinnerValue(charInventory.getInventoryObjects().indexOf(item)));
-                if (charInventory.getMap().get(item.getName()) < 1) {
+            for (StoreObjects item : student.getInventory().getInventoryObjects()) {
+                student.getInventory().removeItem(item, menuPanel.getSpinnerValue(student.getInventory().getInventoryObjects().indexOf(item)));
+                if (student.getInventory().getMap().get(item.getName()) < 1) {
                     toRemove.add(item);
                     //charInventory.getInventoryObjects().remove(charInventory.getInventoryObjects().indexOf(item));
                 }
 
             }
             for (StoreObjects remove : toRemove) {
-                charInventory.getInventoryObjects().remove(remove);
-                charInventory.getMap().remove((String) remove.getName());
+                student.getInventory().getInventoryObjects().remove(remove);
+                student.getInventory().getMap().remove((String) remove.getName());
             }
             menuPanel.dispose();
 
@@ -201,15 +198,15 @@ public class GameRoomController {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            charInventory.removeItem(inventory.getItemSelected(), 1.0);
+            student.getInventory().removeItem(inventory.getItemSelected(), 1.0);
 
-            if (charInventory.getMap().get(inventory.getItemSelected().getName()) < 1) {
-                charInventory.getInventoryObjects().remove(inventory.getItemSelected());
-                charInventory.getMap().remove((String) inventory.getItemSelected().getName());
+            if (student.getInventory().getMap().get(inventory.getItemSelected().getName()) < 1) {
+                student.getInventory().getInventoryObjects().remove(inventory.getItemSelected());
+                student.getInventory().getMap().remove((String) inventory.getItemSelected().getName());
                 inventory.getSideBar().removeAll();
             }
 
-            inventory.popUpInventory(charInventory);
+            inventory.popUpInventory(student.getInventory());
             inventory.getSideBar().repaint();
 
         }
@@ -247,7 +244,7 @@ public class GameRoomController {
                         case 2:
                             break;
                         case 3:
-                            menuPanel.populateTrashMenu(new TrashStation(), charInventory);
+                            menuPanel.populateTrashMenu(new TrashStation(), student.getInventory());
                             break;
                         case 4:
                             menuPanel.populateFoodMenu(new BreadStation(randomize.getBakeryObjects()));
