@@ -112,9 +112,8 @@ public class MenuPanel extends JFrame{
         layoutConst.gridy = i + offset + 1;
         content.add(grabItems, layoutConst);
         
-        this.setContentPane(content);
-        this.pack();
-        this.setTitle(station.getStationName());
+        setContentPane(content);
+        setTitle(station.getStationName());
         setVisible(true);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -198,7 +197,6 @@ public class MenuPanel extends JFrame{
         content.add(tossItems, layoutConst);
         
         setContentPane(content);
-        pack();
         setTitle("TRASH MENU");
         setVisible(true);
         setResizable(false);
@@ -231,7 +229,6 @@ public class MenuPanel extends JFrame{
         content.add(signCost, layoutConst);
         
         setContentPane(content);
-        pack();
         setTitle("ABP Sign");
         setVisible(true);
         setResizable(false);
