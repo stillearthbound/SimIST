@@ -250,7 +250,7 @@ public class GameRoomController {
                         break;
                     case 3:
 //                            System.out.println("trash initiated");
-                        menuPanel.populateTrashMenu(new TrashStation(), charInventory);
+                        menuPanel.populateTrashMenu(new TrashStation(), student.getInventory());
                         break;
                     case 4:
 //                            System.out.println("bakery initiated");

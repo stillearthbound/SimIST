@@ -117,8 +117,7 @@ public class MenuPanel extends JFrame{
         this.setTitle(station.getStationName());
         setVisible(true);
         setResizable(false);
-        setLocation(MouseInfo.getPointerInfo().getLocation().x-(getWidth()/2),MouseInfo.getPointerInfo().getLocation().y-(getHeight()/2));
-
+        setLocationRelativeTo(null);
     }
     
     
@@ -203,7 +202,7 @@ public class MenuPanel extends JFrame{
         setTitle("TRASH MENU");
         setVisible(true);
         setResizable(false);
-        setLocation(MouseInfo.getPointerInfo().getLocation().x-(getWidth()/2),MouseInfo.getPointerInfo().getLocation().y-(getHeight()/2));
+        setLocationRelativeTo(null);
         
     }
     
@@ -236,6 +235,5 @@ public class MenuPanel extends JFrame{
         setTitle("ABP Sign");
         setVisible(true);
         setResizable(false);
-        setLocation(MouseInfo.getPointerInfo().getLocation().x-(getWidth()/2),MouseInfo.getPointerInfo().getLocation().y-(getHeight()/2));
-    }
+        setLocationRelativeTo(null);    }
 }
