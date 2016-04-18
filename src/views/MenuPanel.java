@@ -35,6 +35,9 @@ public class MenuPanel extends JFrame{
     private JLabel actualItem;
     private JLabel actualCost;
     private JLabel actualQuantity;
+    private JLabel signIntro;
+    private JLabel signMessage;
+    private JLabel signCost;
     private JButton grabItems = new JButton("Grab Items");
     private JButton tossItems = new JButton("Toss Items");
     private JSpinner quantSpin;
@@ -209,8 +212,30 @@ public class MenuPanel extends JFrame{
         
     }
     
-    public void populateSignMenu(SignStation signStation)
+    public void populateSignMenu(String objectName, float objectCost)
     {
+        content.removeAll();
         
+        signIntro = new JLabel("Welcome to Au Bon Pain!");
+        layoutConst.gridx = 0;
+        layoutConst.gridy = 0;
+        content.add(signIntro, layoutConst);
+        
+        signMessage = new JLabel("Today's 15% off special is: " + objectName);
+        layoutConst.gridx = 0;
+        layoutConst.gridy = 1;
+        content.add(signMessage, layoutConst);
+        
+        signCost = new JLabel(String.format("New Cost: $%.2f", objectCost));
+        layoutConst.gridx = 0;
+        layoutConst.gridy = 2;
+        content.add(signCost, layoutConst);
+        
+        setContentPane(content);
+        pack();
+        setTitle("ABP Sign");
+        setVisible(true);
+        setResizable(false);
+        setLocation(MouseInfo.getPointerInfo().getLocation().x-(getWidth()/2),MouseInfo.getPointerInfo().getLocation().y-(getHeight()/2));
     }
 }

@@ -36,7 +36,7 @@ public class GameRoomController {
     private Inventory inventory;
     private TestFrame testFrame;
     private static Timer signTimer;
-    private static TimerTask updateSaleTask;
+    private StoreObjects signObject;
     private static final int CHANGE_INTERVAL = 10000;
 
     public GameRoomController(Customer inf_student, GameRoom inf_room) throws Exception {
@@ -52,6 +52,12 @@ public class GameRoomController {
         inventory = new Inventory();
         charMovement = new CharacterMovement(testFrame, menuPanel, student, inventory, room);
         testFrame.add(room, BorderLayout.CENTER);
+        
+        signObject = randomize.getRandObject(randomize.getAllFood());
+        System.out.println("Food Object: " + signObject.getName());
+        System.out.printf("Price changed from $%.2f", signObject.getCost());
+        signObject.changeCost((float) (signObject.getCost() * .85));
+        System.out.printf(" to $%.2f\n", signObject.getCost());
 
         addKeyListeners();
 
@@ -118,25 +124,21 @@ public class GameRoomController {
 
     class SignTimer implements ActionListener {
 
-        private StoreObjects signObject;
-        int i = 0;
-
         @Override
         public void actionPerformed(ActionEvent ae) {
-            if (i > 0) {
-                System.out.printf("%s price returned from $%.2f", signObject.getName(), signObject.getCost());
-                signObject.changeCost((float) (signObject.getCost() * 1.176470588));
-                System.out.printf(" to $%.2f\n", signObject.getCost());
-            }
+            System.out.printf("%s price returned from $%.2f", signObject.getName(), signObject.getCost());
+            signObject.changeCost((float) (signObject.getCost() * 1.176470588));
+            System.out.printf(" to $%.2f\n", signObject.getCost());
+            
             signObject = randomize.getRandObject(randomize.getAllFood());
             System.out.println("Food Object: " + signObject.getName());
             System.out.printf("Price changed from $%.2f", signObject.getCost());
             signObject.changeCost((float) (signObject.getCost() * .85));
             System.out.printf(" to $%.2f\n", signObject.getCost());
-            i++;
         }
         // Got rid of duplicate code here. George
     }
+    
 
     /*
     
@@ -235,31 +237,39 @@ public class GameRoomController {
                     switch (charMovement.getStationNumber()) {
 
                         case 0:
-                            System.out.println("counter initiated");
+                        System.out.println("counter initiated");
 
-                            break;
-                        case 1:
-                            menuPanel.populateFoodMenu(new CoffeeStation(randomize.getCoffeeObjects()));
-                            break;
-                        case 2:
-                            break;
-                        case 3:
-                            menuPanel.populateTrashMenu(new TrashStation(), student.getInventory());
-                            break;
-                        case 4:
-                            menuPanel.populateFoodMenu(new BreadStation(randomize.getBakeryObjects()));
-                            break;
-                        case 5:
-                            menuPanel.populateFoodMenu(new FruitStation(randomize.getFruitObjects()));
-                            break;
-                        case 6:
-                            menuPanel.populateFoodMenu(new SoupStation(randomize.getSoupObjects()));
-                            break;
-                        case 7:
-                            menuPanel.populateFoodMenu(new CoolerStation(randomize.getCoolerObjects()));
-                            break;
-                        case 8:
-                            break;
+                        break;
+                    case 1:
+//                            System.out.println("coffee initiated");
+                        menuPanel.populateFoodMenu(new CoffeeStation(randomize.getCoffeeObjects()));
+                        break;
+                    case 2:
+//                            System.out.println("sign initiated");
+                        menuPanel.populateSignMenu(signObject.getName(), signObject.getCost());
+                        break;
+                    case 3:
+//                            System.out.println("trash initiated");
+                        menuPanel.populateTrashMenu(new TrashStation(), charInventory);
+                        break;
+                    case 4:
+//                            System.out.println("bakery initiated");
+                        menuPanel.populateFoodMenu(new BreadStation(randomize.getBakeryObjects()));
+                        break;
+                    case 5:
+//                            System.out.println("fruit initiated");
+                        menuPanel.populateFoodMenu(new FruitStation(randomize.getFruitObjects()));
+                        break;
+                    case 6:
+//                            System.out.println("soup initiated");
+                        menuPanel.populateFoodMenu(new SoupStation(randomize.getSoupObjects()));
+                        break;
+                    case 7:
+//                            System.out.println("cooler initiated");
+                        menuPanel.populateFoodMenu(new CoolerStation(randomize.getCoolerObjects()));
+                        break;
+                    case 8:
+                        break;
 
                     }
                 }
