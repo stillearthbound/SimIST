@@ -75,7 +75,7 @@ public class Room206 extends JPanel {
         add(msg);
         init();
         placeStations();
-        this.addKeyListener(characterMovement);
+//        this.addKeyListener(characterMovement);
 
         this.addMouseMotionListener(new MouseAdapter() {
             @Override

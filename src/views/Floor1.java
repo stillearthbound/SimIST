@@ -7,6 +7,7 @@ package views;
 
 import controllers.FloorController;
 import entities.Room;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -60,8 +61,8 @@ public class Floor1 extends JPanel implements ActionListener, KeyListener{
         entries.add(new RoomEntry(208, 50, 250, rooms.get(3)));
         entries.add(new RoomEntry(210, 50, 300, rooms.get(4)));
         player1 = new player();
-        cust1 = new Customer();
-        charMove1 = new CharacterMovement(cust1);
+        cust1 = new Customer(new Dimension(800, 600));
+        charMove1 = new CharacterMovement();
         abp1 = new AuBonPainPanel(cust1, charMove1);
         entry1 = new AbpEntry(1, 450, 50, abp1);
         this.addKeyListener(this);

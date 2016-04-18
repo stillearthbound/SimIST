@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
@@ -31,11 +32,11 @@ public class RoomController {
     {
         
         TestFrame testFrame = new TestFrame();
-        Customer student = new Customer();
-        CharacterMovement charMovement = new CharacterMovement(student);
+        Customer student = new Customer(new Dimension(800, 600));
+        CharacterMovement charMovement = new CharacterMovement();
         room = new Room206(student, charMovement);
-        charMovement.setRoom206(room.getShelf1(),room.getShelf2(), room.getLongtable(), room.getMiddletable1(),room.getMiddletable2(),room.getMiddletable3(),room.getMiddletable4(),room.getMiddletable5(), room.getMiddletable6(),room.getShorttable(), room.getCornertable1(),room.getCornertable2(),room.getKey());
-        charMovement.setWall(room.getWallUD1(),room.getWallUD2(), room.getWallLR1(), room.getWallLR2());
+//        charMovement.setRoom206(room.getShelf1(),room.getShelf2(), room.getLongtable(), room.getMiddletable1(),room.getMiddletable2(),room.getMiddletable3(),room.getMiddletable4(),room.getMiddletable5(), room.getMiddletable6(),room.getShorttable(), room.getCornertable1(),room.getCornertable2(),room.getKey());
+//        charMovement.setWall(room.getWallUD1(),room.getWallUD2(), room.getWallLR1(), room.getWallLR2());
         testFrame.add(room);
         testFrame.setSize(530,670);
         

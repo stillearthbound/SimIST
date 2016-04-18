@@ -6,6 +6,7 @@
 
 package controllers;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
@@ -31,7 +32,7 @@ public class MRController {
     {
         
         TestFrame testFrame = new TestFrame();
-        Customer student = new Customer();
+        Customer student = new Customer(new Dimension(800, 600));
         MeetingRoomMovement charMovement = new MeetingRoomMovement(student);
         mrp = new MeetingRoomPanel(student, charMovement);
         charMovement.setStations(mrp.getTable(), mrp.getProjector());
