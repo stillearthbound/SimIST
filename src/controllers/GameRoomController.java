@@ -26,7 +26,7 @@ import javax.swing.*;
  */
 public class GameRoomController {
 
-    private GameRoom abp;
+    private GameRoom room;
     private Timer gameTimer;
     private Customer student;
     private CharacterMovement charMovement;
@@ -42,19 +42,19 @@ public class GameRoomController {
 
     public GameRoomController(Customer inf_student, GameRoom inf_room) throws Exception {
         testFrame = new TestFrame();
-        
+
         student = inf_student;
         stations = new FoodStations();
-        abp = inf_room;
-        testFrame.setSize(abp.getSize());
-        abp.setFocusable(true);
-        
+        room = inf_room;
+        testFrame.setSize(room.getSize());
+        room.setFocusable(true);
+
         randomize = new Randomize();
         menuPanel = new MenuPanel();
         charInventory = new CharacterInventory();
         inventory = new Inventory();
-        charMovement = new CharacterMovement(testFrame, menuPanel, student, inventory, abp, charInventory);
-        testFrame.add(abp, BorderLayout.CENTER);
+        charMovement = new CharacterMovement(testFrame, menuPanel, student, inventory, room, charInventory);
+        testFrame.add(room, BorderLayout.CENTER);
 
         addKeyListeners();
 
@@ -89,9 +89,9 @@ public class GameRoomController {
         /*
          SETTING KEYLISTENERS ON THE PANEL TO DETECT MOVEMENT
          */
-        abp.requestFocusInWindow();
-        abp.addKeyListener(charMovement);
-        abp.addKeyListener(new InteractKeyListener());
+        room.requestFocusInWindow();
+        room.addKeyListener(charMovement);
+        room.addKeyListener(new InteractKeyListener());
 
         /*
          ADD THE RESIZING LISTENER ON FRAME
@@ -110,7 +110,7 @@ public class GameRoomController {
         @Override
         public void actionPerformed(ActionEvent ae) {
 
-            abp.repaint();
+            room.repaint();
 
             if (inventory != null) {
                 inventory.getContainer().repaint();
@@ -140,6 +140,7 @@ public class GameRoomController {
         }
         // Got rid of duplicate code here. George
     }
+
     /*
     
      ADD ITEM FROM STATION BUTTON
@@ -220,10 +221,7 @@ public class GameRoomController {
     
      */
     public class InteractKeyListener implements KeyListener {
-        
-        
-        
-        
+
         @Override
         public void keyTyped(KeyEvent ke) {
 
@@ -234,46 +232,39 @@ public class GameRoomController {
             if (menuPanel != null) {
                 menuPanel.dispose();
             }
+            if (room instanceof AuBonPainPanel) {
+                if (ke.getKeyCode() == KeyEvent.VK_SPACE && charMovement.getIsInteracting()) {
 
-            if (ke.getKeyCode() == KeyEvent.VK_SPACE && charMovement.getIsInteracting()) {
+                    switch (charMovement.getStationNumber()) {
 
-                switch (charMovement.getStationNumber()) {
+                        case 0:
+                            System.out.println("counter initiated");
 
-                    case 0:
-                        System.out.println("counter initiated");
+                            break;
+                        case 1:
+                            menuPanel.populateFoodMenu(new CoffeeStation(randomize.getCoffeeObjects()));
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            menuPanel.populateTrashMenu(new TrashStation(), charInventory);
+                            break;
+                        case 4:
+                            menuPanel.populateFoodMenu(new BreadStation(randomize.getBakeryObjects()));
+                            break;
+                        case 5:
+                            menuPanel.populateFoodMenu(new FruitStation(randomize.getFruitObjects()));
+                            break;
+                        case 6:
+                            menuPanel.populateFoodMenu(new SoupStation(randomize.getSoupObjects()));
+                            break;
+                        case 7:
+                            menuPanel.populateFoodMenu(new CoolerStation(randomize.getCoolerObjects()));
+                            break;
+                        case 8:
+                            break;
 
-                        break;
-                    case 1:
-//                            System.out.println("coffee initiated");
-                        menuPanel.populateFoodMenu(new CoffeeStation(randomize.getCoffeeObjects()));
-                        break;
-                    case 2:
-//                            System.out.println("sign initiated");
-                        break;
-                    case 3:
-//                            System.out.println("trash initiated");
-                        menuPanel.populateTrashMenu(new TrashStation(), charInventory);
-                        break;
-                    case 4:
-//                            System.out.println("bakery initiated");
-                        menuPanel.populateFoodMenu(new BreadStation(randomize.getBakeryObjects()));
-                        break;
-                    case 5:
-//                            System.out.println("fruit initiated");
-                        menuPanel.populateFoodMenu(new FruitStation(randomize.getFruitObjects()));
-                        break;
-                    case 6:
-//                            System.out.println("soup initiated");
-                        menuPanel.populateFoodMenu(new SoupStation(randomize.getSoupObjects()));
-                        break;
-                    case 7:
-//                            System.out.println("cooler initiated");
-                        menuPanel.populateFoodMenu(new CoolerStation(randomize.getCoolerObjects()));
-                        break;
-                    case 8:
-
-                        break;
-
+                    }
                 }
 
             }
@@ -292,8 +283,9 @@ public class GameRoomController {
         public void componentResized(ComponentEvent ce) {
 
             JFrame placeHolder = (JFrame) ce.getSource();
-            if(abp instanceof AuBonPainPanel)
-            student.setBounds(placeHolder.getWidth() - student.width * 2, Math.round(placeHolder.getHeight() - student.height * 2.5f), student.width, student.height);
+            if (room instanceof AuBonPainPanel) {
+                student.setBounds(placeHolder.getWidth() - student.width * 2, Math.round(placeHolder.getHeight() - student.height * 2.5f), student.width, student.height);
+            }
         }
 
         @Override
