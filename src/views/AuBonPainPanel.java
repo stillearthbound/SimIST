@@ -46,6 +46,7 @@ public class AuBonPainPanel extends GameRoom {
     public AuBonPainPanel(Customer inf_Student) {
         super();
         student = inf_Student;
+        setSize(800,600);
 
         setPreferredSize(new Dimension(800, 600));
         setLayout(null);

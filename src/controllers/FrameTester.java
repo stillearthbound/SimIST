@@ -136,7 +136,6 @@ public class FrameTester {
                 try {
                     room = new Room206(student);
                     GameRoomController abp = new GameRoomController(student, room);
-                    //RoomController roomController = new RoomController();
                 } catch (Exception ex) {
                 }
             }
