@@ -36,6 +36,9 @@ public class ABPController {
     private Inventory inventory;
     private CharacterInventory charInventory;
     private TestFrame testFrame;
+    private static Timer signTimer;
+    private static TimerTask updateSaleTask;
+    private static final int CHANGE_INTERVAL = 10000;
 
     public ABPController() throws Exception {
         testFrame = new TestFrame();
@@ -57,7 +60,7 @@ public class ABPController {
         Sequencer sequence;
         sequence = MidiSystem.getSequencer();
         sequence.open();
-        is = new BufferedInputStream(new FileInputStream(new File("beatit.mid")));
+        is = new BufferedInputStream(new FileInputStream(new File("jamiroquai-canned_heat.mid")));
         sequence.setSequence(is);
         sequence.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
         sequence.start();
@@ -71,6 +74,8 @@ public class ABPController {
          */
         gameTimer = new Timer(5, new GameTimer());
         gameTimer.start();
+        signTimer = new Timer(CHANGE_INTERVAL, new SignTimer());
+        signTimer.start();
 
         /*
          SETTING LISTENERS ON BUTTONS FOR ADDING/SUBTRACTING/USING FROM INVENTORY
@@ -112,7 +117,27 @@ public class ABPController {
 
         }
     }
-
+    
+    class SignTimer implements ActionListener {
+        private StoreObjects signObject;
+        int i = 0;
+        
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            if (i > 0){
+                System.out.printf("%s price returned from $%.2f", signObject.getName(), signObject.getCost());
+                signObject.changeCost((float)(signObject.getCost() * 1.176470588));
+                System.out.printf(" to $%.2f\n", signObject.getCost());
+            }
+            signObject = randomize.getRandObject(randomize.getAllFood());
+            System.out.println("Food Object: " + signObject.getName());
+            System.out.printf("Price changed from $%.2f", signObject.getCost());
+            signObject.changeCost((float)(signObject.getCost() * .85));
+            System.out.printf(" to $%.2f\n", signObject.getCost());
+            i++;
+        }
+        // Got rid of duplicate code here. George
+    }
     /*
     
      ADD ITEM FROM STATION BUTTON
@@ -390,6 +415,6 @@ public class ABPController {
         @Override
         public void componentHidden(ComponentEvent ce) {
         }
-
+        
     }
 }

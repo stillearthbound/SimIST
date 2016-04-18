@@ -74,6 +74,9 @@ public class StoreObjects {
        
        
    }
+   public void changeCost(float newCost){
+       cost = newCost;
+   }
    
    public void setNumInv(int set)
    {

@@ -29,7 +29,7 @@ public class FrameTester {
     private JButton floor1;
     private JButton cybertorium;
 
-    private ClockPanel clock;
+    //private ClockPanel clock;
 
     public FrameTester() {
         frame = new TestFrame();
@@ -120,7 +120,7 @@ public class FrameTester {
 
             if (o == clockPanel) {
                 try {
-                    FrameTester frame = new FrameTester(new ClockPanel());
+                  //  FrameTester frame = new FrameTester(new ClockPanel());
                 } catch (Exception ex) {
                 }
             }

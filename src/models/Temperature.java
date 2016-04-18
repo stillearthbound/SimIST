@@ -4,10 +4,6 @@
  * and open the template in the editor.
  */
 package models;
-import sandbox.Clock;
-import sandbox.Weather;
-import java.time.*;
-import java.time.temporal.*;
 
 
 /**

@@ -56,9 +56,7 @@ public class AuBonPainPanel extends JPanel {
 
         this.addMouseMotionListener(new MouseAdapter() {
             @Override
-
             public void mouseMoved(MouseEvent e) {
-
                 temp.setText(e.getPoint().toString());
             }
         });

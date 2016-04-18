@@ -35,11 +35,9 @@ public class CharacterMovement  {
         facing = set;
     }
     
-
     public boolean getIsInteracting()
     {
         return isInteracting;
-
     }
     
     public void setIsInteracting(boolean set)
@@ -56,8 +54,6 @@ public class CharacterMovement  {
     {
         frame = set;
     }
-
-
     
     public int getStationNumber()
     {
