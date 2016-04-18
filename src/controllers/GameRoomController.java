@@ -38,6 +38,7 @@ public class GameRoomController {
     private static Timer signTimer;
     private StoreObjects signObject;
     private static final int CHANGE_INTERVAL = 10000;
+    protected Sequencer sequence;
 
     public GameRoomController(Customer inf_student, GameRoom inf_room) throws Exception {
         testFrame = new TestFrame();
@@ -62,7 +63,6 @@ public class GameRoomController {
         addKeyListeners();
 
         InputStream is;
-        Sequencer sequence;
         sequence = MidiSystem.getSequencer();
         sequence.open();
         is = new BufferedInputStream(new FileInputStream(new File("jamiroquai-canned_heat.mid")));
@@ -306,6 +306,7 @@ public class GameRoomController {
 
         @Override
         public void componentHidden(ComponentEvent ce) {
+            sequence.stop();
         }
 
     }

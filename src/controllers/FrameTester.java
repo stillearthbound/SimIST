@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import models.Customer;
 import views.*;
@@ -45,6 +46,7 @@ public class FrameTester {
 
     public FrameTester(JPanel panel) {
         frame = new TestFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(panel);
         panel.setFocusable(true);
         panel.requestFocusInWindow();
