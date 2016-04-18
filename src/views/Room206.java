@@ -129,7 +129,7 @@ public class Room206 extends GameRoom {
         cornertable1.setBounds(444, 353, CornertableWidth, CornertableHeight);
         cornertable2.setBounds(413, 449, CornertableWidth, CornertableHeight);
         key.setBounds(29, 353, CornertableWidth, CornertableHeight);
-        wallUD1.setBounds(23,2, WallUDWidth, WallUDHeight);
+        wallUD1.setBounds(23,30, WallUDWidth, WallUDHeight);
         wallUD2.setBounds(23, 544, WallUDWidth, WallUDHeight);
         wallLR1.setBounds(0,66, WallLRWidth, WallLRHeight);
         wallLR2.setBounds(458,226, WallLRWidth, WallLRHeight);
@@ -221,7 +221,7 @@ public class Room206 extends GameRoom {
         super.paintComponent(g);
 
         g.drawImage(new ImageIcon("room206.png").getImage(), 0, 0, null);
-        g.drawImage(new ImageIcon(student.getAnimation()).getImage(), student.x, student.y, null);
+        g.drawImage(new ImageIcon(student.getAnimation()).getImage(), student.x, student.y, student.width, student.height, null);
 
     }
 

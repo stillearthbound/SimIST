@@ -134,7 +134,11 @@ public class FrameTester {
             
             if (o == room206) {
                 try {
+                    double tempHeight = student.height *.75;
+                    double tempWidth = student.width *.75;
                     room = new Room206(student);
+                    student.height = (int) tempHeight;
+                    student.width = (int) tempWidth;
                     GameRoomController abp = new GameRoomController(student, room);
                 } catch (Exception ex) {
                 }

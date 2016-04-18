@@ -41,8 +41,8 @@ public class CharacterMovement implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent ke) {
-        double tempLeftRight = mTestFrame.getWidth() * .00625;
-        double tempUpDown = mTestFrame.getHeight() * .00833333;
+        double tempLeftRight = mPanel.getWidth() * .00625;
+        double tempUpDown = mPanel.getHeight() * .00833333;
 
         if (mMenuPanel != null) {
             mMenuPanel.dispose();
