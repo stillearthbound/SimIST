@@ -27,6 +27,7 @@ public class FrameTester {
     private JButton room206;
     private JButton menuPanel;
     private JButton floor1;
+    private JButton cybertorium;
 
     private ClockPanel clock;
 
@@ -54,6 +55,7 @@ public class FrameTester {
         room206 = new JButton("Room 206");
         menuPanel = new JButton("MenuPanel");
         floor1 = new JButton("Floor 1");
+        cybertorium = new JButton("Cybertorium");
 
         frame.add(auBon);
 //        frame.add(floor);
@@ -62,6 +64,7 @@ public class FrameTester {
         frame.add(room206);
 //        frame.add(menuPanel);
         frame.add(floor1);
+        frame.add(cybertorium);
 
         auBon.addActionListener(new PanelSwitcher());
         floor.addActionListener(new PanelSwitcher());
@@ -70,6 +73,7 @@ public class FrameTester {
         room206.addActionListener(new PanelSwitcher());
         menuPanel.addActionListener(new PanelSwitcher());
         floor1.addActionListener(new PanelSwitcher());
+        cybertorium.addActionListener(new PanelSwitcher());
     }
 
     private void refreshPane() {
@@ -138,6 +142,13 @@ public class FrameTester {
             if (o == floor1) {
                 try {
                     FrameTester frame = new FrameTester(new Floor1("test", new FloorController()));
+                } catch (Exception ex) {
+                }
+            }
+            
+            if (o == cybertorium) {
+                try {
+                    FrameTester frame = new FrameTester(new Cybertorium());
                 } catch (Exception ex) {
                 }
             }

@@ -1,3 +1,5 @@
+package views;
+
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
