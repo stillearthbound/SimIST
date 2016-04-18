@@ -43,15 +43,15 @@ public class ABPController {
     public ABPController() throws Exception {
         testFrame = new TestFrame();
         student = new Customer(testFrame.getSize());
-        charMovement = new CharacterMovement();
         stations = new FoodStations();
-        abp = new AuBonPainPanel(student, charMovement);
+        abp = new AuBonPainPanel(student);
         abp.setFocusable(true);
+        
         randomize = new Randomize();
         menuPanel = new MenuPanel();
         charInventory = new CharacterInventory();
         inventory = new Inventory();
-
+        charMovement = new CharacterMovement(testFrame, menuPanel, student, inventory, abp, charInventory);
         testFrame.add(abp, BorderLayout.CENTER);
 
         addKeyListeners();
@@ -88,13 +88,12 @@ public class ABPController {
          SETTING KEYLISTENERS ON THE PANEL TO DETECT MOVEMENT
          */
         abp.requestFocusInWindow();
-        abp.addKeyListener(new MovementKeyListener());
+        abp.addKeyListener(charMovement);
         abp.addKeyListener(new InteractKeyListener());
-        
+
         /*
-          ADD THE RESIZING LISTENER ON FRAME
-        */
-        
+         ADD THE RESIZING LISTENER ON FRAME
+         */
         testFrame.addComponentListener(new Resizer());
 
     }
@@ -117,22 +116,23 @@ public class ABPController {
 
         }
     }
-    
+
     class SignTimer implements ActionListener {
+
         private StoreObjects signObject;
         int i = 0;
-        
+
         @Override
         public void actionPerformed(ActionEvent ae) {
-            if (i > 0){
+            if (i > 0) {
                 System.out.printf("%s price returned from $%.2f", signObject.getName(), signObject.getCost());
-                signObject.changeCost((float)(signObject.getCost() * 1.176470588));
+                signObject.changeCost((float) (signObject.getCost() * 1.176470588));
                 System.out.printf(" to $%.2f\n", signObject.getCost());
             }
             signObject = randomize.getRandObject(randomize.getAllFood());
             System.out.println("Food Object: " + signObject.getName());
             System.out.printf("Price changed from $%.2f", signObject.getCost());
-            signObject.changeCost((float)(signObject.getCost() * .85));
+            signObject.changeCost((float) (signObject.getCost() * .85));
             System.out.printf(" to $%.2f\n", signObject.getCost());
             i++;
         }
@@ -143,15 +143,16 @@ public class ABPController {
      ADD ITEM FROM STATION BUTTON
     
      */
+
     public class AddItemListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
             StoreObjects[] objectsTemp = menuPanel.getStoreObjects();
-            
+
             for (int i = 0; i < objectsTemp.length; i++) {
                 charInventory.addItem(objectsTemp[i], menuPanel.getSpinnerValue(i));
-                
+
             }
             menuPanel.dispose();
         }
@@ -213,123 +214,14 @@ public class ABPController {
 
     /*
     
-     MOVEMENT LISTENER, INPUT ARRAYLIST OF RECTANGLES FOR COLLISION
-    
-     */
-    public class MovementKeyListener implements KeyListener {
-
-        public MovementKeyListener() {
-
-        }
-
-        @Override
-        public void keyTyped(KeyEvent ke) {
-
-        }
-
-        @Override
-        public void keyPressed(KeyEvent ke) {
-            double tempLeftRight = testFrame.getWidth() * .00625;
-            double tempUpDown = testFrame.getHeight() * .00833333;
-
-            if (menuPanel != null) {
-                menuPanel.dispose();
-            }
-            if (inventory != null) {
-                inventory.dispose();
-            }
-            int oldX = student.x;
-            int oldY = student.y;
-
-            if (ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_D) {
-                if (charMovement.getFrame() < 5) {
-                    charMovement.setAnimation(student.getAnimation()[0]);
-                    charMovement.setFrame(charMovement.getFrame() + 1);
-                } else if (charMovement.getFrame() >= 5 && charMovement.getFrame() < 10) {
-                    charMovement.setAnimation(student.getAnimation()[1]);
-                    charMovement.setFrame(charMovement.getFrame() + 1);
-                } else if (charMovement.getFrame() > 9) {
-                    charMovement.setFrame(0);
-                }
-                student.x = student.x + (int) tempLeftRight;
-            } else if (ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_A) {
-
-                if (charMovement.getFrame() < 5) {
-                    charMovement.setAnimation(student.getAnimation()[2]);
-                    charMovement.setFrame(charMovement.getFrame() + 1);
-                } else if (charMovement.getFrame() >= 5 && charMovement.getFrame() < 10) {
-                    charMovement.setAnimation(student.getAnimation()[3]);
-                    charMovement.setFrame(charMovement.getFrame() + 1);
-                } else if (charMovement.getFrame() > 9) {
-                    charMovement.setFrame(0);
-                }
-                student.x = student.x - (int) tempLeftRight;
-            } else if (ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_W) {
-                if (charMovement.getFrame() < 5) {
-                    charMovement.setAnimation(student.getAnimation()[4]);
-                    charMovement.setFrame(charMovement.getFrame() + 1);
-                } else if (charMovement.getFrame() >= 5 && charMovement.getFrame() < 10) {
-                    charMovement.setAnimation(student.getAnimation()[5]);
-                    charMovement.setFrame(charMovement.getFrame() + 1);
-                } else if (charMovement.getFrame() > 9) {
-                    charMovement.setFrame(0);
-                }
-                student.y = student.y - (int) tempUpDown;
-            } else if (ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_S) {
-                if (charMovement.getFrame() < 5) {
-                    charMovement.setAnimation(student.getAnimation()[6]);
-                    charMovement.setFrame(charMovement.getFrame() + 1);
-                } else if (charMovement.getFrame() >= 5 && charMovement.getFrame() < 10) {
-                    charMovement.setAnimation(student.getAnimation()[7]);
-                    charMovement.setFrame(charMovement.getFrame() + 1);
-                } else if (charMovement.getFrame() > 9) {
-                    charMovement.setFrame(0);
-                }
-                student.y = student.y + (int) tempUpDown;
-            }
-
-            /*
-            
-             PRESSING 'I' POPS UP INVENTORY
-            
-             */
-            if (ke.getKeyCode() == KeyEvent.VK_I) {
-                inventory.popUpInventory(charInventory);
-                inventory.setLocationRelativeTo(abp);
-            }
-
-            if (!charMovement.getAnimation().equals(charMovement.getFacing())) {
-                charMovement.setIsInteracting(false);
-            }
-            abp.refreshStations();
-            for (Rectangle station : abp.getStations()) {
-                if (student.intersects(station)) {
-                    student.x = oldX;
-                    student.y = oldY;
-
-                    charMovement.setIsInteracting(true);
-                    charMovement.setFacing(charMovement.getAnimation());
-                    charMovement.setStationNumber(abp.getStations().indexOf(station));
-
-                }
-
-            }
-
-        }
-
-        @Override
-        public void keyReleased(KeyEvent ke) {
-
-        }
-    }
-
-    /*
-    
      INTERACTING WITH STATIONS
     
      */
     public class InteractKeyListener implements KeyListener {
-
+        
+        
+        
+        
         @Override
         public void keyTyped(KeyEvent ke) {
 
@@ -393,14 +285,12 @@ public class ABPController {
     }
 
     public class Resizer implements ComponentListener {
-        
-        
-        
+
         @Override
         public void componentResized(ComponentEvent ce) {
-            
+
             JFrame placeHolder = (JFrame) ce.getSource();
-            student.setBounds(placeHolder.getWidth()-student.width*2,Math.round(placeHolder.getHeight()-student.height*2.5f),student.width,student.height);
+            student.setBounds(placeHolder.getWidth() - student.width * 2, Math.round(placeHolder.getHeight() - student.height * 2.5f), student.width, student.height);
         }
 
         @Override
@@ -415,6 +305,6 @@ public class ABPController {
         @Override
         public void componentHidden(ComponentEvent ce) {
         }
-        
+
     }
 }

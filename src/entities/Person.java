@@ -31,17 +31,17 @@ public class Person {
     }
 
 
-    public static void main(String[] Args)
-    {
-      Professor prof = new Professor("Dave", "Smith", 34, "Phd in IST", 68970);
-      Student stud = new Student("Joey", "Williams", 20, 914987112, 3.1, "Junior");
-      Visitor vis = new Visitor("Vincent", "Maimone", 20);
-
-      prof.getInfo();
-//      stud.getInfo()；
-//      vis.getInfo()；
-
-    }
+//    public static void main(String[] Args)
+//    {
+//      Professor prof = new Professor("Dave", "Smith", 34, "Phd in IST", 68970);
+//      Student stud = new Student("Joey", "Williams", 20, 914987112, 3.1, "Junior");
+//      Visitor vis = new Visitor("Vincent", "Maimone", 20);
+//
+//      prof.getInfo();
+////      stud.getInfo()；
+////      vis.getInfo()；
+//
+//    }
 }
 
 

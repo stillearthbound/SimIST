@@ -12,12 +12,12 @@ package models;
 import java.awt.*;
 public class Customer extends Rectangle{
     
-    private String[] animation;
- 
+    private String[] animations;
+    private String animation = "left1.png";
     
     public Customer(Dimension inf_FrameSize)
     {
-        animation = new String [] {"right1.png" , "right2.png" , "left1.png" , "left2.png" , "up1.png" , "up2.png" , "down1.png" , "down2.png"};
+        animations = new String [] {"right1.png" , "right2.png" , "left1.png" , "left2.png" , "up1.png" , "up2.png" , "down1.png" , "down2.png"};
         double tempHeight = inf_FrameSize.height * .125;
         double tempWidth = inf_FrameSize.width * .05;
         double tempX = inf_FrameSize.width * .875;
@@ -29,8 +29,18 @@ public class Customer extends Rectangle{
     }
     
     
-    public String[] getAnimation()
+    public String[] getAnimations()
+    {
+        return animations;
+    }
+    
+    public String getAnimation()
     {
         return animation;
+    }
+    
+    public void setAnimation(String set)
+    {
+        animation = set;
     }
 }
