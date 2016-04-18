@@ -307,6 +307,7 @@ public class GameRoomController {
         @Override
         public void componentHidden(ComponentEvent ce) {
             sequence.stop();
+            testFrame.dispose();
         }
 
     }

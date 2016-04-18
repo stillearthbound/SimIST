@@ -114,6 +114,7 @@ public class MenuPanel extends JFrame{
         
         setContentPane(content);
         setTitle(station.getStationName());
+        pack();
         setVisible(true);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -199,6 +200,7 @@ public class MenuPanel extends JFrame{
         setContentPane(content);
         setTitle("TRASH MENU");
         setVisible(true);
+        pack();
         setResizable(false);
         setLocationRelativeTo(null);
         
