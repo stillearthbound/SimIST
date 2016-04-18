@@ -24,7 +24,7 @@ import javax.swing.*;
  *
  * @author Paul
  */
-public class ABPController {
+public class GameRoomController {
 
     private GameRoom abp;
     private Timer gameTimer;
@@ -40,11 +40,13 @@ public class ABPController {
     private static TimerTask updateSaleTask;
     private static final int CHANGE_INTERVAL = 10000;
 
-    public ABPController() throws Exception {
+    public GameRoomController(Customer inf_student, GameRoom inf_room) throws Exception {
         testFrame = new TestFrame();
-        student = new Customer(testFrame.getSize());
+        
+        student = inf_student;
         stations = new FoodStations();
-        abp = new AuBonPainPanel(student);
+        abp = inf_room;
+        testFrame.setSize(abp.getSize());
         abp.setFocusable(true);
         
         randomize = new Randomize();
@@ -290,6 +292,7 @@ public class ABPController {
         public void componentResized(ComponentEvent ce) {
 
             JFrame placeHolder = (JFrame) ce.getSource();
+            if(abp instanceof AuBonPainPanel)
             student.setBounds(placeHolder.getWidth() - student.width * 2, Math.round(placeHolder.getHeight() - student.height * 2.5f), student.width, student.height);
         }
 

@@ -1,6 +1,6 @@
 package views;
 
-import controllers.ABPController;
+import controllers.GameRoomController;
 import models.*;
 import javax.swing.*;
 import java.awt.*;

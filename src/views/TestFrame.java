@@ -26,7 +26,7 @@ public class TestFrame extends JFrame {
         setVisible(true);
         setLocationRelativeTo(null);
         validate();
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(EXIT_ON_CLOSE);
         setFocusable(false);
         
     }
