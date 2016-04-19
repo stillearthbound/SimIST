@@ -51,7 +51,7 @@ public class GameRoomController {
         randomize = new Randomize();
         menuPanel = new MenuPanel();
         inventory = new Inventory();
-        charMovement = new CharacterMovement(testFrame, menuPanel, student, inventory, room);
+        charMovement = new CharacterMovement(student, room);
         testFrame.add(room, BorderLayout.CENTER);
         
         signObject = randomize.getRandObject(randomize.getAllFood());

@@ -4,33 +4,24 @@ package models;
  *
  * @author Paul
  */
-import entities.Room;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import views.Inventory;
-import views.MenuPanel;
-import views.TestFrame;
 import java.awt.event.KeyListener;
 import views.GameRoom;
 
 public class CharacterMovement implements KeyListener {
 
-    private TestFrame mTestFrame;
-    private MenuPanel mMenuPanel;
     private Customer mStudent;
-    private Inventory mInventory;
     private GameRoom mPanel;
-    private String animation = "left1.png";
     private String facing = "";
     private boolean isInteracting = false;
     private int frame = 0;
     private int stationNumber;
 
-    public CharacterMovement(TestFrame testFrame, MenuPanel menuPanel, Customer student, Inventory inventory, GameRoom panel) {
-        mTestFrame = testFrame;
-        mMenuPanel = menuPanel;
+    public CharacterMovement(Customer student, GameRoom panel) {
+
         mStudent = student;
-        mInventory = inventory;
         mPanel = panel;
     }
 
@@ -44,14 +35,14 @@ public class CharacterMovement implements KeyListener {
         double tempLeftRight = mPanel.getWidth() * .00625;
         double tempUpDown = mPanel.getHeight() * .00833333;
 
-        if (mMenuPanel != null) {
-            mMenuPanel.dispose();
-        }
-        if (mInventory != null) {
-            mInventory.dispose();
-        }
         int oldX = mStudent.x;
         int oldY = mStudent.y;
+
+        if (!mStudent.getAnimation().equals(facing)) {
+            isInteracting = false;
+
+        }
+
 
         switch (ke.getKeyCode()) {
             case KeyEvent.VK_RIGHT:
@@ -64,7 +55,8 @@ public class CharacterMovement implements KeyListener {
                     frame += 1;
                 } else if (frame > 9) {
                     frame = 0;
-                }   mStudent.x = mStudent.x + (int) tempLeftRight;
+                }
+                mStudent.x = mStudent.x + (int) tempLeftRight;
                 break;
             case KeyEvent.VK_LEFT:
             case KeyEvent.VK_A:
@@ -76,7 +68,8 @@ public class CharacterMovement implements KeyListener {
                     frame += 1;
                 } else if (frame > 9) {
                     frame = 0;
-                }   mStudent.x = mStudent.x - (int) tempLeftRight;
+                }
+                mStudent.x = mStudent.x - (int) tempLeftRight;
                 break;
             case KeyEvent.VK_UP:
             case KeyEvent.VK_W:
@@ -88,7 +81,8 @@ public class CharacterMovement implements KeyListener {
                     frame += 1;
                 } else if (frame > 9) {
                     frame = 0;
-                }   mStudent.y = mStudent.y - (int) tempUpDown;
+                }
+                mStudent.y = mStudent.y - (int) tempUpDown;
                 break;
             case KeyEvent.VK_DOWN:
             case KeyEvent.VK_S:
@@ -100,7 +94,8 @@ public class CharacterMovement implements KeyListener {
                     frame += 1;
                 } else if (frame > 9) {
                     frame = 0;
-                }   mStudent.y = mStudent.y + (int) tempUpDown;
+                }
+                mStudent.y = mStudent.y + (int) tempUpDown;
                 break;
             default:
                 break;
@@ -112,13 +107,9 @@ public class CharacterMovement implements KeyListener {
             
          */
         if (ke.getKeyCode() == KeyEvent.VK_I) {
-            mInventory.popUpInventory(mStudent.getInventory());
-            mInventory.setLocationRelativeTo(mPanel);
-        }
-
-        if (!animation.equals(facing)) {
-            isInteracting = false;
-            
+            Inventory inventory = new Inventory();
+            inventory.popUpInventory(mStudent.getInventory());
+            inventory.setLocationRelativeTo(mPanel);
         }
 
         for (Rectangle station : mPanel.getStations()) {
@@ -127,7 +118,7 @@ public class CharacterMovement implements KeyListener {
                 mStudent.y = oldY;
 
                 isInteracting = true;
-                facing = animation;
+                facing = mStudent.getAnimation();
                 stationNumber = mPanel.getStations().indexOf(station);
 
             }
@@ -141,13 +132,7 @@ public class CharacterMovement implements KeyListener {
 
     }
 
-    public String getAnimation() {
-        return animation;
-    }
 
-    public void setAnimation(String set) {
-        animation = set;
-    }
 
     public String getFacing() {
         return facing;
@@ -165,13 +150,6 @@ public class CharacterMovement implements KeyListener {
         isInteracting = set;
     }
 
-    public int getFrame() {
-        return frame;
-    }
-
-    public void setFrame(int set) {
-        frame = set;
-    }
 
     public int getStationNumber() {
         return stationNumber;
