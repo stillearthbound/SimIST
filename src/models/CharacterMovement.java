@@ -14,15 +14,17 @@ public class CharacterMovement implements KeyListener {
 
     private Customer mStudent;
     private GameRoom mPanel;
+    private Inventory mInventory;
     private String facing = "";
     private boolean isInteracting = false;
     private int frame = 0;
     private int stationNumber;
 
-    public CharacterMovement(Customer student, GameRoom panel) {
+    public CharacterMovement(Customer student, GameRoom panel, Inventory inventory) {
 
         mStudent = student;
         mPanel = panel;
+        mInventory = inventory;
     }
 
     @Override
@@ -107,9 +109,8 @@ public class CharacterMovement implements KeyListener {
             
          */
         if (ke.getKeyCode() == KeyEvent.VK_I) {
-            Inventory inventory = new Inventory();
-            inventory.popUpInventory(mStudent.getInventory());
-            inventory.setLocationRelativeTo(mPanel);
+            mInventory.popUpInventory(mStudent.getInventory());
+            mInventory.setLocationRelativeTo(mPanel);
         }
 
         for (Rectangle station : mPanel.getStations()) {

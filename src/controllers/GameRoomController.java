@@ -51,7 +51,7 @@ public class GameRoomController {
         randomize = new Randomize();
         menuPanel = new MenuPanel();
         inventory = new Inventory();
-        charMovement = new CharacterMovement(student, room);
+        charMovement = new CharacterMovement(student, room, inventory);
         testFrame.add(room, BorderLayout.CENTER);
         
         signObject = randomize.getRandObject(randomize.getAllFood());
@@ -201,7 +201,7 @@ public class GameRoomController {
         @Override
         public void actionPerformed(ActionEvent ae) {
             student.getInventory().removeItem(inventory.getItemSelected(), 1.0);
-
+            
             if (student.getInventory().getMap().get(inventory.getItemSelected().getName()) < 1) {
                 student.getInventory().getInventoryObjects().remove(inventory.getItemSelected());
                 student.getInventory().getMap().remove((String) inventory.getItemSelected().getName());
