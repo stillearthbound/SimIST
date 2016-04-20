@@ -1,6 +1,6 @@
 package views;
 
-import controllers.ABPController;
+import controllers.GameRoomController;
 import models.*;
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
 
-public class AuBonPainPanel extends JPanel {
+public class AuBonPainPanel extends GameRoom {
 
     public static final int COUNTERWIDTH = 160;
     public static final int COUNTERHEIGHT = 192;
@@ -43,10 +43,10 @@ public class AuBonPainPanel extends JPanel {
 
     private JLabel temp = new JLabel();
 
-    public AuBonPainPanel(Customer inf_Student, CharacterMovement inf_characterMovement) {
+    public AuBonPainPanel(Customer inf_Student) {
         super();
         student = inf_Student;
-        characterMovement = inf_characterMovement;
+        setSize(800,600);
 
         setPreferredSize(new Dimension(800, 600));
         setLayout(null);
@@ -56,9 +56,7 @@ public class AuBonPainPanel extends JPanel {
 
         this.addMouseMotionListener(new MouseAdapter() {
             @Override
-
             public void mouseMoved(MouseEvent e) {
-
                 temp.setText(e.getPoint().toString());
             }
         });
@@ -93,22 +91,9 @@ public class AuBonPainPanel extends JPanel {
         double playerHeight = getParent().getHeight() * .125;
         double playerWidth = getParent().getWidth() * .06;
         g.drawImage(new ImageIcon("floor.png").getImage(), 0, 0, getParent().getWidth(), getParent().getHeight(), null);
-        g.drawImage(new ImageIcon(characterMovement.getAnimation()).getImage(), student.x, student.y, (int) playerWidth, (int) playerHeight, null);
+        g.drawImage(new ImageIcon(student.getAnimation()).getImage(), student.x, student.y, (int) playerWidth, (int) playerHeight, null);
 
         refreshStations();
-        
-        
-        ///TESTING LOCATIONS OF RECTANGLES
-        
-        
-//        g.setColor(Color.red);
-//        g.fillRect(student.x, student.y, student.width, student.height);
-//
-//        for (Rectangle rec : new ArrayList<>(Arrays.asList(counter, coffee, sign, trash, bakery, fruit, soup, cooler, exitCompSci))) {
-//
-//            g.fillRect(rec.x, rec.y, rec.width, rec.height);
-//        }
-
     }
 
     public void refreshStations() {

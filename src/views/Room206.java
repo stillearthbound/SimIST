@@ -14,6 +14,8 @@ import models.CharacterMovement;
 import models.Customer;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -22,7 +24,7 @@ import java.awt.event.MouseEvent;
 //public final class Room206 extends JPanel implements KeyListener{
     
 
-public class Room206 extends JPanel {
+public class Room206 extends GameRoom {
 
     public static final int ShelfWidth = 60;
     public static final int ShelfHeight = 15;
@@ -56,17 +58,15 @@ public class Room206 extends JPanel {
     private Rectangle wallUD2;
     private Rectangle wallLR1;
     private Rectangle wallLR2;
-    
-    private CharacterMovement characterMovement;
+
     private Customer student;
 
     private JLabel temp = new JLabel();
     private JLabel msg = new JLabel();
 
-    public Room206(Customer inf_Student, CharacterMovement inf_charMovement) {
+    public Room206(Customer inf_Student) {
         super();
         student = inf_Student;
-        characterMovement = inf_charMovement;
         setSize(537, 670);
         add(temp);
         temp.setBounds(200,200,200,200);
@@ -129,11 +129,16 @@ public class Room206 extends JPanel {
         cornertable1.setBounds(444, 353, CornertableWidth, CornertableHeight);
         cornertable2.setBounds(413, 449, CornertableWidth, CornertableHeight);
         key.setBounds(29, 353, CornertableWidth, CornertableHeight);
-        wallUD1.setBounds(23,2, WallUDWidth, WallUDHeight);
+        wallUD1.setBounds(23,30, WallUDWidth, WallUDHeight);
         wallUD2.setBounds(23, 544, WallUDWidth, WallUDHeight);
         wallLR1.setBounds(0,66, WallLRWidth, WallLRHeight);
         wallLR2.setBounds(458,226, WallLRWidth, WallLRHeight);
    
+    }
+    
+     @Override
+    public ArrayList<Rectangle> getStations() {
+        return new ArrayList<>(Arrays.asList(shelf1, shelf2, longtable, middletable1, middletable2, middletable3, middletable4, middletable5, middletable6, shorttable, cornertable1, cornertable2, key, wallUD1, wallUD2, wallLR1, wallLR2));
     }
 
     public Rectangle getShelf1()
@@ -216,9 +221,11 @@ public class Room206 extends JPanel {
         super.paintComponent(g);
 
         g.drawImage(new ImageIcon("room206.png").getImage(), 0, 0, null);
-        g.drawImage(new ImageIcon(characterMovement.getAnimation()).getImage(), student.x, student.y, null);
+        g.drawImage(new ImageIcon(student.getAnimation()).getImage(), student.x, student.y, student.width, student.height, null);
 
     }
+
+   
 
 }
 

@@ -73,7 +73,7 @@ public class Floor extends JPanel implements ActionListener, KeyListener {
                   System.out.println("print");
                   this.setVisible(false);
                   try {
-                    RoomController r = new RoomController();
+                    //RoomController r = new RoomController();
                 } catch (Exception ex){
                     System.err.println(ex);
                 }

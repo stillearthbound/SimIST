@@ -3,26 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package views;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import models.Customer;
-import models.MeetingRoomMovement;
-import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
  * @author Jon
  */
+public class MeetingRoomPanel extends GameRoom {
 
-public class MeetingRoomPanel extends JPanel {
     public static final int TABLEWIDTH = 410;
     public static final int TABLEHEIGHT = 58;
     public static final int PROJECTORWIDTH = 300;
@@ -30,31 +26,16 @@ public class MeetingRoomPanel extends JPanel {
 
     private Rectangle table;
     private Rectangle projector;
-    private MeetingRoomMovement characterMovement;
     private Customer student;
 
-    private JLabel temp = new JLabel();
-
-    public MeetingRoomPanel(Customer inf_Student, MeetingRoomMovement inf_charMovement) {
+    public MeetingRoomPanel(Customer inf_Student) {
         super();
         student = inf_Student;
-        characterMovement = inf_charMovement;
         setSize(800, 600);
         setLayout(null);
-        add(temp);
-        temp.setBounds(200, 200, 200, 200);
         init();
         placeStations();
-        this.addKeyListener(characterMovement);
 
-        this.addMouseMotionListener(new MouseAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent e)
-            {
-//                System.out.println(e.getPoint());
-                temp.setText(e.getPoint().toString());
-            }
-        });
         this.setFocusable(true);
     }
 
@@ -68,14 +49,12 @@ public class MeetingRoomPanel extends JPanel {
         table.setBounds(180, 245, TABLEWIDTH, TABLEHEIGHT);
         projector.setBounds(670, 400, PROJECTORWIDTH, PROJECTORHEIGHT);
     }
-    
-    public Rectangle getTable()
-    {
+
+    public Rectangle getTable() {
         return table;
     }
-    
-    public Rectangle getProjector()
-    {
+
+    public Rectangle getProjector() {
         return projector;
     }
 
@@ -85,8 +64,14 @@ public class MeetingRoomPanel extends JPanel {
         super.paintComponent(g);
 
         g.drawImage(new ImageIcon("meetingRoom.png").getImage(), 0, 0, null);
-        g.drawImage(new ImageIcon(characterMovement.getAnimation()).getImage(), student.x, student.y, null);
+        g.drawImage(new ImageIcon(student.getAnimation()).getImage(), student.x, student.y, null);
 
+    }
+
+    @Override
+    public ArrayList<Rectangle> getStations() {
+
+        return new ArrayList<>(Arrays.asList(table, projector));
     }
 
 }

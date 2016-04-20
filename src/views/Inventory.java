@@ -142,6 +142,7 @@ public class Inventory extends JFrame implements ComponentListener{
 
     public void addUseListener(ActionListener al) {
         useItem.addActionListener(al);
+        
     }
 
     public JPanel getContainer() {

@@ -71,5 +71,27 @@ public class Randomize {
     public StoreObjects[] getBakeryObjects() {
         return bakeryObjects;
     }
-    
+    public ArrayList<StoreObjects> getAllFood(){
+        StoreObjects[][] allFoodArray = new StoreObjects[5][];
+        ArrayList<StoreObjects> allFoodAL = new ArrayList<StoreObjects>();
+        
+        allFoodArray[0] = getBakeryObjects();
+        allFoodArray[1] = getCoffeeObjects();
+        allFoodArray[2] = getCoolerObjects();
+        allFoodArray[3] = getFruitObjects();
+        allFoodArray[4] = getSoupObjects();
+        
+        for (int row = 0; row < allFoodArray.length; row++){
+                for (int col = 0; col < allFoodArray[row].length; col++){
+                    allFoodAL.add(allFoodArray[row][col]);
+                }
+            }
+        return allFoodAL;
+    }
+    public StoreObjects getRandObject(ArrayList<StoreObjects> allFood){
+        int randNum = (int)(Math.random() * allFood.size());
+        StoreObjects signObject = allFood.get(randNum);
+        
+        return signObject;
+    }
 }

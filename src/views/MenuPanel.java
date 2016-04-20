@@ -35,6 +35,9 @@ public class MenuPanel extends JFrame{
     private JLabel actualItem;
     private JLabel actualCost;
     private JLabel actualQuantity;
+    private JLabel signIntro;
+    private JLabel signMessage;
+    private JLabel signCost;
     private JButton grabItems = new JButton("Grab Items");
     private JButton tossItems = new JButton("Toss Items");
     private JSpinner quantSpin;
@@ -109,13 +112,12 @@ public class MenuPanel extends JFrame{
         layoutConst.gridy = i + offset + 1;
         content.add(grabItems, layoutConst);
         
-        this.setContentPane(content);
-        this.pack();
-        this.setTitle(station.getStationName());
+        setContentPane(content);
+        setTitle(station.getStationName());
+        pack();
         setVisible(true);
         setResizable(false);
-        setLocation(MouseInfo.getPointerInfo().getLocation().x-(getWidth()/2),MouseInfo.getPointerInfo().getLocation().y-(getHeight()/2));
-
+        setLocationRelativeTo(null);
     }
     
     
@@ -156,6 +158,8 @@ public class MenuPanel extends JFrame{
     {
         allSpinners.clear();
         content.removeAll();
+        content.setLayout(new GridBagLayout());
+        layoutConst.insets = new Insets(10, 10, 10, 10);
         
         item = new JLabel("Item");
         layoutConst.gridx = 0;
@@ -196,11 +200,11 @@ public class MenuPanel extends JFrame{
         content.add(tossItems, layoutConst);
         
         setContentPane(content);
-        pack();
         setTitle("TRASH MENU");
         setVisible(true);
+        pack();
         setResizable(false);
-        setLocation(MouseInfo.getPointerInfo().getLocation().x-(getWidth()/2),MouseInfo.getPointerInfo().getLocation().y-(getHeight()/2));
+        setLocationRelativeTo(null);
         
     }
     
@@ -209,8 +213,30 @@ public class MenuPanel extends JFrame{
         
     }
     
-    public void populateSignMenu(SignStation signStation)
+    public void populateSignMenu(String objectName, float objectCost)
     {
+        content.removeAll();
+        content.setLayout(new GridBagLayout());
+        layoutConst.insets = new Insets(10, 10, 10, 10);
+        signIntro = new JLabel("Welcome to Au Bon Pain!");
+        layoutConst.gridx = 0;
+        layoutConst.gridy = 0;
+        content.add(signIntro, layoutConst);
         
-    }
+        signMessage = new JLabel("Today's 15% off special is: " + objectName);
+        layoutConst.gridx = 0;
+        layoutConst.gridy = 1;
+        content.add(signMessage, layoutConst);
+        
+        signCost = new JLabel(String.format("New Cost: $%.2f", objectCost));
+        layoutConst.gridx = 0;
+        layoutConst.gridy = 2;
+        content.add(signCost, layoutConst);
+        
+        setContentPane(content);
+        setTitle("ABP Sign");
+        setVisible(true);
+        pack();
+        setResizable(false);
+        setLocationRelativeTo(null);    }
 }

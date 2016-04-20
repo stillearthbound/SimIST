@@ -5,11 +5,14 @@
  */
 package controllers;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import models.Customer;
 import views.*;
 
 /**
@@ -28,12 +31,16 @@ public class FrameTester {
     private JButton menuPanel;
     private JButton floor1;
     private JButton cybertorium;
+    private Customer student;
+    private GameRoom room;
 
-    private ClockPanel clock;
+    //private ClockPanel clock;
 
     public FrameTester() {
         frame = new TestFrame();
         frame.setLocationRelativeTo(null);
+        student = new Customer(new Dimension(800,600));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setup();
         refreshPane();
     }
@@ -95,7 +102,8 @@ public class FrameTester {
 
             if (o == auBon) {
                 try {
-                    ABPController c = new ABPController();
+                    room = new AuBonPainPanel(student);
+                    GameRoomController c = new GameRoomController(student, room);
                 } catch (Exception ex) {
                     System.err.println(ex);
                 }
@@ -112,7 +120,8 @@ public class FrameTester {
 
             if (o == meetingRoom) {
                 try {
-                    MRController m = new MRController();
+                    room = new MeetingRoomPanel(student);
+                    GameRoomController abp = new GameRoomController(student, room);
                 } catch (Exception ex) {
                     System.err.println(ex);
                 }
@@ -120,14 +129,19 @@ public class FrameTester {
 
             if (o == clockPanel) {
                 try {
-                    FrameTester frame = new FrameTester(new ClockPanel());
+                  //  FrameTester frame = new FrameTester(new ClockPanel());
                 } catch (Exception ex) {
                 }
             }
             
             if (o == room206) {
                 try {
-                    RoomController roomController = new RoomController();
+                    double tempHeight = student.height *.75;
+                    double tempWidth = student.width *.75;
+                    room = new Room206(student);
+                    student.height = (int) tempHeight;
+                    student.width = (int) tempWidth;
+                    GameRoomController abp = new GameRoomController(student, room);
                 } catch (Exception ex) {
                 }
             }
