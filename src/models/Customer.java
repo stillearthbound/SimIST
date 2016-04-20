@@ -29,6 +29,10 @@ public class Customer extends Rectangle{
         x = (int) tempX;
         y = (int) tempY;
     }
+
+    public Customer() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public CharacterInventory getInventory()
     {

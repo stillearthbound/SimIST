@@ -104,9 +104,9 @@ public class CharacterMovement implements KeyListener {
         }
 
         /*
-            
+
              PRESSING 'I' POPS UP INVENTORY
-            
+
          */
         if (ke.getKeyCode() == KeyEvent.VK_I) {
             mInventory.popUpInventory(mStudent.getInventory());
