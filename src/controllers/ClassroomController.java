@@ -22,15 +22,15 @@ public class ClassroomController {
     private ClassroomPanel classroomPanel;
 
     // Attributes related to character
-    private Customer student = new Customer();
-    private CharacterMovement charMovement = new CharacterMovement(student);
+    //private Customer student = new Customer();
+    //private CharacterMovement charMovement = new CharacterMovement(student);
 
     private Timer gameTimer;
 
     public ClassroomController() {
         // bring the character and characterMoevement
-        student = new Customer();
-        charMovement = new CharacterMovement(student);
+        //student = new Customer();
+        //charMovement = new CharacterMovement(student);
 
         // frame and panel
         classroomFrame = new ClassroomFrame();
@@ -43,13 +43,13 @@ public class ClassroomController {
 
     }
 
-    public Customer getCustomer() {
-        return student;
-    }
+//    public Customer getCustomer() {
+//        return student;
+//    }
 
-    public CharacterMovement getCharacterMovement() {
-        return charMovement;
-    }
+//    public CharacterMovement getCharacterMovement() {
+//        return charMovement;
+//    }
 
     class GameTimer implements ActionListener {
 
