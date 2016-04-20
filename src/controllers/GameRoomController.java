@@ -37,7 +37,7 @@ public class GameRoomController {
     private TestFrame testFrame;
     private static Timer signTimer;
     private StoreObjects signObject;
-    private static final int CHANGE_INTERVAL = 10000;
+    private static final int CHANGE_INTERVAL = 900000;
     protected Sequencer sequence;
 
     public GameRoomController(Customer inf_student, GameRoom inf_room) throws Exception {
@@ -55,11 +55,8 @@ public class GameRoomController {
         testFrame.add(room, BorderLayout.CENTER);
         
         signObject = randomize.getRandObject(randomize.getAllFood());
-        System.out.println("Food Object: " + signObject.getName());
-        System.out.printf("Price changed from $%.2f", signObject.getCost());
         signObject.changeCost((float) (signObject.getCost() * .85));
-        System.out.printf(" to $%.2f\n", signObject.getCost());
-
+ 
         addKeyListeners();
 
         InputStream is;
