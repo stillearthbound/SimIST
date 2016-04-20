@@ -19,6 +19,10 @@ public class CharacterMovement  {
 
     }
 
+    public CharacterMovement(Customer student) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getAnimation() {
         return animation;
     }
