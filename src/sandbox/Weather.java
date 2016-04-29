@@ -101,7 +101,7 @@ public class Weather {
         f.add(p);
         p.add(tempLable);
         p.add(weatherIcon);
-        sunnyImage = new ImageIcon("src/sandbox/Weather Images/unny.gif");
+        sunnyImage = new ImageIcon("src/sandbox/Weather Images/Sunny.gif");
         cloudyImage = new ImageIcon("src/sandbox/Weather Images/Cloudy.gif");
         rainyImage = new ImageIcon("src/sandbox/Weather Images/Rainy.gif");
         snowyImage = new ImageIcon("src/sandbox/Weather Images/Snowy.gif");   
