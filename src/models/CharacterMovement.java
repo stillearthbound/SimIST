@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import views.Inventory;
 import java.awt.event.KeyListener;
 import views.GameRoom;
+import sandbox.Weather;
 
 public class CharacterMovement implements KeyListener {
 
@@ -99,6 +100,16 @@ public class CharacterMovement implements KeyListener {
                 }
                 mStudent.y = mStudent.y + (int) tempUpDown;
                 break;
+            case KeyEvent.VK_M:
+                //System.out.println("M pressed");
+                try{
+                    Weather.main(new String[]{"arg1", "arg2", "arg3"});
+            
+                }
+                catch (Exception e) {
+                
+                }
+                break;
             default:
                 break;
         }
@@ -108,10 +119,11 @@ public class CharacterMovement implements KeyListener {
              PRESSING 'I' POPS UP INVENTORY
 
          */
-        if (ke.getKeyCode() == KeyEvent.VK_I) {
+        if (ke.getKeyCode() == KeyEvent.VK_I) { 
             mInventory.popUpInventory(mStudent.getInventory());
             mInventory.setLocationRelativeTo(mPanel);
         }
+        
 
         for (Rectangle station : mPanel.getStations()) {
             if (mStudent.intersects(station)) {
